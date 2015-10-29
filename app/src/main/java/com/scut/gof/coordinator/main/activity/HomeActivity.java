@@ -12,7 +12,7 @@ import android.widget.Button;
 import com.scut.gof.coordinator.R;
 import com.scut.gof.coordinator.main.widget.BottomToolBar;
 
-public class HomeActivity extends BaseAcitivy {
+public class HomeActivity extends BaseActivity {
     DrawerLayout mDrwer;
     BottomToolBar mBar;
     FloatingActionButton mBtnfab;
