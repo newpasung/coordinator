@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 /**
  * Created by Administrator on 2015/10/29.
  */
-public class BaseAcitivy extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
