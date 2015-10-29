@@ -1,15 +1,22 @@
-package com.scut.gof.coordinator;
+package com.scut.gof.coordinator.main.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
-public class HomeActivity extends AppCompatActivity {
+import com.scut.gof.coordinator.R;
+import com.scut.gof.coordinator.main.widget.BottomToolBar;
+
+public class HomeActivity extends BaseAcitivy {
+    DrawerLayout mDrwer;
+    BottomToolBar mBar;
+    FloatingActionButton mBtnfab;
+    Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,13 +24,21 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        button = (Button) findViewById(R.id.button1);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBar.reset(mBtnfab);
+            }
+        });
+        mDrwer = (DrawerLayout) findViewById(R.id.drawerlayout);
+        mDrwer.setScrimColor(getResources().getColor(R.color.black_54));
+        mBar = (BottomToolBar) findViewById(R.id.bottombar);
+        mBtnfab = (FloatingActionButton) findViewById(R.id.btn_fab);
+        mBtnfab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                mBar.reveal(HomeActivity.this, mBtnfab);
             }
         });
     }
@@ -46,7 +61,6 @@ public class HomeActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }
