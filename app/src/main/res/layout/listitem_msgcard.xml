@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="@dimen/cardheight_normal"
+    app:cardCornerRadius="@dimen/cardradius_normal"
+    app:cardElevation="@dimen/evelation_l1"
+    >
+    <RelativeLayout
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/padding_small"
+        android:paddingRight="@dimen/padding_small"
+        android:paddingTop="@dimen/padding_small"
+        android:paddingBottom="@dimen/padding_small"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.scut.gof.coordinator.main.widget.CircleImageView
+            android:id="@+id/cir_msgtype"
+            tools:src="@drawable/landscape"
+            android:layout_marginRight="@dimen/margin_normal"
+            android:layout_width="@dimen/big_avatarsize"
+            android:layout_height="@dimen/big_avatarsize" />
+
+        <TextView
+            android:id="@+id/tv_type"
+            android:layout_toRightOf="@+id/cir_msgtype"
+            android:layout_marginRight="@dimen/margin_normal"
+            android:layout_alignTop="@+id/cir_msgtype"
+            tools:text="@string/test_sentence_20"
+            style="@style/text_caption"
+            android:singleLine="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_content"
+            style="@style/text_body"
+            android:layout_below="@+id/tv_type"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:layout_marginRight="@dimen/margin_normal"
+            android:layout_alignLeft="@+id/tv_type"
+            tools:text="@string/test_sentence_100"
+            android:ellipsize="end"
+            android:maxLines="4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

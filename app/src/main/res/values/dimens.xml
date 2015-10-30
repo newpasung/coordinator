@@ -3,4 +3,29 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="big_avatarsize">60dp</dimen>
+
+    <dimen name="cardheight_normal">120dp</dimen>
+    <dimen name="cardradius_normal">4dp</dimen>
+
+    <dimen name="paper_projectheight">80dp</dimen>
+
+    <dimen name="margin_normal">16dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_medium">24dp</dimen>
+
+    <dimen name="padding_small">8dp</dimen>
+    <dimen name="padding_normal">16dp</dimen>
+    
+    <dimen name="textsize_l1">12sp</dimen>
+    <dimen name="textsize_l2">14sp</dimen>
+    <dimen name="textsize_l3">16sp</dimen>
+    <dimen name="textsize_l4">20sp</dimen>
+    <dimen name="textsize_l5">24sp</dimen>
+    <dimen name="textsize_l6">34sp</dimen>
+    <dimen name="textsize_l7">45sp</dimen>
+
+    <dimen name="evelation_l1">4dp</dimen>
+
 </resources>
