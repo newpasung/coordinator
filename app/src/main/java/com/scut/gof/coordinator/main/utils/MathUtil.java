@@ -2,6 +2,7 @@ package com.scut.gof.coordinator.main.utils;
 
 /**
  * Created by Administrator on 2015/10/29.
+ * 一些常用的数学计算
  */
 public class MathUtil {
 

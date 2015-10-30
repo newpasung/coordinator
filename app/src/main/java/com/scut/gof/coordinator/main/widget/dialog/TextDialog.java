@@ -12,6 +12,7 @@ import com.scut.gof.coordinator.R;
 
 /**
  * Created by Administrator on 2015/9/20.
+ * 只显示文字和等待icon的dialog
  */
 public class TextDialog extends Dialog {
     ImageView imageView;

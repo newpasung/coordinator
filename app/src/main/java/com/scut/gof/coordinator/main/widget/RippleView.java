@@ -47,12 +47,7 @@ import com.scut.gof.coordinator.R;
 
 
 /**
- * RippleView custom layout
- *
- * Custom Layout that allows to use Ripple UI pattern above API 21
- *
- * @author Chutaux Robin
- * @version 2015.0512
+ * 辅助出现点击波纹效果
  */
 public class RippleView extends RelativeLayout {
     /*app:rv_alpha [integer def:90 0-255] --> Alpha of the ripple

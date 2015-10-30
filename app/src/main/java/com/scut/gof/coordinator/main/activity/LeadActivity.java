@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 /**
  * Created by Administrator on 2015/10/29.
+ * 初始启动的activity，不显示界面，预处理简单逻辑
  */
 public class LeadActivity extends BaseActivity {
     @Override
