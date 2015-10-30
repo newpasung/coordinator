@@ -39,4 +39,9 @@
         <item name="android:windowNoTitle">true</item>
     </style>
 
+    <style name="text_subtitle">
+        <item name="android:textSize">@dimen/textsize_l2</item>
+        <item name="android:textColor">@color/black_54</item>
+    </style>
+
 </resources>

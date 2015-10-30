@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.scut.gof.coordinator.R;
+import com.scut.gof.coordinator.main.utils.ApiUtil;
 import com.scut.gof.coordinator.main.utils.DenstityUtil;
 import com.scut.gof.coordinator.main.utils.MathUtil;
 import com.scut.gof.coordinator.main.utils.ViewUtil;
@@ -55,7 +56,7 @@ public class BottomToolBar extends RelativeLayout {
         animView.setVisibility(INVISIBLE);
         shapeDrawable = new ShapeDrawable(new OvalShape());
         shapeDrawable.getPaint().setColor(getResources().getColor(R.color.colorPrimary));
-        ViewUtil.setBackground(animView, shapeDrawable);
+        ApiUtil.setBackground(animView, shapeDrawable);
     }
 
     @Override

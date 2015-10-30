@@ -7,7 +7,7 @@
         android:id="@+id/tv_category"
         tools:text="@string/test_sentence_20"
         android:layout_margin="@dimen/margin_normal"
-        style="@style/text_title"
+        style="@style/text_subtitle"
         android:singleLine="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

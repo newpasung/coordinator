@@ -1,6 +1,7 @@
 package com.scut.gof.coordinator.main.activity;
 
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +12,7 @@ import android.widget.Button;
 
 import com.scut.gof.coordinator.R;
 import com.scut.gof.coordinator.main.adapter.HomeAdapter;
+import com.scut.gof.coordinator.main.utils.ApiUtil;
 import com.scut.gof.coordinator.main.widget.BottomToolBar;
 import com.scut.gof.coordinator.main.widget.dialog.TextDialog;
 
@@ -22,23 +24,20 @@ public class HomeActivity extends BaseActivity {
     BottomToolBar mBar;
     FloatingActionButton mBtnfab;
     Button button;
-    RecyclerView mRec;
-    List<String> proData=new ArrayList<>();
-    List<String> msgData=new ArrayList<>();
-    TextDialog dialog ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        iniData();
         initUI();
     }
 
     protected void initUI() {
-        dialog=new TextDialog(this);
-        dialog.show();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        CollapsingToolbarLayout mCoolBar=(CollapsingToolbarLayout)findViewById(R.id.cooltoolbar);
+        mCoolBar.setTitleEnabled(true);
+        mCoolBar.setTitle(getString(R.string.app_name));
+        mCoolBar.setExpandedTitleColor(ApiUtil.getColor(this,R.color.colorPrimary));
         button = (Button) findViewById(R.id.button1);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,26 +55,10 @@ public class HomeActivity extends BaseActivity {
                 mBar.reveal(HomeActivity.this, mBtnfab);
             }
         });
-        mRec=(RecyclerView)findViewById(R.id.recyclerview);
-        mRec.setLayoutManager(new LinearLayoutManager(this));
-        HomeAdapter adapter=new HomeAdapter(this);
-        adapter.setProData(proData);
-        adapter.setMsgData(msgData);
-        mRec.setAdapter(adapter);
-    }
-
-    protected void iniData(){
-        proData.add("我的项目1");
-        proData.add("我的项目2");
-        proData.add("我的项目3");
-        msgData.add("未处理消息的概括1好长啊好长啊好长啊好长啊好长啊好长啊好长啊好长啊好长啊好长啊");
-        msgData.add("未处理消息的概括2");
-        msgData.add("未处理消息的概括3");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        dialog.dismiss();
     }
 }

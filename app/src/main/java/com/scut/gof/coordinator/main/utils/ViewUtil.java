@@ -10,15 +10,6 @@ import android.view.View;
  */
 public class ViewUtil {
 
-    public static void setBackground(View view ,Drawable drawable){
-        if(Build.VERSION.SDK_INT<Build.VERSION_CODES.JELLY_BEAN){
-            view.setBackgroundDrawable(drawable);
-        }
-        else{
-            view.setBackground(drawable);
-        }
-    }
-
     /*返回左上角全局x坐标*/
     public static int getScreenX(View view){
         Rect rect =new Rect();

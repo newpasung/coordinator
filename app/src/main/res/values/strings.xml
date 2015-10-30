@@ -9,4 +9,5 @@
 
     <string name="action_setting">设置</string>
     <string name="action_feedback">帮助&#38;反馈</string>
+    <string name="action_personalinfo">个人信息</string>
 </resources>
