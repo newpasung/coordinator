@@ -1,9 +1,12 @@
 <resources>
     <string name="app_name">Coordinator</string>
-    <string name="action_settings">Settings</string>
     <string name="test_sentence_20">注意这是一个有二十个中文字用于测试的句子</string>
     <string name="test_sentence_100">注意这是一个有二十个中文字用于测试的句子注意这是一个有二十个中文字用于测试的句子注意这是一个有二十个中文字用于测试的句子注意这是一个有二十个中文字用于测试的句子注意这是一个有二十个中文字用于测试的句子</string>
     <string name="test_type">it\'s a type tip</string>
-    <string name="myproject">我的项目</string>
-    <string name="message">消息</string>
+
+    <string name="text_myproject">我的项目</string>
+    <string name="text_message">消息</string>
+
+    <string name="action_setting">设置</string>
+    <string name="action_feedback">帮助&#38;反馈</string>
 </resources>

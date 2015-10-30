@@ -4,13 +4,6 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
 
-    <dimen name="big_avatarsize">60dp</dimen>
-
-    <dimen name="cardheight_normal">120dp</dimen>
-    <dimen name="cardradius_normal">4dp</dimen>
-
-    <dimen name="paper_projectheight">80dp</dimen>
-
     <dimen name="margin_normal">16dp</dimen>
     <dimen name="margin_small">8dp</dimen>
     <dimen name="margin_medium">24dp</dimen>
@@ -28,4 +21,18 @@
 
     <dimen name="evelation_l1">4dp</dimen>
 
+    <dimen name="dialog_width">260dp</dimen>
+
+
+    <dimen name="avatar_big">60dp</dimen>
+    <dimen name="avatar_normal">40dp</dimen>
+    <dimen name="avatar_large">80dp</dimen>
+
+    <dimen name="cardheight_normal">120dp</dimen>
+    <dimen name="cardradius_normal">4dp</dimen>
+
+    <dimen name="paper_projectheight">80dp</dimen>
+
+    //from official
+    <dimen name="drawer_header_content_height">56dp</dimen>
 </resources>

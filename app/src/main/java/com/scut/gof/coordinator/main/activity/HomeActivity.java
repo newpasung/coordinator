@@ -12,6 +12,7 @@ import android.widget.Button;
 import com.scut.gof.coordinator.R;
 import com.scut.gof.coordinator.main.adapter.HomeAdapter;
 import com.scut.gof.coordinator.main.widget.BottomToolBar;
+import com.scut.gof.coordinator.main.widget.dialog.TextDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ public class HomeActivity extends BaseActivity {
     RecyclerView mRec;
     List<String> proData=new ArrayList<>();
     List<String> msgData=new ArrayList<>();
+    TextDialog dialog ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +35,8 @@ public class HomeActivity extends BaseActivity {
     }
 
     protected void initUI() {
+        dialog=new TextDialog(this);
+        dialog.show();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         button = (Button) findViewById(R.id.button1);
@@ -69,4 +73,9 @@ public class HomeActivity extends BaseActivity {
         msgData.add("未处理消息的概括3");
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        dialog.dismiss();
+    }
 }

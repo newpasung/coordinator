@@ -55,10 +55,9 @@ import com.scut.gof.coordinator.R;
  * @version 2015.0512
  */
 public class RippleView extends RelativeLayout {
-
     /*app:rv_alpha [integer def:90 0-255] --> Alpha of the ripple
     app:rv_framerate [integer def:10] --> Frame rate of the ripple animation
-    app:rv_rippleDuration [integer def:400] --> Duration of the ripple animation
+    app:rv_rippleDuration [integer def:100] --> Duration of the ripple animation
     app:rv_ripplePadding [dimension def:0] --> Add a padding to the ripple
     app:rv_color [color def:@android:color/white] --> Color of the ripple
     app:rv_centered [boolean def:false] --> Center ripple in the child view

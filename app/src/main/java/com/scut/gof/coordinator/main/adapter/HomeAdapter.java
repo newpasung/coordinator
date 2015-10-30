@@ -56,10 +56,10 @@ public class HomeAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         switch(getItemViewType(position)){
             case HEADLINE_PRO:{
-                ((HeadHolder) holder).mTv.setText(mContext.getString(R.string.myproject));
+                ((HeadHolder) holder).mTv.setText(mContext.getString(R.string.text_myproject));
             }break;
             case HEADLINE_MSG:{
-                ((HeadHolder) holder).mTv.setText(mContext.getString(R.string.message));
+                ((HeadHolder) holder).mTv.setText(mContext.getString(R.string.text_message));
             }break;
             case TYPE_PROJECT:{
                 ((ProHolder)holder).mCir.setImageResource(R.drawable.tencent);

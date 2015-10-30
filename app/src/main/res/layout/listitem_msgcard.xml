@@ -22,8 +22,8 @@
             android:id="@+id/cir_msgtype"
             tools:src="@drawable/landscape"
             android:layout_marginRight="@dimen/margin_normal"
-            android:layout_width="@dimen/big_avatarsize"
-            android:layout_height="@dimen/big_avatarsize" />
+            android:layout_width="@dimen/avatar_big"
+            android:layout_height="@dimen/avatar_big" />
 
         <TextView
             android:id="@+id/tv_type"
