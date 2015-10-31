@@ -12,7 +12,7 @@ public class LeadActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //在这里确定跳转方向
-        startActivity(new Intent(this,HomeActivity.class));
+        startActivity(new Intent(this,WelcomeActivity.class));
         finish();
     }
 }

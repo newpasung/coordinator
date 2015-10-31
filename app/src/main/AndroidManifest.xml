@@ -15,13 +15,18 @@
             android:theme="@style/Theme.AppCompat.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".main.activity.HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar"
+        <activity
+            android:name=".main.activity.HomeActivity"
             android:screenOrientation="portrait"
-            ></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".main.activity.WelcomeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>
