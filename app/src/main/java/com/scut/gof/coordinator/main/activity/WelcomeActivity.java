@@ -13,7 +13,7 @@ import android.widget.ViewSwitcher;
 
 import com.scut.gof.coordinator.R;
 
-public class WelcomeActivity extends BaseActivity implements ViewSwitcher.ViewFactory, View.OnTouchListener{
+public class WelcomeActivity extends BaseActivity implements View.OnTouchListener{
     private ImageSwitcher imgSwitcher;
     //欢迎页的图片资源id
     private int[] imgIds;
@@ -43,7 +43,15 @@ public class WelcomeActivity extends BaseActivity implements ViewSwitcher.ViewFa
 
         imgSwitcher.setBackgroundColor(Color.BLACK);
         //设置factory
-        imgSwitcher.setFactory(this);
+        imgSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
+            @Override
+            public View makeView() {
+                ImageView iv = new ImageView(WelcomeActivity.this);
+                iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                iv.setLayoutParams(new ImageSwitcher.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                return iv;
+            }
+        });
 
         //设置OnTouchListener，用于监听滑动，以改变当前图片
         imgSwitcher.setOnTouchListener(this);
@@ -54,16 +62,6 @@ public class WelcomeActivity extends BaseActivity implements ViewSwitcher.ViewFa
 
         //设置第一张图片
         imgSwitcher.setImageResource(imgIds[0]);
-    }
-
-
-    @Override
-    public View makeView() {
-        ImageView iv = new ImageView(this);
-        iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        iv.setLayoutParams(new ImageSwitcher.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-
-        return iv;
     }
 
     @Override

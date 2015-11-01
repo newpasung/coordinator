@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class HomeActivityFragment extends Fragment {
+public class HomeActivityFragment extends BaseFragment {
 
     RecyclerView mRec;
     List<String> proData=new ArrayList<>();

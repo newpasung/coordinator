@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 <group >
-    <item android:icon="@drawable/account" android:title="@string/action_personalinfo"/>
-    <item android:icon="@drawable/home" android:title="@string/app_name"/>
-    <item android:icon="@drawable/home" android:title="@string/app_name"/>
-    <item android:icon="@drawable/setting" android:title="@string/action_setting"/>
-    <item android:icon="@drawable/feedback" android:title="@string/action_feedback"/>
+    <item
+        android:id="@+id/btn_userdata"
+        android:icon="@drawable/account"
+        android:title="@string/action_personaldata"/>
+    <item android:icon="@drawable/home"
+        android:title="@string/app_name"/>
+    <item  android:icon="@drawable/home"
+        android:title="@string/app_name"/>
+    <item android:id="@+id/btn_setting"
+        android:icon="@drawable/setting"
+        android:title="@string/action_setting"/>
+    <item android:id="@+id/btn_feedback"
+        android:icon="@drawable/feedback"
+        android:title="@string/action_feedback"/>
 </group>
 </menu>

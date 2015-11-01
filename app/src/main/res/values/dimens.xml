@@ -35,4 +35,6 @@
 
     //from official
     <dimen name="drawer_header_content_height">56dp</dimen>
+
+    <dimen name="header_height">192dp</dimen>
 </resources>
