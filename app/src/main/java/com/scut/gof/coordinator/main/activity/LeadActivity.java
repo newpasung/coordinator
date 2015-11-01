@@ -2,7 +2,6 @@ package com.scut.gof.coordinator.main.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-
 import com.scut.gof.coordinator.main.storage.XManager;
 
 /**
@@ -17,7 +16,7 @@ public class LeadActivity extends BaseActivity {
         if(XManager.isLogined(LeadActivity.this)){
             startActivity(new Intent(this,HomeActivity.class));
         }else{
-            startActivity(new Intent(this,WelcomeActivity.class));
+            startActivity(new Intent(this,HomeActivity.class));
         }
         finish();
     }

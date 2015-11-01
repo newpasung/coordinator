@@ -17,12 +17,12 @@ import java.util.List;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class HomeActivityFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment {
 
     RecyclerView mRec;
     List<String> proData=new ArrayList<>();
     List<String> msgData=new ArrayList<>();
-    public HomeActivityFragment() {
+    public HomeFragment() {
     }
 
     @Override

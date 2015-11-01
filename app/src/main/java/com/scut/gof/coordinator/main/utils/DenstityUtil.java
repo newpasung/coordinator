@@ -2,8 +2,10 @@ package com.scut.gof.coordinator.main.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Rect;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.Display;
 import android.view.View;
 import android.view.Window;
@@ -45,6 +47,12 @@ public class DenstityUtil {
         Rect rect=new Rect();
         view.getGlobalVisibleRect(rect);
         return rect.top;
+    }
+
+    //单位转换
+    public static int dp2px(float dp,Resources resources){
+            float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, resources.getDisplayMetrics());
+            return (int) px;
     }
 
 }

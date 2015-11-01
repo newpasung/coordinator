@@ -2,13 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 <group >
     <item
+        android:id="@+id/btn_home"
+        android:icon="@drawable/home"
+        android:title="@string/action_home"/>
+    <item
         android:id="@+id/btn_userdata"
         android:icon="@drawable/account"
         android:title="@string/action_personaldata"/>
-    <item android:icon="@drawable/home"
-        android:title="@string/app_name"/>
-    <item  android:icon="@drawable/home"
-        android:title="@string/app_name"/>
+
     <item android:id="@+id/btn_setting"
         android:icon="@drawable/setting"
         android:title="@string/action_setting"/>

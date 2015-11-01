@@ -10,6 +10,7 @@ import com.scut.gof.coordinator.R;
 
 /**
  * Created by Administrator on 2015/10/31.
+ * 用户数据--一些更细节操作的入口
  */
 public class UserDataFragment extends BaseFragment {
 
