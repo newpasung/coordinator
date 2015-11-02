@@ -94,7 +94,6 @@ public class HomeActivity extends BaseActivity {
     //用来切换fragment//TODO 加上缓存
     protected void replaceFragment(Fragment fragment){
         getFragmentManager().beginTransaction()
-                .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
                 .replace(R.id.fragment,fragment)
                 .commit();
         mDrwer.closeDrawer(Gravity.LEFT);
