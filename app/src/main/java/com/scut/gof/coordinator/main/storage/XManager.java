@@ -42,7 +42,7 @@ public class XManager {
     *设置是否已登录
     *@param status  登录状态是或否
     */
-    public static void setLoginStatus(Context context,boolean status){
+    public static void setLoginStatus(Context context, boolean status){
         SharedPreferences.Editor editor =getSystemManager(context).edit();
         editor.putBoolean(PARAM_LOGINED,status);
         editor.apply();
@@ -51,6 +51,12 @@ public class XManager {
     //获取是否已打开过app
     public static boolean hasOpened(Context context){
         return getSystemManager(context).getBoolean(PARAM_OPENED,false);
+    }
+
+    public static void setOpenedStatus(Context context, boolean status){
+        SharedPreferences.Editor editor =getSystemManager(context).edit();
+        editor.putBoolean(PARAM_OPENED,status);
+        editor.apply();
     }
 
 }

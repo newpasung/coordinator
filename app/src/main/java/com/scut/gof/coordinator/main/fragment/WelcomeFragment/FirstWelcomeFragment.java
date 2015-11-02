@@ -1,4 +1,4 @@
-package com.scut.gof.coordinator.main.fragment;
+package com.scut.gof.coordinator.main.fragment.WelcomeFragment;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -14,6 +14,8 @@ import android.widget.ViewSwitcher;
 
 import com.scut.gof.coordinator.R;
 import com.scut.gof.coordinator.main.activity.HomeActivity;
+import com.scut.gof.coordinator.main.fragment.BaseFragment;
+import com.scut.gof.coordinator.main.storage.XManager;
 
 public class FirstWelcomeFragment extends BaseFragment implements View.OnTouchListener{
 
@@ -86,8 +88,10 @@ public class FirstWelcomeFragment extends BaseFragment implements View.OnTouchLi
                     }
                     //已经是最后一张，进入下一个activity
                     else {
+                        XManager.setOpenedStatus(getActivity(), true);//设置已经打开过app
                         Intent intent = new Intent(getActivity(), HomeActivity.class);
                         startActivity(intent);
+                        getActivity().finish();
                     }
                 }
 
