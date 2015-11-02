@@ -5,10 +5,10 @@
     android:layout_height="match_parent"
     tools:context="com.scut.gof.coordinator.main.activity.WelcomeActivity">
 
-    <ImageSwitcher
-        android:id="@+id/imgswitcher_welcome"
+    <FrameLayout
+        android:id="@+id/welcome_content"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
-    </ImageSwitcher>
+    </FrameLayout>
 
 </LinearLayout>
