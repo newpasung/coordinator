@@ -16,9 +16,14 @@ public class XManager {
     public static final String FILENAME_USER = "userconfig";
     public static SharedPreferences userPref;
 
-    //下面是一些参数
+    //一些用户无关的参数
     public static String PARAM_OPENED = "hasopened";//是否已经打开过app，用于判断是否显示引导页
     public static String PARAM_LOGINED = "haslogined";//是否已经登录
+    //一些用户相关的参数
+    public static String PARAM_TOKEN = "token";//用户token
+    public static String PARAM_UID = "uid";//用户uid
+
+
     public static synchronized SharedPreferences getSystemManager(Context context){
         if(sysPref==null){
             sysPref=context.getSharedPreferences(FILENAME_SYSTEM, Context.MODE_PRIVATE);
@@ -42,7 +47,7 @@ public class XManager {
     *设置是否已登录
     *@param status  登录状态是或否
     */
-    public static void setLoginStatus(Context context,boolean status){
+    public static void setLoginStatus(Context context, boolean status){
         SharedPreferences.Editor editor =getSystemManager(context).edit();
         editor.putBoolean(PARAM_LOGINED,status);
         editor.apply();
@@ -51,6 +56,21 @@ public class XManager {
     //获取是否已打开过app
     public static boolean hasOpened(Context context){
         return getSystemManager(context).getBoolean(PARAM_OPENED,false);
+    }
+
+    /**
+     * 设置是否已经打开过app
+     * @param status  是否打开
+     */
+    public static void setOpenedStatus(Context context, boolean status){
+        SharedPreferences.Editor editor =getSystemManager(context).edit();
+        editor.putBoolean(PARAM_OPENED,status);
+        editor.apply();
+    }
+
+    //获取用户token，如果没有则返回空字符串
+    public static String getToken(Context context){
+        return getUserManager(context).getString(PARAM_TOKEN, "");
     }
 
 }
