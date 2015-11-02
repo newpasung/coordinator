@@ -31,7 +31,10 @@ public class BottomToolBar extends RelativeLayout {
     ShapeDrawable shapeDrawable;
     final int INIWIDTH=10;
     final int INIHEIGHT=10;
+    //是否需要初始化
     boolean needIni=true;
+    //是否进行动画中
+    boolean isAnimating=false;
     public BottomToolBar(Context context) {
         super(context);
         init(context);
@@ -57,6 +60,7 @@ public class BottomToolBar extends RelativeLayout {
         shapeDrawable = new ShapeDrawable(new OvalShape());
         shapeDrawable.getPaint().setColor(getResources().getColor(R.color.colorPrimary));
         ApiUtil.setBackground(animView, shapeDrawable);
+        setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -77,7 +81,9 @@ public class BottomToolBar extends RelativeLayout {
         }
     }
 
+    //显示bottombar
     public void reveal() {
+        setVisibility(VISIBLE);
         animView.setScaleX(1f);
         animView.setScaleY(1f);
         //先移到中点后缩放
@@ -91,10 +97,12 @@ public class BottomToolBar extends RelativeLayout {
                 .setListener(new Animator.AnimatorListener() {
                     @Override
                     public void onAnimationStart(Animator animation) {
+                        isAnimating=true;
                     }
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         showMainBuz();
+                        isAnimating=false;
                     }
 
                     @Override
@@ -110,6 +118,7 @@ public class BottomToolBar extends RelativeLayout {
                 .start();
     }
 
+    //协同显示bottombar和隐藏fab
     public void reveal(Context context, final FloatingActionButton button) {
         int transX=ViewUtil.getScreenX(button) - DenstityUtil.getScreenWidth(context) /2+ button.getWidth() / 2;;
         int transY=DenstityUtil.getScreenHeight(context)-
@@ -148,7 +157,7 @@ public class BottomToolBar extends RelativeLayout {
                 setListener(new Animator.AnimatorListener() {
                     @Override
                     public void onAnimationStart(Animator animation) {
-
+                        isAnimating=true;
                     }
 
                     @Override
@@ -156,6 +165,8 @@ public class BottomToolBar extends RelativeLayout {
                         animView.setScaleY(1f);
                         animView.setScaleX(1f);
                         animView.setVisibility(INVISIBLE);
+                        setVisibility(INVISIBLE);
+                        isAnimating=false;
                         if (listener != null) {
                             listener.onAnimationEnd(animation);
                         }
@@ -181,7 +192,7 @@ public class BottomToolBar extends RelativeLayout {
                 setListener(new Animator.AnimatorListener() {
                     @Override
                     public void onAnimationStart(Animator animation) {
-
+                        isAnimating=true;
                     }
 
                     @Override
@@ -190,13 +201,15 @@ public class BottomToolBar extends RelativeLayout {
                         animView.setScaleX(1f);
                         animView.setVisibility(INVISIBLE);
                         button.show();
-                        button.animate().translationX(0)
+                        isAnimating=false;
+                        setVisibility(INVISIBLE);
+                        button.animate()
+                                .translationX(0)
                                 .translationY(0)
                                 .setDuration(250)
                                 .setInterpolator(new AccelerateDecelerateInterpolator())
                                 .start();
                     }
-
                     @Override
                     public void onAnimationCancel(Animator animation) {
 
@@ -239,6 +252,10 @@ public class BottomToolBar extends RelativeLayout {
         for (int i=1;i<getChildCount();i++){
             getChildAt(i).setVisibility(VISIBLE);
         }
+    }
+
+    public boolean isAnimating(){
+        return isAnimating;
     }
 
 }

@@ -1,12 +1,12 @@
 package com.scut.gof.coordinator.main.fragment;
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.scut.gof.coordinator.R;
 import com.scut.gof.coordinator.main.adapter.HomeAdapter;

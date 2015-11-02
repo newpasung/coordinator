@@ -5,8 +5,9 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
+import com.scut.gof.coordinator.R;
+import com.scut.gof.coordinator.main.widget.BottomToolBar;
 
 /**
  * Created by Administrator on 2015/11/2.
@@ -28,10 +29,28 @@ public class FabBehavior extends FloatingActionButton.Behavior {
     public void onNestedScroll(CoordinatorLayout coordinatorLayout, FloatingActionButton child,
     View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
         //正负可以判断滑动方向
-        if(dyConsumed>0&&child.getVisibility()==View.VISIBLE){
-            child.hide();
-        }else if(dyConsumed<=0&&child.getVisibility()!=View.VISIBLE){
-            child.show();
+        View view =(View)coordinatorLayout.getParent();
+        if(view.findViewById(R.id.bottombar)!=null
+                &&view.findViewById(R.id.bottombar) instanceof BottomToolBar){
+            //存在bottombar
+            BottomToolBar bar =(BottomToolBar)view.findViewById(R.id.bottombar);
+            if(bar.getVisibility()==View.VISIBLE&&!bar.isAnimating()){
+                bar.reset(child);
+            }
+            else{
+                if(dyConsumed>0&&child.getVisibility()==View.VISIBLE){
+                    child.hide();
+                }else if(dyConsumed<=0&&child.getVisibility()!=View.VISIBLE){
+                    child.show();
+                }
+            }
+        } else{
+            //这里是没有bottombar的
+            if(dyConsumed>0&&child.getVisibility()==View.VISIBLE){
+                child.hide();
+            }else if(dyConsumed<=0&&child.getVisibility()!=View.VISIBLE){
+                child.show();
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.scut.gof.coordinator.main.activity;
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -15,6 +16,7 @@ import android.widget.Button;
 
 import com.scut.gof.coordinator.R;
 import com.scut.gof.coordinator.main.fragment.FeedBackFragment;
+import com.scut.gof.coordinator.main.fragment.FragmentTransactionExtended;
 import com.scut.gof.coordinator.main.fragment.HomeFragment;
 import com.scut.gof.coordinator.main.fragment.SettingFragment;
 import com.scut.gof.coordinator.main.fragment.UserDataFragment;
@@ -25,6 +27,12 @@ public class HomeActivity extends BaseActivity {
     BottomToolBar mBar;
     FloatingActionButton mBtnfab;
     Button button;
+    UserDataFragment userDataFragment;
+    HomeFragment homeFragment;
+    FeedBackFragment feedBackFragment;
+    SettingFragment settingFragment;
+    Fragment curFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +45,7 @@ public class HomeActivity extends BaseActivity {
     protected void initUI() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        CollapsingToolbarLayout mCoolBar=(CollapsingToolbarLayout)findViewById(R.id.cooltoolbar);
+        CollapsingToolbarLayout mCoolBar = (CollapsingToolbarLayout) findViewById(R.id.cooltoolbar);
         mCoolBar.setTitleEnabled(true);
         mCoolBar.setTitle(getString(R.string.app_name));
         mCoolBar.setCollapsedTitleTextColor(Color.WHITE);
@@ -47,10 +55,11 @@ public class HomeActivity extends BaseActivity {
         mDrwer.setScrimColor(getResources().getColor(R.color.black_54));
         mBar = (BottomToolBar) findViewById(R.id.bottombar);
         mBtnfab = (FloatingActionButton) findViewById(R.id.btn_fab);
-
+        homeFragment = (HomeFragment) getFragmentManager().findFragmentById(R.id.fragment);
+        curFragment = homeFragment;
     }
 
-    protected void iniListener(){
+    protected void iniListener() {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,25 +73,32 @@ public class HomeActivity extends BaseActivity {
             }
         });
         //设置fragment切换
-        final NavigationView naviView=(NavigationView)findViewById(R.id.navigationview);
+        final NavigationView naviView = (NavigationView) findViewById(R.id.navigationview);
         naviView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.btn_userdata: {
-                        replaceFragment(new UserDataFragment());
+                        if (userDataFragment == null) {
+                            userDataFragment = new UserDataFragment();
+                        }
+                        replaceFragment(userDataFragment);
                     }
                     break;
                     case R.id.btn_home: {
-                        replaceFragment(new HomeFragment());
+                        if (homeFragment == null) homeFragment = new HomeFragment();
+                        replaceFragment(homeFragment);
                     }
                     break;
                     case R.id.btn_feedback: {
-                        replaceFragment(new FeedBackFragment());
+                        if (feedBackFragment == null) feedBackFragment = new FeedBackFragment();
+                        replaceFragment(feedBackFragment);
                     }
                     break;
                     case R.id.btn_setting: {
-                        replaceFragment(new SettingFragment());
+                        if (settingFragment == null)
+                            settingFragment = new SettingFragment();
+                        replaceFragment(settingFragment);
                     }
                     break;
                 }
@@ -92,10 +108,13 @@ public class HomeActivity extends BaseActivity {
     }
 
     //用来切换fragment//TODO 加上缓存
-    protected void replaceFragment(Fragment fragment){
-        getFragmentManager().beginTransaction()
-                .replace(R.id.fragment,fragment)
-                .commit();
+    protected void replaceFragment(Fragment fragment) {
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        FragmentTransactionExtended fragmentTransactionExtended
+                = new FragmentTransactionExtended(this, fragmentTransaction, curFragment, fragment, R.id.fragment);
+        fragmentTransactionExtended.addTransition(FragmentTransactionExtended.ROTATE_DOWN);
+        fragmentTransactionExtended.commit();
         mDrwer.closeDrawer(Gravity.LEFT);
     }
+
 }

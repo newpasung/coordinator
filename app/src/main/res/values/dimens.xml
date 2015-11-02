@@ -43,4 +43,5 @@
     <dimen name="header_height">192dp</dimen>
     <dimen name="header_height_small">150dp</dimen>
     <dimen name="action_entry_height">48dp</dimen>
+
 </resources>

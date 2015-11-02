@@ -1,65 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.scut.gof.coordinator.main.widget.FragContainer
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:stretchColumns="0"
-    android:paddingRight="@dimen/padding_small"
-    android:paddingLeft="@dimen/padding_small"
-    android:background="@drawable/background"
-    >
-    <TableRow
-        android:background="@drawable/frame4_black24_whiteground"
-        android:layout_marginTop="@dimen/margin_medium"
-        android:gravity="center_vertical">
-        <TextView
-            android:layout_marginLeft="@dimen/margin_small"
-            style="@style/text_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/text_baseinfo" />
+    android:layout_height="match_parent">
 
-        <ImageView
-            android:layout_height="@dimen/action_entry_height"
-            android:layout_width="@dimen/action_entry_height"
-            android:layout_margin="@dimen/margin_tiny"
-            android:src="@drawable/userinfo"
-            />
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background"
+        android:paddingLeft="@dimen/padding_small"
+        android:paddingRight="@dimen/padding_small"
+        android:stretchColumns="0">
 
-    </TableRow>
+        <TableRow
+            android:layout_marginTop="@dimen/margin_medium"
+            android:background="@drawable/frame4_black24_whiteground"
+            android:gravity="center_vertical">
 
-    <TableRow
-        android:background="@drawable/frame4_black24_whiteground"
-        android:gravity="center_vertical"
-        android:layout_marginTop="@dimen/margin_normal">
-        <TextView
-            android:layout_marginLeft="@dimen/margin_small"
-            style="@style/text_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/text_baseinfo" />
-        <ImageView
-            android:layout_height="@dimen/action_entry_height"
-            android:layout_width="@dimen/action_entry_height"
-            android:layout_margin="@dimen/margin_tiny"
-            android:src="@drawable/userinfo"
-            />
-    </TableRow>
+            <TextView
+                style="@style/text_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_small"
+                android:text="@string/text_baseinfo" />
 
-    <TableRow
-        android:background="@drawable/frame4_black24_whiteground"
-        android:gravity="center_vertical"
-        android:layout_marginTop="@dimen/margin_normal">
-        <TextView
-            android:layout_marginLeft="@dimen/margin_small"
-            style="@style/text_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/text_baseinfo" />
-        <com.scut.gof.coordinator.main.widget.Switcher
-            android:id="@+id/switcher"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
-    </TableRow>
+            <ImageView
+                android:layout_width="@dimen/action_entry_height"
+                android:layout_height="@dimen/action_entry_height"
+                android:layout_margin="@dimen/margin_tiny"
+                android:src="@drawable/userinfo" />
 
-</TableLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_marginTop="@dimen/margin_normal"
+            android:background="@drawable/frame4_black24_whiteground"
+            android:gravity="center_vertical">
+
+            <TextView
+                style="@style/text_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_small"
+                android:text="@string/text_baseinfo" />
+
+            <ImageView
+                android:layout_width="@dimen/action_entry_height"
+                android:layout_height="@dimen/action_entry_height"
+                android:layout_margin="@dimen/margin_tiny"
+                android:src="@drawable/userinfo" />
+        </TableRow>
+
+        <TableRow
+            android:layout_marginTop="@dimen/margin_normal"
+            android:background="@drawable/frame4_black24_whiteground"
+            android:gravity="center_vertical">
+
+            <TextView
+                style="@style/text_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_small"
+                android:text="@string/text_baseinfo" />
+
+            <com.scut.gof.coordinator.main.widget.Switcher
+                android:id="@+id/switcher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </TableRow>
+
+    </TableLayout>
+</com.scut.gof.coordinator.main.widget.FragContainer>
