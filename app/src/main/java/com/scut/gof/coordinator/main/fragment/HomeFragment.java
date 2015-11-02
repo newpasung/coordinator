@@ -36,8 +36,8 @@ public class HomeFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mRec=(RecyclerView)view.findViewById(R.id.recyclerview);
-        mRec.setLayoutManager(new LinearLayoutManager(getContext()));
-        HomeAdapter adapter=new HomeAdapter(getContext());
+        mRec.setLayoutManager(new LinearLayoutManager(getActivity()));
+        HomeAdapter adapter=new HomeAdapter(getActivity());
         adapter.setProData(proData);
         adapter.setMsgData(msgData);
         mRec.setAdapter(adapter);

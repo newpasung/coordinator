@@ -1,11 +1,11 @@
 package com.scut.gof.coordinator.main.activity;
 
+import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -68,19 +68,23 @@ public class HomeActivity extends BaseActivity {
         naviView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.btn_userdata:{
+                switch (item.getItemId()) {
+                    case R.id.btn_userdata: {
                         replaceFragment(new UserDataFragment());
-                    }break;
-                    case R.id.btn_home :{
+                    }
+                    break;
+                    case R.id.btn_home: {
                         replaceFragment(new HomeFragment());
-                    }break;
-                    case R.id.btn_feedback:{
+                    }
+                    break;
+                    case R.id.btn_feedback: {
                         replaceFragment(new FeedBackFragment());
-                    }break;
-                    case R.id.btn_setting:{
+                    }
+                    break;
+                    case R.id.btn_setting: {
                         replaceFragment(new SettingFragment());
-                    }break;
+                    }
+                    break;
                 }
                 return true;
             }
@@ -89,9 +93,10 @@ public class HomeActivity extends BaseActivity {
 
     //用来切换fragment//TODO 加上缓存
     protected void replaceFragment(Fragment fragment){
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment,
-                fragment).commit();
+        getFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
+                .replace(R.id.fragment,fragment)
+                .commit();
         mDrwer.closeDrawer(Gravity.LEFT);
     }
-
 }

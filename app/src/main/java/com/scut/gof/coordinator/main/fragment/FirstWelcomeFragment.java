@@ -52,7 +52,7 @@ public class FirstWelcomeFragment extends BaseFragment implements View.OnTouchLi
         imgSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
             @Override
             public View makeView() {
-                ImageView iv = new ImageView(getContext());
+                ImageView iv = new ImageView(getActivity());
                 iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 iv.setLayoutParams(new ImageSwitcher.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
                 return iv;
@@ -63,8 +63,8 @@ public class FirstWelcomeFragment extends BaseFragment implements View.OnTouchLi
         imgSwitcher.setOnTouchListener(this);
 
         //设置改变图片时的效果
-        imgSwitcher.setInAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.slow_fade_in));
-        imgSwitcher.setOutAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.fast_fade_out));
+        imgSwitcher.setInAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.slow_fade_in));
+        imgSwitcher.setOutAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.fast_fade_out));
 
         //设置第一张图片
         imgSwitcher.setImageResource(imgIds[0]);
@@ -86,7 +86,7 @@ public class FirstWelcomeFragment extends BaseFragment implements View.OnTouchLi
                     }
                     //已经是最后一张，进入下一个activity
                     else {
-                        Intent intent = new Intent(getContext(), HomeActivity.class);
+                        Intent intent = new Intent(getActivity(), HomeActivity.class);
                         startActivity(intent);
                     }
                 }

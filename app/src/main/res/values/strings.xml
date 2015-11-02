@@ -8,7 +8,7 @@
     <string name="text_message">消息</string>
     <string name="text_baseinfo">基本信息</string>
     <string name="text_feedback_tips">你可以写下建议或意见，并留下联系方式，我们会做出及时的回复。</string>
-    <string name="text_copyright">&#169;Copyright 2015 SCUT-GOF\n本应用由独立小组开发未经允许不能用于商业用途</string>
+    <string name="text_copyright">Copyright&#169; 2015 SCUT-GOF\n本应用由独立小组开发未经允许不能用于商业用途</string>
     <string name="hint_leaveusinfo">留下任何的联系方式</string>
 
     <string name="action_setting">设置</string>
