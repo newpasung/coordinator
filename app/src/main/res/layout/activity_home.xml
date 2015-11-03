@@ -17,16 +17,8 @@
             <android.support.design.widget.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fitsSystemWindows="true"
                 >
-
-                <android.support.design.widget.CollapsingToolbarLayout
-                    android:id="@+id/cooltoolbar"
-                    app:contentScrim="@color/colorPrimary"
-                    android:minHeight="?attr/actionBarSize"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/header_height_small"
-                    app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
-
                     <!--<ImageView
                         android:id="@+id/iv_toolbar"
                         android:layout_width="match_parent"
@@ -40,21 +32,22 @@
                         android:id="@+id/toolbar"
                         android:layout_width="match_parent"
                         android:layout_height="?attr/actionBarSize"
+                        android:elevation="@dimen/evelation_l1"
+                        app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
                         />
 
-                </android.support.design.widget.CollapsingToolbarLayout>
             </android.support.design.widget.AppBarLayout>
 
             <include layout="@layout/content_home" />
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/btn_fab"
-                app:layout_behavior="com.scut.gof.coordinator.main.widget.behavior.FabBehavior"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
                 android:layout_margin="@dimen/fab_margin"
-                android:src="@android:drawable/ic_dialog_email" />
+                android:src="@android:drawable/ic_dialog_email"
+                app:layout_behavior="com.scut.gof.coordinator.main.widget.behavior.FabBehavior" />
         </android.support.design.widget.CoordinatorLayout>
 
         <com.scut.gof.coordinator.main.widget.BottomToolBar
@@ -63,25 +56,37 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true">
 
-            <Button
-                android:id="@+id/button1"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/app_name" />
+                android:orientation="horizontal"
+                android:weightSum="3">
 
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="@string/app_name" />
+                <Button
+                    android:id="@+id/button1"
+                    style="@style/bottom_toolbar_flatbtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/action_newpro" />
 
-            <Button
-                android:id="@+id/button3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:text="@string/app_name" />
+                <Button
+                    android:id="@+id/button2"
+                    style="@style/bottom_toolbar_flatbtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/app_name" />
+
+                <Button
+                    android:id="@+id/button3"
+                    style="@style/bottom_toolbar_flatbtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/app_name" />
+            </LinearLayout>
+
         </com.scut.gof.coordinator.main.widget.BottomToolBar>
     </RelativeLayout>
 
