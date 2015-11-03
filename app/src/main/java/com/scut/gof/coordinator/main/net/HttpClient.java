@@ -13,8 +13,15 @@ public class HttpClient {
     private static final String BASE_URL = "http://121.42.160.104/coordinator/backend/web/";
     private static AsyncHttpClient client = new AsyncHttpClient();
 
-    private void get(Context context, String url, RequestParams params, JsonResponseHandler handler){
+    public static void get(Context context, String url, RequestParams params, JsonResponseHandler handler){
         params.put(RequestParamName.TOKEN, XManager.getToken(context));
         client.get(context, BASE_URL + url, params, handler);
     }
+
+    public static void post(Context context, String url, RequestParams params, JsonResponseHandler handler){
+        params.put(RequestParamName.TOKEN, XManager.getToken(context));
+        client.post(context, BASE_URL + url, params, handler);
+    }
+
+
 }

@@ -64,13 +64,38 @@ public class XManager {
      */
     public static void setOpenedStatus(Context context, boolean status){
         SharedPreferences.Editor editor =getSystemManager(context).edit();
-        editor.putBoolean(PARAM_OPENED,status);
+        editor.putBoolean(PARAM_OPENED, status);
         editor.apply();
     }
 
     //获取用户token，如果没有则返回空字符串
     public static String getToken(Context context){
-        return getUserManager(context).getString(PARAM_TOKEN, "");
+        return getUserManager(context).getString(PARAM_TOKEN, null);
+    }
+
+    /**
+     * 设置用户token
+     * @param token 要设置成的token
+     */
+    public static void setToken(Context context, String token) {
+        SharedPreferences.Editor editor =getUserManager(context).edit();
+        editor.putString(PARAM_TOKEN, token);
+        editor.apply();
+    }
+
+    //获取用户uid，如果没有则返回0
+    public static int getUid(Context context) {
+        return getUserManager(context).getInt(PARAM_UID, 0);
+    }
+
+    /**
+     * 设置用户token
+     * @param uid 要设置成的uid
+     */
+    public static void setUid(Context context, int uid) {
+        SharedPreferences.Editor editor =getUserManager(context).edit();
+        editor.putInt(PARAM_UID, uid);
+        editor.apply();
     }
 
 }

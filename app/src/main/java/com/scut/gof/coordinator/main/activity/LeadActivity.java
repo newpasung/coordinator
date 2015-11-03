@@ -13,12 +13,7 @@ public class LeadActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //跳转逻辑
-        if(XManager.isLogined(LeadActivity.this)){
-            startActivity(new Intent(this,HomeActivity.class));
-        }else{
-            startActivity(new Intent(this,HomeActivity.class));
-        }
+        startActivity(new Intent(this,WelcomeActivity.class));
         finish();
     }
 }

@@ -14,6 +14,7 @@ import android.widget.ViewSwitcher;
 
 import com.scut.gof.coordinator.R;
 import com.scut.gof.coordinator.main.activity.HomeActivity;
+import com.scut.gof.coordinator.main.activity.LoginActivity;
 import com.scut.gof.coordinator.main.fragment.BaseFragment;
 import com.scut.gof.coordinator.main.storage.XManager;
 
@@ -89,7 +90,8 @@ public class FirstWelcomeFragment extends BaseFragment implements View.OnTouchLi
                     //已经是最后一张，进入下一个activity
                     else {
                         XManager.setOpenedStatus(getActivity(), true);//设置已经打开过app
-                        Intent intent = new Intent(getActivity(), HomeActivity.class);
+                        boolean isLogined = XManager.isLogined(getActivity());//通过是否已登录决定进入的下一个activity
+                        Intent intent = new Intent(getActivity(), isLogined ? HomeActivity.class : LoginActivity.class);
                         startActivity(intent);
                         getActivity().finish();
                     }
