@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -20,7 +21,6 @@ import com.scut.gof.coordinator.main.net.HttpClient;
 import com.scut.gof.coordinator.main.net.JsonResponseHandler;
 import com.scut.gof.coordinator.main.net.RequestParamName;
 import com.scut.gof.coordinator.main.storage.XManager;
-import com.scut.gof.coordinator.main.widget.dialog.WaitingDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -59,16 +59,15 @@ public class LoginFragment extends BaseFragment {
                     passwordInputLayout.setErrorEnabled(true);
                     passwordInputLayout.setError("请输入密码");
                 } else {
-                    final WaitingDialog waitingDialog = new WaitingDialog(getActivity());
-                    waitingDialog.show();
                     RequestParams params = new RequestParams();
                     params.put(RequestParamName.PHONE, phone);
                     params.put(RequestParamName.PASSWORD, password);
+                    XRotationAnimation animation = new XRotationAnimation();
+                    animation.setRepeatMode(Animation.INFINITE);
+                    loginBtn.startAnimation(animation);
                     HttpClient.post(getActivity(), "user/login", params, new JsonResponseHandler() {
                         @Override
                         public void onSuccess(JSONObject response) {
-                            waitingDialog.dismiss();
-                            loginBtn.startAnimation(new XRotationAnimation());
                             try {
                                 XManager.setLoginStatus(getActivity(), true);
                                 XManager.setToken(getActivity(), response.getJSONObject("data").getJSONObject("user").getString("token"));
@@ -82,7 +81,6 @@ public class LoginFragment extends BaseFragment {
 
                         @Override
                         public void onFailure(String message, String for_param) {
-                            waitingDialog.dismiss();
                             if (for_param.equals(RequestParamName.PHONE)) {
                                 phoneInputLayout.setErrorEnabled(true);
                                 phoneInputLayout.setError(message);

@@ -72,8 +72,8 @@ public class HomeActivity extends BaseActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                mBar.reset(mBtnfab);
                 startActivity(new Intent(HomeActivity.this, ProinfoActivty.class));
+                mBar.reset(mBtnfab);
             }
         });
         mBtnfab.setOnClickListener(new View.OnClickListener() {
