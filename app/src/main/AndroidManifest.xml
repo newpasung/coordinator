@@ -21,13 +21,18 @@
         </activity>
         <activity
             android:name=".main.activity.HomeActivity"
-            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".main.activity.WelcomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+
+        <activity
+            android:name=".main.activity.ProinfoActivty"
+            android:screenOrientation="portrait"></activity>
+
     </application>
 
 </manifest>

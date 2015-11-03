@@ -2,9 +2,9 @@ package com.scut.gof.coordinator.main.activity;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -21,10 +21,7 @@ import com.scut.gof.coordinator.main.fragment.HomeFragment;
 import com.scut.gof.coordinator.main.fragment.SettingFragment;
 import com.scut.gof.coordinator.main.fragment.UserDataFragment;
 import com.scut.gof.coordinator.main.widget.BottomToolBar;
-import com.scut.gof.coordinator.main.widget.dialog.AlarmDialog;
-import com.scut.gof.coordinator.main.widget.dialog.ChoiceDialog;
 import com.scut.gof.coordinator.main.widget.dialog.InputDialog;
-import com.scut.gof.coordinator.main.widget.dialog.WaitingDialog;
 
 public class HomeActivity extends BaseActivity {
     DrawerLayout mDrwer;
@@ -56,11 +53,12 @@ public class HomeActivity extends BaseActivity {
             }
         });
         toolbar.setNavigationIcon(R.drawable.bar_drawer);
-        CollapsingToolbarLayout mCoolBar = (CollapsingToolbarLayout) findViewById(R.id.cooltoolbar);
+        toolbar.setTitleTextColor(Color.WHITE);
+        /*CollapsingToolbarLayout mCoolBar = (CollapsingToolbarLayout) findViewById(R.id.cooltoolbar);
         mCoolBar.setTitleEnabled(true);
         mCoolBar.setTitle(getString(R.string.app_name));
         mCoolBar.setCollapsedTitleTextColor(Color.WHITE);
-        mCoolBar.setExpandedTitleColor(Color.WHITE);
+        mCoolBar.setExpandedTitleColor(Color.WHITE);*/
         button = (Button) findViewById(R.id.button1);
         mDrwer = (DrawerLayout) findViewById(R.id.drawerlayout);
         mDrwer.setScrimColor(getResources().getColor(R.color.black_54));
@@ -74,7 +72,8 @@ public class HomeActivity extends BaseActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mBar.reset(mBtnfab);
+//                mBar.reset(mBtnfab);
+                startActivity(new Intent(HomeActivity.this, ProinfoActivty.class));
             }
         });
         mBtnfab.setOnClickListener(new View.OnClickListener() {

@@ -2,19 +2,15 @@ package com.scut.gof.coordinator.main.widget;
 
 import android.animation.Animator;
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.support.design.widget.FloatingActionButton;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.scut.gof.coordinator.R;
@@ -29,10 +25,10 @@ import com.scut.gof.coordinator.main.utils.ViewUtil;
  */
 public class BottomToolBar extends RelativeLayout {
 
-    View animView;
-    ShapeDrawable shapeDrawable;
     final int INIWIDTH=20;
     final int INIHEIGHT=20;
+    View animView;
+    ShapeDrawable shapeDrawable;
     //是否需要初始化
     boolean needIni=true;
     //是否进行动画中
@@ -93,7 +89,7 @@ public class BottomToolBar extends RelativeLayout {
         animView.animate()
                 .scaleX(radius)
                 .scaleY(radius)
-                .setDuration(180)
+                .setDuration(120)
                 .setInterpolator(new LinearInterpolator())
                 .setListener(new Animator.AnimatorListener() {
                     @Override
@@ -162,7 +158,7 @@ public class BottomToolBar extends RelativeLayout {
     public void reset(final Animator.AnimatorListener listener) {
         hideMainBuz();
         animView.animate().scaleY(1f).scaleX(1f).
-                setInterpolator(new DecelerateInterpolator()).setDuration(150).
+                setInterpolator(new DecelerateInterpolator()).setDuration(120).
                 setListener(new Animator.AnimatorListener() {
                     @Override
                     public void onAnimationStart(Animator animation) {
@@ -197,7 +193,7 @@ public class BottomToolBar extends RelativeLayout {
     public void reset(final FloatingActionButton button) {
         hideMainBuz();
         animView.animate().scaleY(1f).scaleX(1f).
-                setInterpolator(new DecelerateInterpolator()).setDuration(150).
+                setInterpolator(new DecelerateInterpolator()).setDuration(120).
                 setListener(new Animator.AnimatorListener() {
                     @Override
                     public void onAnimationStart(Animator animation) {
@@ -245,13 +241,14 @@ public class BottomToolBar extends RelativeLayout {
 
     //隐藏除动画view外的view
     protected void hideMainBuz(){
-        for (int i=1;i<getChildCount();i++){
-            getChildAt(i).setVisibility(INVISIBLE);
+        for (int j = 1; j < getChildCount(); j++) {
+            getChildAt(j).setVisibility(INVISIBLE);
         }
     }
 
     protected void showMainBuz(){
         for (int i=1;i<getChildCount();i++){
+            final int j = i;
             getChildAt(i).setVisibility(VISIBLE);
         }
     }
@@ -260,4 +257,8 @@ public class BottomToolBar extends RelativeLayout {
         return isAnimating;
     }
 
+    @Override
+    public boolean hasOverlappingRendering() {
+        return false;
+    }
 }

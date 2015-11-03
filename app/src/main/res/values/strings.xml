@@ -12,6 +12,12 @@
     <string name="text_copyright">Copyright&#169; 2015 SCUT-GOF\n本应用由独立小组开发未经允许不能用于商业用途</string>
     <string name="text_ensure">确定</string>
     <string name="text_cancel">取消</string>
+    <string name="text_proname">项目名</string>
+    <string name="text_start_end_time">起始时间</string>
+    <string name="text_prodesc">项目描述</string>
+    <string name="text_propricipal">项目负责人</string>
+    <string name="text_protype">项目类型</string>
+    <string name="text_proaffiliation">项目归属</string>
 
     <string name="hint_leaveusinfo">留下任何的联系方式</string>
 
@@ -20,4 +26,5 @@
     <string name="action_personaldata">个人数据</string>
     <string name="action_home">首页</string>
     <string name="action_submit">提交</string>
+    <string name="action_newpro">新建项目</string>
 </resources>
