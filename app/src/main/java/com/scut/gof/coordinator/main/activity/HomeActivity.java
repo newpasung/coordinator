@@ -21,6 +21,10 @@ import com.scut.gof.coordinator.main.fragment.HomeFragment;
 import com.scut.gof.coordinator.main.fragment.SettingFragment;
 import com.scut.gof.coordinator.main.fragment.UserDataFragment;
 import com.scut.gof.coordinator.main.widget.BottomToolBar;
+import com.scut.gof.coordinator.main.widget.dialog.AlarmDialog;
+import com.scut.gof.coordinator.main.widget.dialog.ChoiceDialog;
+import com.scut.gof.coordinator.main.widget.dialog.InputDialog;
+import com.scut.gof.coordinator.main.widget.dialog.WaitingDialog;
 
 public class HomeActivity extends BaseActivity {
     DrawerLayout mDrwer;
@@ -45,6 +49,13 @@ public class HomeActivity extends BaseActivity {
     protected void initUI() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDrwer.openDrawer(Gravity.LEFT);
+            }
+        });
+        toolbar.setNavigationIcon(R.drawable.bar_drawer);
         CollapsingToolbarLayout mCoolBar = (CollapsingToolbarLayout) findViewById(R.id.cooltoolbar);
         mCoolBar.setTitleEnabled(true);
         mCoolBar.setTitle(getString(R.string.app_name));
@@ -101,6 +112,34 @@ public class HomeActivity extends BaseActivity {
                         replaceFragment(settingFragment);
                     }
                     break;
+                    case R.id.btn_test :{
+                        /*new ChoiceDialog(HomeActivity.this)
+                                .addTitle("这个是title")
+                                .addItem("第一个", new ChoiceDialog.OnClickListener() {
+                                    @Override
+                                    public void didClick(ChoiceDialog dialog, String itemTitle) {
+                                        toast("dianji");
+                                    }
+                                })
+                                .addItem("第二个", new ChoiceDialog.OnClickListener() {
+                                    @Override
+                                    public void didClick(ChoiceDialog dialog, String itemTitle) {
+                                        toast("dianji 2");
+                                    }
+                                })
+                                .show();*/
+                        /*AlarmDialog dialog =new AlarmDialog(HomeActivity.this);
+                        dialog.show();
+                        dialog.setMessage("发生了什么事");*/
+                        /*WaitingDialog dialog=new WaitingDialog(HomeActivity.this);
+                        dialog.show();*/
+                        InputDialog dialog=new InputDialog(HomeActivity.this);
+                        dialog.show();
+                        dialog.setTip("这个是tip");
+                        dialog.setHint("这个是hint");
+                        dialog.setError("这个是error");
+                        dialog.setMaxCount(10);
+                    }break;
                 }
                 return true;
             }

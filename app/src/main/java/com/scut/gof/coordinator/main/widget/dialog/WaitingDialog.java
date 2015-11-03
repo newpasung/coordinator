@@ -3,7 +3,9 @@ package com.scut.gof.coordinator.main.widget.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,14 +16,14 @@ import com.scut.gof.coordinator.R;
  * Created by Administrator on 2015/9/20.
  * 只显示文字和等待icon的dialog
  */
-public class TextDialog extends Dialog {
-    ImageView imageView;
-    TextView textView;
-    public TextDialog(Context context) {
-        super(context, R.style.textdialog);
+public class WaitingDialog extends Dialog {
+    private ImageView imageView;
+    private TextView textView;
+    public WaitingDialog(Context context) {
+        super(context, R.style.commondialog);
     }
 
-    public TextDialog(Context context, int theme) {
+    public WaitingDialog(Context context, int theme) {
         super(context, theme);
     }
 
@@ -34,6 +36,7 @@ public class TextDialog extends Dialog {
         RotateAnimation animation=new RotateAnimation(0,359,
                 RotateAnimation.RELATIVE_TO_SELF,0.5f,RotateAnimation.RELATIVE_TO_SELF,0.5f);
         animation.setDuration(1500);
+        animation.setInterpolator(new LinearInterpolator());
         animation.setRepeatCount(Animation.INFINITE);
         imageView.startAnimation(animation);
     }
@@ -41,4 +44,5 @@ public class TextDialog extends Dialog {
     public void setTextView(String text){
         textView.setText(text);
     }
+
 }

@@ -8,10 +8,12 @@ import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.support.design.widget.FloatingActionButton;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
@@ -29,8 +31,8 @@ public class BottomToolBar extends RelativeLayout {
 
     View animView;
     ShapeDrawable shapeDrawable;
-    final int INIWIDTH=10;
-    final int INIHEIGHT=10;
+    final int INIWIDTH=20;
+    final int INIHEIGHT=20;
     //是否需要初始化
     boolean needIni=true;
     //是否进行动画中
@@ -72,8 +74,8 @@ public class BottomToolBar extends RelativeLayout {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        int w=MeasureSpec.makeMeasureSpec(INIWIDTH,MeasureSpec.EXACTLY);
-        int h=MeasureSpec.makeMeasureSpec(INIHEIGHT,MeasureSpec.EXACTLY);
+        int w=MeasureSpec.makeMeasureSpec(INIWIDTH, MeasureSpec.EXACTLY);
+        int h=MeasureSpec.makeMeasureSpec(INIHEIGHT, MeasureSpec.EXACTLY);
         animView.measure(w, h);
         if(needIni){
             hideMainBuz();
@@ -83,26 +85,26 @@ public class BottomToolBar extends RelativeLayout {
 
     //显示bottombar
     public void reveal() {
+        preProcess();
         setVisibility(VISIBLE);
-        animView.setScaleX(1f);
-        animView.setScaleY(1f);
-        //先移到中点后缩放
-        animView.setTranslationX(getWidth() / 2 - animView.getWidth() / 2);
-        animView.setTranslationY(getHeight() / 2 - animView.getHeight() / 2);
+        //根据宽度决定scale
+        float radius=calScale(animView.getWidth()/2);
         animView.setVisibility(VISIBLE);
-        int scale=calScale(animView.getWidth() / 2);
         animView.animate()
-                .scaleX(scale).scaleY(scale).setDuration(250)
-                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .scaleX(radius)
+                .scaleY(radius)
+                .setDuration(180)
+                .setInterpolator(new LinearInterpolator())
                 .setListener(new Animator.AnimatorListener() {
                     @Override
                     public void onAnimationStart(Animator animation) {
-                        isAnimating=true;
+                        isAnimating = true;
                     }
+
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         showMainBuz();
-                        isAnimating=false;
+                        isAnimating = false;
                     }
 
                     @Override
@@ -116,6 +118,13 @@ public class BottomToolBar extends RelativeLayout {
                     }
                 })
                 .start();
+    }
+
+    protected void preProcess(){
+        animView.setScaleX(1f);
+        animView.setScaleY(1f);
+        animView.setTranslationX(getWidth()/2-animView.getWidth()/2);
+        animView.setTranslationY(getHeight() / 2 - animView.getHeight() / 2);
     }
 
     //协同显示bottombar和隐藏fab
@@ -153,11 +162,11 @@ public class BottomToolBar extends RelativeLayout {
     public void reset(final Animator.AnimatorListener listener) {
         hideMainBuz();
         animView.animate().scaleY(1f).scaleX(1f).
-                setInterpolator(new DecelerateInterpolator()).setDuration(200).
+                setInterpolator(new DecelerateInterpolator()).setDuration(150).
                 setListener(new Animator.AnimatorListener() {
                     @Override
                     public void onAnimationStart(Animator animation) {
-                        isAnimating=true;
+                        isAnimating = true;
                     }
 
                     @Override
@@ -166,7 +175,7 @@ public class BottomToolBar extends RelativeLayout {
                         animView.setScaleX(1f);
                         animView.setVisibility(INVISIBLE);
                         setVisibility(INVISIBLE);
-                        isAnimating=false;
+                        isAnimating = false;
                         if (listener != null) {
                             listener.onAnimationEnd(animation);
                         }
@@ -188,7 +197,7 @@ public class BottomToolBar extends RelativeLayout {
     public void reset(final FloatingActionButton button) {
         hideMainBuz();
         animView.animate().scaleY(1f).scaleX(1f).
-                setInterpolator(new DecelerateInterpolator()).setDuration(200).
+                setInterpolator(new DecelerateInterpolator()).setDuration(150).
                 setListener(new Animator.AnimatorListener() {
                     @Override
                     public void onAnimationStart(Animator animation) {
@@ -223,22 +232,15 @@ public class BottomToolBar extends RelativeLayout {
                 .start();
     }
 
-    //计算完全覆盖的scale
-    protected int calScale(int radius){
+    protected float calScale(float radius){
         Rect barRect =new Rect();
         Rect viewRect =new Rect();
         getGlobalVisibleRect(barRect);
         animView.getGlobalVisibleRect(viewRect);
-        int dis1=MathUtil.calDis(viewRect.centerX(),viewRect.centerY(),barRect.left,barRect.top);
-        int dis2=MathUtil.calDis(viewRect.centerX(),viewRect.centerY(),barRect.left,barRect.bottom);
-        int dis3=MathUtil.calDis(viewRect.centerX(),viewRect.centerY(),barRect.right,barRect.top);
-        int dis4=MathUtil.calDis(viewRect.centerX(),viewRect.centerY(),barRect.right,barRect.bottom);
+        long dis1=MathUtil.calDis(viewRect.centerX(),viewRect.centerY(),barRect.left,viewRect.centerY());
+        long dis2=MathUtil.calDis(viewRect.centerX(),viewRect.centerY(),barRect.right,viewRect.centerY());
         dis1 =dis1>dis2?dis1:dis2;
-        dis1 =dis1>dis3?dis1:dis3;
-        dis1 =dis1>dis4?dis1:dis4;
-//        return dis1/radius+1;
-        //TODO 还不知道怎么确定一个合适的scale
-        return 80;
+        return dis1/radius+1;
     }
 
     //隐藏除动画view外的view

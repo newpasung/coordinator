@@ -3,12 +3,16 @@
     <string name="test_sentence_20">注意这是一个有二十个中文字用于测试的句子</string>
     <string name="test_sentence_100">注意这是一个有二十个中文字用于测试的句子注意这是一个有二十个中文字用于测试的句子注意这是一个有二十个中文字用于测试的句子注意这是一个有二十个中文字用于测试的句子注意这是一个有二十个中文字用于测试的句子</string>
     <string name="test_type">it\'s a type tip</string>
+    <string name="test">测试</string>
 
     <string name="text_myproject">我的项目</string>
     <string name="text_message">消息</string>
     <string name="text_baseinfo">基本信息</string>
     <string name="text_feedback_tips">你可以写下建议或意见，并留下联系方式，我们会做出及时的回复。</string>
     <string name="text_copyright">Copyright&#169; 2015 SCUT-GOF\n本应用由独立小组开发未经允许不能用于商业用途</string>
+    <string name="text_ensure">确定</string>
+    <string name="text_cancel">取消</string>
+
     <string name="hint_leaveusinfo">留下任何的联系方式</string>
 
     <string name="action_setting">设置</string>

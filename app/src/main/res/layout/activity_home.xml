@@ -49,7 +49,7 @@
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/btn_fab"
-                app:layout_behavior="com.scut.gof.coordinator.main.widget.dialog.behavior.FabBehavior"
+                app:layout_behavior="com.scut.gof.coordinator.main.widget.behavior.FabBehavior"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"

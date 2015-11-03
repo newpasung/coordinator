@@ -16,5 +16,9 @@
     <item android:id="@+id/btn_feedback"
         android:icon="@drawable/feedback"
         android:title="@string/action_feedback"/>
+    <item android:id="@+id/btn_test"
+        android:title="@string/test"
+        android:icon="@drawable/home"
+        />
 </group>
 </menu>
