@@ -4,10 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.scut.gof.coordinator.main.activity.LoginActivity">
-    <FrameLayout
+
+    <fragment
         android:id="@+id/login_content"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
-    </FrameLayout>
+        android:layout_height="fill_parent"
+        android:name="com.scut.gof.coordinator.main.fragment.LoginFragment.LoginFragment"
+        tools:layout="@layout/fragment_login">
+    </fragment>
 
 </RelativeLayout>

@@ -1,6 +1,9 @@
 package com.scut.gof.coordinator.main.fragment.LoginFragment;
 
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
@@ -16,6 +19,7 @@ import com.loopj.android.http.RequestParams;
 import com.scut.gof.coordinator.R;
 import com.scut.gof.coordinator.main.activity.HomeActivity;
 import com.scut.gof.coordinator.main.animation.XRotationAnimation;
+import com.scut.gof.coordinator.main.communication.LocalBrCast;
 import com.scut.gof.coordinator.main.fragment.BaseFragment;
 import com.scut.gof.coordinator.main.net.HttpClient;
 import com.scut.gof.coordinator.main.net.JsonResponseHandler;
@@ -30,6 +34,7 @@ public class LoginFragment extends BaseFragment {
     private TextInputLayout phoneInputLayout;
     private TextInputLayout passwordInputLayout;
     private Button loginBtn;
+    private Button registerBtn;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,12 +67,12 @@ public class LoginFragment extends BaseFragment {
                     RequestParams params = new RequestParams();
                     params.put(RequestParamName.PHONE, phone);
                     params.put(RequestParamName.PASSWORD, password);
-                    XRotationAnimation animation = new XRotationAnimation();
-                    animation.setRepeatMode(Animation.INFINITE);
-                    loginBtn.startAnimation(animation);
                     HttpClient.post(getActivity(), "user/login", params, new JsonResponseHandler() {
                         @Override
                         public void onSuccess(JSONObject response) {
+                            XRotationAnimation animation = new XRotationAnimation();
+                            animation.setRepeatMode(Animation.INFINITE);
+                            loginBtn.startAnimation(animation);
                             try {
                                 XManager.setLoginStatus(getActivity(), true);
                                 XManager.setToken(getActivity(), response.getJSONObject("data").getJSONObject("user").getString("token"));
@@ -98,6 +103,14 @@ public class LoginFragment extends BaseFragment {
                 }
             }
         });
+
+        //跳转到注册界面
+        registerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LocalBrCast.sendBroadcast(getActivity(), "show register fragment");
+            }
+        });
     }
 
     private void initUI(View view) {
@@ -107,5 +120,6 @@ public class LoginFragment extends BaseFragment {
 
         loginBtn = (Button) view.findViewById(R.id.btn_login);
 
+        registerBtn = (Button) view.findViewById(R.id.btn_register);
     }
 }
