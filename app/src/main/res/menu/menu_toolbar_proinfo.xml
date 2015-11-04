@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group>
+        <item
+            android:id="@+id/action_edit"
+            android:icon="@drawable/add"
+            android:orderInCategory="80"
+            android:title="@string/action_newpro" />
+
+        <item
+            android:id="@+id/action_share"
+            android:icon="@drawable/add"
+            android:orderInCategory="90"
+            android:title="@string/action_feedback" />
+
+        <item
+            android:id="@+id/action_settings"
+            android:icon="@drawable/add"
+            android:orderInCategory="100"
+            android:title="@string/action_home" />
+    </group>
+
+</menu>

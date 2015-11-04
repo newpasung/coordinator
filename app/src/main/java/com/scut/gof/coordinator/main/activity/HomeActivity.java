@@ -21,7 +21,6 @@ import com.scut.gof.coordinator.main.fragment.HomeFragment;
 import com.scut.gof.coordinator.main.fragment.SettingFragment;
 import com.scut.gof.coordinator.main.fragment.UserDataFragment;
 import com.scut.gof.coordinator.main.widget.BottomToolBar;
-import com.scut.gof.coordinator.main.widget.dialog.InputDialog;
 
 public class HomeActivity extends BaseActivity {
     DrawerLayout mDrwer;
@@ -33,13 +32,13 @@ public class HomeActivity extends BaseActivity {
     FeedBackFragment feedBackFragment;
     SettingFragment settingFragment;
     Fragment curFragment;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         initUI();
         iniListener();
+
     }
 
     //初始化几个结构化的界面
@@ -52,7 +51,7 @@ public class HomeActivity extends BaseActivity {
                 mDrwer.openDrawer(Gravity.LEFT);
             }
         });
-        toolbar.setNavigationIcon(R.drawable.bar_drawer);
+        toolbar.setNavigationIcon(R.mipmap.bar_drawer);
         toolbar.setTitleTextColor(Color.WHITE);
         /*CollapsingToolbarLayout mCoolBar = (CollapsingToolbarLayout) findViewById(R.id.cooltoolbar);
         mCoolBar.setTitleEnabled(true);
@@ -66,6 +65,11 @@ public class HomeActivity extends BaseActivity {
         mBtnfab = (FloatingActionButton) findViewById(R.id.btn_fab);
         homeFragment = (HomeFragment) getFragmentManager().findFragmentById(R.id.fragment);
         curFragment = homeFragment;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     protected void iniListener() {
@@ -112,32 +116,6 @@ public class HomeActivity extends BaseActivity {
                     }
                     break;
                     case R.id.btn_test :{
-                        /*new ChoiceDialog(HomeActivity.this)
-                                .addTitle("这个是title")
-                                .addItem("第一个", new ChoiceDialog.OnClickListener() {
-                                    @Override
-                                    public void didClick(ChoiceDialog dialog, String itemTitle) {
-                                        toast("dianji");
-                                    }
-                                })
-                                .addItem("第二个", new ChoiceDialog.OnClickListener() {
-                                    @Override
-                                    public void didClick(ChoiceDialog dialog, String itemTitle) {
-                                        toast("dianji 2");
-                                    }
-                                })
-                                .show();*/
-                        /*AlarmDialog dialog =new AlarmDialog(HomeActivity.this);
-                        dialog.show();
-                        dialog.setMessage("发生了什么事");*/
-                        /*WaitingDialog dialog=new WaitingDialog(HomeActivity.this);
-                        dialog.show();*/
-                        InputDialog dialog=new InputDialog(HomeActivity.this);
-                        dialog.show();
-                        dialog.setTip("这个是tip");
-                        dialog.setHint("这个是hint");
-                        dialog.setError("这个是error");
-                        dialog.setMaxCount(10);
                     }break;
                 }
                 return true;

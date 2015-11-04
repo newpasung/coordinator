@@ -13,11 +13,12 @@ public class CustomView extends RelativeLayout{
 	final static String ANDROIDXML = "http://schemas.android.com/apk/res/android";
 	
 	final int disabledBackgroundColor = Color.parseColor("#E2E2E2");
-	int beforeBackground;
+	public int beforeBackground;
 	
 	// Indicate if user touched this view the last time
 	public boolean isLastTouch = false;
-
+	boolean animation = false;
+	
 	public CustomView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
@@ -31,8 +32,6 @@ public class CustomView extends RelativeLayout{
 			setBackgroundColor(disabledBackgroundColor);
 		invalidate();
 	}
-	
-	boolean animation = false;
 	
 	@Override
 	protected void onAnimationStart() {

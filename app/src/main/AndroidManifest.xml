@@ -18,27 +18,28 @@
             android:theme="@style/Theme.AppCompat.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".main.activity.HomeActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:theme="@style/HomeActivityStyle"
             android:windowSoftInputMode="adjustPan" />
 
         <activity android:name=".main.activity.WelcomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+
         <activity android:name=".main.activity.LoginActivity"
             android:screenOrientation="portrait" >
         </activity>
 
         <activity
             android:name=".main.activity.ProinfoActivty"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
     </application>
 
