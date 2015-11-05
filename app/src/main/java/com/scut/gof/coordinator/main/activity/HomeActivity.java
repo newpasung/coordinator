@@ -21,6 +21,7 @@ import com.scut.gof.coordinator.main.fragment.HomeFragment;
 import com.scut.gof.coordinator.main.fragment.SettingFragment;
 import com.scut.gof.coordinator.main.fragment.UserDataFragment;
 import com.scut.gof.coordinator.main.widget.BottomToolBar;
+import com.scut.gof.coordinator.qcode.androidzhang.zxingframe.ZxingFrame;
 
 public class HomeActivity extends BaseActivity {
     DrawerLayout mDrwer;
@@ -116,6 +117,7 @@ public class HomeActivity extends BaseActivity {
                     }
                     break;
                     case R.id.btn_test :{
+                        startActivity(new Intent(HomeActivity.this, ZxingFrame.class));
                     }break;
                 }
                 return true;

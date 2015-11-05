@@ -4,7 +4,11 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -41,6 +45,9 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
+        <activity android:name=".qcode.zxing.activity.CaptureActivity"></activity>
+        <activity android:name=".qcode.androidzhang.zxingframe.CheckResult"></activity>
+        <activity android:name=".qcode.androidzhang.zxingframe.ZxingFrame"></activity>
     </application>
 
 </manifest>

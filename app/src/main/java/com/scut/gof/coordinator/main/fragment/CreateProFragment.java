@@ -1,6 +1,9 @@
 package com.scut.gof.coordinator.main.fragment;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -105,10 +108,33 @@ public class CreateProFragment extends BaseFragment {
                 choiceDialog.show();
             }
         });
+        mBtnpic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getAPic();
+            }
+        });
     }
 
     protected void getAPic() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, 1);
+    }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1 && resultCode == getActivity().RESULT_OK) {
+            Uri uri = data.getData();
+//            String []column ={MediaStore.Images.Media.DATA};
+//            Cursor cursor=getActivity().getContentResolver()
+//                    .query(uri,column,null,null,null);
+//            cursor.moveToFirst();
+//            int index =cursor.getColumnIndex(column[0]);
+//            String path =cursor.getString(index);
+//            cursor.close();
+//            mBtnpic.setImageBitmap(BitmapFactory.decodeFile(path));
+            mBtnpic.setImageURI(uri);
+        }
     }
 
     @Override
