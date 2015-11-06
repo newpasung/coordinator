@@ -15,13 +15,13 @@ import android.view.View;
 import android.widget.Button;
 
 import com.scut.gof.coordinator.R;
+import com.scut.gof.coordinator.lib.nereo.multi_image_selector.MultiImageSelectorActivity;
 import com.scut.gof.coordinator.main.fragment.FeedBackFragment;
 import com.scut.gof.coordinator.main.fragment.FragmentTransactionExtended;
 import com.scut.gof.coordinator.main.fragment.HomeFragment;
 import com.scut.gof.coordinator.main.fragment.SettingFragment;
 import com.scut.gof.coordinator.main.fragment.UserDataFragment;
 import com.scut.gof.coordinator.main.widget.BottomToolBar;
-import com.scut.gof.coordinator.qcode.androidzhang.zxingframe.ZxingFrame;
 
 public class HomeActivity extends BaseActivity {
     DrawerLayout mDrwer;
@@ -117,7 +117,7 @@ public class HomeActivity extends BaseActivity {
                     }
                     break;
                     case R.id.btn_test :{
-                        startActivity(new Intent(HomeActivity.this, ZxingFrame.class));
+                        startActivity(new Intent(HomeActivity.this, MultiImageSelectorActivity.class));
                     }break;
                 }
                 return true;

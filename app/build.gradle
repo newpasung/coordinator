@@ -29,4 +29,5 @@ dependencies {
     compile files('libs/ActiveAndroid.jar')
     compile 'com.wdullaer:materialdatetimepicker:1.5.4'
     compile files('libs/zxing.jar')
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }

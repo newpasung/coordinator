@@ -48,6 +48,7 @@
         <activity android:name=".qcode.zxing.activity.CaptureActivity"></activity>
         <activity android:name=".qcode.androidzhang.zxingframe.CheckResult"></activity>
         <activity android:name=".qcode.androidzhang.zxingframe.ZxingFrame"></activity>
+        <activity android:name=".lib.nereo.multi_image_selector.MultiImageSelectorActivity"></activity>
     </application>
 
 </manifest>
