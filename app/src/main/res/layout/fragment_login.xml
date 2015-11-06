@@ -1,46 +1,79 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.scut.gof.coordinator.main.widget.FragContainer
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="@dimen/margin_normal"
     android:background="@drawable/background"
+    android:padding="@dimen/margin_normal"
     tools:context="com.scut.gof.coordinator.main.fragment.LoginFragment.LoginFragment">
 
-    <ImageView
-        android:layout_width="@dimen/avatar_large"
-        android:layout_height="@dimen/avatar_large"
-        android:layout_gravity="center_horizontal"
-        android:src="@mipmap/ic_launcher"/>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="@dimen/avatar_large"
+            android:layout_height="@dimen/avatar_large"
+            android:layout_gravity="center_horizontal"
+            android:src="@mipmap/ic_launcher"/>
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/phone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/text_phone">
-        <EditText
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"/>
-    </android.support.design.widget.TextInputLayout>
+            android:hint="@string/text_phone">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+        </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/text_password">
-        <EditText
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"/>
-    </android.support.design.widget.TextInputLayout>
+            android:hint="@string/text_password">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"/>
+        </android.support.design.widget.TextInputLayout>
 
-    <Button
-        android:id="@+id/btn_login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/login"
-        android:background="@color/colorPrimary"/>
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/login"
+            android:background="@color/colorPrimary"/>
 
-</LinearLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/margin_normal">
+            <Button
+                android:id="@+id/btn_forget_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="@string/forget_password"
+                android:background="@null"
+                android:textColor="@color/colorPrimary"
+                android:gravity="start"
+                android:textAlignment="viewStart"
+                android:layout_alignParentLeft="true" />
+            <Button
+                android:id="@+id/btn_register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="@string/register"
+                android:background="@null"
+                android:textColor="@color/colorPrimary"
+                android:gravity="end"
+                android:textAlignment="viewEnd"
+                android:layout_alignParentRight="true" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</com.scut.gof.coordinator.main.widget.FragContainer>

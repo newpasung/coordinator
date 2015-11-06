@@ -8,6 +8,8 @@
     <string name="text_phone">手机号码</string>
     <string name="text_password">密码</string>
     <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="forget_password">忘记密码</string>
     <string name="text_myproject">我的项目</string>
     <string name="text_message">消息</string>
     <string name="text_baseinfo">基本信息</string>
