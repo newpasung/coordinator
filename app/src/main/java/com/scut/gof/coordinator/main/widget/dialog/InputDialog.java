@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -13,7 +14,8 @@ import com.scut.gof.coordinator.R;
 /**
  * Created by Administrator on 2015/11/2.
  */
-public class InputDialog extends Dialog {
+public class
+        InputDialog extends Dialog {
     private TextInputLayout inputLayout ;
     private TextView mTvtip;
     private Button  mBtnensure;
@@ -38,15 +40,48 @@ public class InputDialog extends Dialog {
         mTvtip=(TextView)findViewById(R.id.text_tip);
         mBtncancel=(Button)findViewById(R.id.btn_cancel);
         mBtnensure=(Button)findViewById(R.id.btn_ensure);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        onCancel(null);
     }
 
-    public void onCancel(View.OnClickListener listener){
-        mBtncancel.setOnClickListener(listener);
+    @Override
+    public void show() {
+        super.show();
+        inputLayout.getEditText().setText(null);
+    }
+
+    public void onEnsure(final TextView textView) {
+        mBtnensure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                textView.setText(getText());
+                dismiss();
+            }
+        });
+    }
+
+    public void onCancel(final View.OnClickListener listener) {
+        mBtncancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inputLayout.getEditText().clearFocus();
+                dismiss();
+                if (listener != null) {
+                    listener.onClick(v);
+                }
+            }
+        });
     }
 
     //点击确认按键
-    public void onEnsure(View.OnClickListener listener){
-        mBtnensure.setOnClickListener(listener);
+    public void onEnsure(final View.OnClickListener listener) {
+        mBtnensure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+                listener.onClick(v);
+            }
+        });
     }
 
     /**显示一个dialog信息*/

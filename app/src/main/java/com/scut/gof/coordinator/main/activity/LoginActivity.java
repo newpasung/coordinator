@@ -5,8 +5,8 @@ import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.scut.gof.coordinator.R;
 import com.scut.gof.coordinator.main.communication.LocalBrCast;
@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
         FragmentTransactionExtended fragmentTransactionExtended
                 = new FragmentTransactionExtended(this, fragmentTransaction, curFragment, fragment, R.id.login_content);
         fragmentTransactionExtended.addTransition(FragmentTransactionExtended.SLIDE_HORIZONTAL);
-        fragmentTransactionExtended.commit();
+        fragmentTransactionExtended.commit(true);
     }
 
     @Override

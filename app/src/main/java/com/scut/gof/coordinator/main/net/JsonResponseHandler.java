@@ -1,14 +1,12 @@
 package com.scut.gof.coordinator.main.net;
 
-import android.util.Log;
-
 import com.loopj.android.http.JsonHttpResponseHandler;
 
+import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import cz.msebera.android.httpclient.Header;
 
 /**
  * Created by gjz on 11/2/15.

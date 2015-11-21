@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@drawable/background"
     android:orientation="vertical"
     android:paddingLeft="@dimen/padding_normal"
-    android:paddingRight="@dimen/padding_normal"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:paddingRight="@dimen/padding_normal">
 
     <com.scut.gof.coordinator.main.widget.CircleImageView
-        android:id="@+id/cir_avatar"
-        android:src="@drawable/tencent"
-        android:layout_marginTop="@dimen/margin_medium"
-        android:layout_marginBottom="@dimen/margin_small"
+        android:id="@+id/drawer_avatar"
         android:layout_width="@dimen/avatar_large"
-        android:layout_height="@dimen/avatar_large" />
+        android:layout_height="@dimen/avatar_large"
+        android:layout_marginBottom="@dimen/margin_small"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:src="@drawable/tencent" />
 
     <RelativeLayout
         android:id="@+id/rl_container"
-        android:layout_below="@+id/cir_avatar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/drawer_header_content_height">
+        android:layout_height="@dimen/drawer_header_content_height"
+        android:layout_below="@+id/drawer_avatar">
 
         <TextView
             android:id="@+id/tv_name"
-            android:text="@string/test_sentence_20"
-            android:singleLine="true"
             style="@style/text_body_bold"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:text="@string/test_sentence_20" />
         <TextView
             android:id="@+id/tv_desc"
-            android:layout_marginTop="@dimen/margin_small"
-            android:layout_below="@id/tv_name"
-            android:layout_alignLeft="@+id/tv_name"
-            android:singleLine="true"
-            android:text="@string/test_sentence_20"
             style="@style/text_body"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tv_name"
+            android:layout_below="@id/tv_name"
+            android:layout_marginTop="@dimen/margin_small"
+            android:singleLine="true"
+            android:text="@string/test_sentence_20" />
     </RelativeLayout>
 
 </RelativeLayout>

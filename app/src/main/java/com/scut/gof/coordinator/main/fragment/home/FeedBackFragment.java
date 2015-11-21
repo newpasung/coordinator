@@ -1,4 +1,4 @@
-package com.scut.gof.coordinator.main.fragment;
+package com.scut.gof.coordinator.main.fragment.home;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.scut.gof.coordinator.R;
+import com.scut.gof.coordinator.main.fragment.BaseFragment;
 
 /**
  * Created by Administrator on 2015/11/1.

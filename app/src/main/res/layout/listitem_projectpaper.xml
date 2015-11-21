@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.scut.gof.coordinator.main.widget.RippleView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.scut.gof.coordinator.main.widget.RippleView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/paper_projectheight">
 
@@ -13,23 +11,23 @@
 
         <com.scut.gof.coordinator.main.widget.CircleImageView
             android:id="@+id/cir_avatar"
-            android:src="@drawable/landscape"
-            android:layout_margin="@dimen/margin_small"
-            android:layout_centerVertical="true"
-            android:layout_height="@dimen/avatar_big"
             android:layout_width="@dimen/avatar_big"
+            android:layout_height="@dimen/avatar_big"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/margin_small"
+            android:src="@drawable/landscape"
             />
 
         <TextView
             android:id="@+id/tv_name"
-            android:layout_centerVertical="true"
-            tools:text="@string/test_sentence_20"
             style="@style/text_title"
-            android:singleLine="true"
-            android:layout_toRightOf="@+id/cir_avatar"
-            android:layout_margin="@dimen/margin_small"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/margin_small"
+            android:layout_toRightOf="@+id/cir_avatar"
+            android:singleLine="true"
+            tools:text="@string/test_sentence_20" />
 
     </RelativeLayout>
 </com.scut.gof.coordinator.main.widget.RippleView>

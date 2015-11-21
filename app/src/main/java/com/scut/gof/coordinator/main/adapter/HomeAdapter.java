@@ -1,7 +1,6 @@
 package com.scut.gof.coordinator.main.adapter;
 
 import android.content.Context;
-import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.scut.gof.coordinator.R;
+import com.scut.gof.coordinator.main.storage.model.Project;
 import com.scut.gof.coordinator.main.widget.CircleImageView;
 
 import java.util.ArrayList;
@@ -20,15 +20,16 @@ import java.util.List;
  * 这个adapter用来呈现首页的项目消息公告入口，//TODO 这种逻辑更改起来麻烦，要修正
  */
 public class HomeAdapter extends RecyclerView.Adapter {
+    public static final String BROAD_ONPROCLICK = "clickonproject";
+    public static final int TYPE_PROJECT = 0;
+    public static final int TYPE_MSG = 1;
+    private static final int DATATYPE_COUNT = 2;
+    private static final int HEADLINE_PRO = 2;
+    private static final int HEADLINE_MSG = 3;
     Context mContext;
-    List<String> prodata=new ArrayList<>();
+    List<Project> prodata = new ArrayList<>();
     List<String> msgdata =new ArrayList<>();
-    private final int TYPECOUNT=2;
-    private final int TYPE_PROJECT=0;
-    private final int TYPE_MSG=1;
-    private final int HEADLINE_PRO=2;
-    private final int HEADLINE_MSG=3;
-
+    MOnClick listener;
     public HomeAdapter(Context mContext) {
         this.mContext = mContext;
     }
@@ -53,21 +54,27 @@ public class HomeAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         switch(getItemViewType(position)){
             case HEADLINE_PRO:{
-                ((HeadHolder) holder).mTv.setText(mContext.getString(R.string.text_myproject));
+                if (hasPro()) {
+                    ((HeadHolder) holder).mTv.setText(mContext.getString(R.string.text_myproject));
+                } else {
+                    ((HeadHolder) holder).mTv.setText(mContext.getString(R.string.text_tip_hasnoproject));
+                }
             }break;
             case HEADLINE_MSG:{
-                ((HeadHolder) holder).mTv.setText(mContext.getString(R.string.text_message));
+                ((HeadHolder) holder).mTv.setText(mContext.getString(R.string.text_importantmsg));
             }break;
             case TYPE_PROJECT:{
                 ((ProHolder)holder).mCir.setImageResource(R.drawable.tencent);
-                ((ProHolder)holder).mTvname.setText(getProData(position));
+                ((ProHolder) holder).mTvname.setText(getProData(position).getProname());
                 ((ProHolder)holder).mRlcontainer.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //TODO
+                        if (listener != null) {
+                            listener.onClick(TYPE_PROJECT, getProData(position).getProid());
+                        }
                     }
                 });
             }break;
@@ -81,7 +88,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return prodata.size()+msgdata.size()+TYPECOUNT;
+        return prodata.size() + msgdata.size() + DATATYPE_COUNT;
     }
 
     @Override
@@ -98,6 +105,37 @@ public class HomeAdapter extends RecyclerView.Adapter {
             return TYPE_MSG;
         }
         return HEADLINE_PRO;
+    }
+
+    public void setProData(List<Project> data) {
+        this.prodata.clear();
+        this.prodata = data;
+    }
+
+    public void setMsgData(List<String> data) {
+        this.msgdata.clear();
+        this.msgdata = data;
+    }
+
+    //要转换出data的位置
+    protected Project getProData(int position) {
+        return prodata.get(position - 1);
+    }
+
+    protected String getMsgData(int position) {
+        return msgdata.get(position - prodata.size() - 2);
+    }
+
+    protected boolean hasPro() {
+        return prodata.size() != 0;
+    }
+
+    public void setListener(MOnClick listener) {
+        this.listener = listener;
+    }
+
+    public interface MOnClick {
+        void onClick(int type, long id);
     }
 
     class ProHolder extends RecyclerView.ViewHolder{
@@ -130,23 +168,6 @@ public class HomeAdapter extends RecyclerView.Adapter {
             super(itemView);
             mTv=(TextView)itemView.findViewById(R.id.tv_category);
         }
-    }
-
-    public void setProData(List<String > data){
-        this.prodata=data;
-    }
-
-    public void setMsgData(List<String> data){
-        this.msgdata=data;
-    }
-
-    //要转换出data的位置
-    protected String getProData(int position){
-        return prodata.get(position-1);
-    }
-
-    protected String getMsgData(int position){
-        return msgdata.get(position-prodata.size()-2);
     }
 
 }

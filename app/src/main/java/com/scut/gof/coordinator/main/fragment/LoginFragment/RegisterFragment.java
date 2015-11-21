@@ -1,7 +1,6 @@
 package com.scut.gof.coordinator.main.fragment.LoginFragment;
 
 
-import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.util.Log;

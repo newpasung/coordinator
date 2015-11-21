@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
+
 import com.scut.gof.coordinator.R;
 import com.scut.gof.coordinator.main.widget.BottomToolBar;
 
@@ -35,7 +36,7 @@ public class FabBehavior extends FloatingActionButton.Behavior {
             //存在bottombar
             BottomToolBar bar =(BottomToolBar)view.findViewById(R.id.bottombar);
             if(bar.getVisibility()==View.VISIBLE&&!bar.isAnimating()){
-                bar.reset(child);
+                bar.reset();
             }
             else{
                 if(dyConsumed>0&&child.getVisibility()==View.VISIBLE){

@@ -2,6 +2,7 @@ package com.scut.gof.coordinator.main.activity;
 
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+
 import com.scut.gof.coordinator.R;
 import com.scut.gof.coordinator.main.fragment.WelcomeFragment.FirstWelcomeFragment;
 import com.scut.gof.coordinator.main.fragment.WelcomeFragment.NormalWelcomeFragment;

@@ -8,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import com.scut.gof.coordinator.R;
 import com.scut.gof.coordinator.lib.nereo.multi_image_selector.bean.Folder;
 import com.squareup.picasso.Picasso;
@@ -23,14 +22,11 @@ import java.util.List;
  */
 public class FolderAdapter extends BaseAdapter {
 
+    int mImageSize;
+    int lastSelected = 0;
     private Context mContext;
     private LayoutInflater mInflater;
-
     private List<Folder> mFolders = new ArrayList<>();
-
-    int mImageSize;
-
-    int lastSelected = 0;
 
     public FolderAdapter(Context context){
         mContext = context;
@@ -111,15 +107,15 @@ public class FolderAdapter extends BaseAdapter {
         return result;
     }
 
+    public int getSelectIndex() {
+        return lastSelected;
+    }
+
     public void setSelectIndex(int i) {
         if(lastSelected == i) return;
 
         lastSelected = i;
         notifyDataSetChanged();
-    }
-
-    public int getSelectIndex(){
-        return lastSelected;
     }
 
     class ViewHolder{

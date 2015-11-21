@@ -10,10 +10,9 @@ import android.content.SharedPreferences;
 public class XManager {
     //关于一些与特定用户无关的资料
     public static final String FILENAME_SYSTEM = "systemconfig";
-    public static SharedPreferences sysPref;
-
     //用于特定用户的配置信息
     public static final String FILENAME_USER = "userconfig";
+    public static SharedPreferences sysPref;
     public static SharedPreferences userPref;
 
     //一些用户无关的参数
@@ -22,7 +21,7 @@ public class XManager {
     //一些用户相关的参数
     public static String PARAM_TOKEN = "token";//用户token
     public static String PARAM_UID = "uid";//用户uid
-
+    public static String PARAM_PROJECT_IDS = "projectids";//用户相关的所有项目id
 
     public static synchronized SharedPreferences getSystemManager(Context context){
         if(sysPref==null){
@@ -84,18 +83,46 @@ public class XManager {
     }
 
     //获取用户uid，如果没有则返回0
-    public static int getUid(Context context) {
-        return getUserManager(context).getInt(PARAM_UID, 0);
+    public static long getUid(Context context) {
+        return getUserManager(context).getLong(PARAM_UID, 0);
     }
 
     /**
      * 设置用户token
      * @param uid 要设置成的uid
      */
-    public static void setUid(Context context, int uid) {
+    public static void setUid(Context context, long uid) {
         SharedPreferences.Editor editor =getUserManager(context).edit();
-        editor.putInt(PARAM_UID, uid);
+        editor.putLong(PARAM_UID, uid);
         editor.apply();
     }
 
+    /**
+     * 把id保存为String，字符分隔符为;
+     * 如：123;123;123;
+     */
+    public static void saveUsersProjectId(Context context, long... params) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < params.length; i++) {
+            builder.append(params[i]);
+            builder.append(";");
+        }
+        SharedPreferences.Editor editor = getUserManager(context).edit();
+        editor.putString(PARAM_PROJECT_IDS, builder.toString());
+        editor.apply();
+    }
+
+    public static long[] getUsersProjectId(Context context) {
+        String ids_str = getUserManager(context).getString(PARAM_PROJECT_IDS, "");
+        String[] ids_arr = ids_str.split(";");
+        if (ids_arr == null) {
+            return null;
+        } else {
+            long ids[] = new long[ids_str.length()];
+            for (int i = 0; i < ids_str.length(); i++) {
+                ids[i] = Long.valueOf(ids_arr[i]);
+            }
+            return ids;
+        }
+    }
 }

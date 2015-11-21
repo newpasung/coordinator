@@ -17,13 +17,6 @@ import com.scut.gof.coordinator.R;
 /**用这个transaction可以给fragment加上很多动画，但是要配合fragcontainer使用*/
 
 public class FragmentTransactionExtended implements FragmentManager.OnBackStackChangedListener {
-    private boolean mDidSlideOut = false;
-    private boolean mIsAnimating = false;
-    private FragmentTransaction mFragmentTransaction;
-    private Context mContext;
-    private Fragment mFirstFragment, mSecondFragment;
-    private int mContainerID;
-    private int mTransitionType;
     public static final int SCALEX = 0;
     public static final int SCALEY = 1;
     public static final int SCALEXY = 2;
@@ -47,7 +40,14 @@ public class FragmentTransactionExtended implements FragmentManager.OnBackStackC
     public static final int ZOOM_FROM_RIGHT_CORNER = 20;
     public static final int ZOOM_SLIDE_HORIZONTAL = 21;
     public static final int ZOOM_SLIDE_VERTICAL = 22;
-
+    public static final int ZOOM_SLIDE_HORIZONTAL2 = 23;
+    private boolean mDidSlideOut = false;
+    private boolean mIsAnimating = false;
+    private FragmentTransaction mFragmentTransaction;
+    private Context mContext;
+    private Fragment mFirstFragment, mSecondFragment;
+    private int mContainerID;
+    private int mTransitionType;
     public FragmentTransactionExtended(Context context, FragmentTransaction fragmentTransaction, Fragment firstFragment, Fragment secondFragment, int containerID) {
         this.mFragmentTransaction = fragmentTransaction;
         this.mContext = context;
@@ -123,6 +123,9 @@ public class FragmentTransactionExtended implements FragmentManager.OnBackStackC
                 break;
             case ZOOM_SLIDE_HORIZONTAL:
             	transitionZoomSlideHorizontal();
+                break;
+            case ZOOM_SLIDE_HORIZONTAL2:
+                transitionZoomSlideHorizontal2();
                 break;
             case ZOOM_SLIDE_VERTICAL:
             	transitionZoomSlideVertical();
@@ -213,13 +216,17 @@ public class FragmentTransactionExtended implements FragmentManager.OnBackStackC
     private void transitionZoomSlideHorizontal() {
         mFragmentTransaction.setCustomAnimations(R.animator.zoom_slide_horizontal_tablet_right_in, R.animator.zoom_slide_horizontal_left_out, R.animator.zoom_slide_horizontal_tablet_left_in, R.animator.zoom_slide_horizontal_right_out);
     }
-    
+
+    private void transitionZoomSlideHorizontal2() {
+        mFragmentTransaction.setCustomAnimations(R.animator.zoom_slide_horizontal_tablet_right_in, R.animator.zoom_slide_horizontal_left_out, R.animator.zoom_slide_horizontal_tablet_right_in, R.animator.zoom_slide_horizontal_left_out);
+    }
+
     private void transitionZoomSlideVertical() {
         mFragmentTransaction.setCustomAnimations(R.animator.zoom_slide_vertical_tablet_right_in, R.animator.zoom_slide_vertical_left_out, R.animator.zoom_slide_vertical_tablet_left_in, R.animator.zoom_slide_vertical_right_out);
     }
 
 
-    private void switchFragments() {
+    private void switchFragments(final boolean shouldAddtoBack) {
         ((Activity) this.mContext).getFragmentManager().addOnBackStackChangedListener(this);
 
         if (mIsAnimating) {
@@ -236,7 +243,9 @@ public class FragmentTransactionExtended implements FragmentManager.OnBackStackC
                 public void onAnimationEnd(Animator arg0) {
                     mFragmentTransaction.setCustomAnimations(R.animator.slide_fragment_in, 0, 0, R.animator.slide_fragment_out);
                     mFragmentTransaction.add(mContainerID, mSecondFragment);
-                    mFragmentTransaction.addToBackStack(null);
+                    if (shouldAddtoBack) {
+                        mFragmentTransaction.addToBackStack(null);
+                    }
                     mFragmentTransaction.commit();
                 }
             };
@@ -290,13 +299,15 @@ public class FragmentTransactionExtended implements FragmentManager.OnBackStackC
     }
 
 
-    public void commit(){
+    public void commit(boolean shouldAddtoBack) {
         switch (mTransitionType){
             case SLIDING:
-                switchFragments();
+                switchFragments(shouldAddtoBack);
                 break;
             default:
-                mFragmentTransaction.addToBackStack(null);
+                if (shouldAddtoBack) {
+                    mFragmentTransaction.addToBackStack(null);
+                }
                 mFragmentTransaction.commit();
                 break;
         }

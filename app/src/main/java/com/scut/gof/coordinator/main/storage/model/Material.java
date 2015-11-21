@@ -1,7 +1,8 @@
-package com.scut.gof.coordinator.main.model;
+package com.scut.gof.coordinator.main.storage.model;
 
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
 
 import org.json.JSONException;
@@ -10,6 +11,7 @@ import org.json.JSONObject;
 /**
  * Created by Administrator on 2015/11/4.
  */
+@Table(name = "material")
 public class Material extends Model {
 
     //物品所属proid

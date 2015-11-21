@@ -9,17 +9,13 @@ import android.view.ViewGroup;
 import com.scut.gof.coordinator.R;
 
 /**
- * Created by Administrator on 2015/10/31.
- * 用户数据--一些更细节操作的入口
+ * Created by Administrator on 2015/11/7.
  */
-public class UserDataFragment extends BaseFragment {
-
-    public UserDataFragment() {
-    }
+public class EmptyFragment extends BaseFragment {
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_userdata,container,false);
+        return inflater.inflate(R.layout.fragment_empty, container, false);
     }
 }

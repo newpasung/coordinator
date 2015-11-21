@@ -1,138 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.scut.gof.coordinator.main.widget.FragContainer xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="@dimen/padding_normal"
-    android:stretchColumns="1">
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:padding="@dimen/padding_normal"
+        android:stretchColumns="1">
 
-        <ImageButton
-            android:id="@+id/btn_img"
-            android:layout_width="@dimen/img_thumbnail"
-            android:layout_height="@dimen/img_thumbnail"
-            android:scaleType="centerInside"
-            android:src="@drawable/add" />
-
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="0dp" />
-
-    </LinearLayout>
-
-    <TableRow>
-
-        <TextView
-            style="@style/text_title"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/margin_normal"
-            android:text="@string/text_proname" />
+            android:orientation="horizontal">
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </TableRow>
+            <ImageButton
+                android:id="@+id/btn_img"
+                android:layout_width="@dimen/img_thumbnail"
+                android:layout_height="@dimen/img_thumbnail"
+                android:scaleType="centerInside"
+                android:src="@drawable/add" />
 
-    <TableRow>
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="0dp" />
 
-        <TextView
-            style="@style/text_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/margin_normal"
-            android:text="@string/text_propricipal" />
+        </LinearLayout>
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </TableRow>
+        <TableRow>
 
-    <TableRow>
+            <TextView
+                style="@style/text_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/margin_normal"
+                android:text="@string/text_proname" />
 
-        <TextView
-            style="@style/text_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/margin_normal"
-            android:text="@string/text_proaffiliation" />
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </TableRow>
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </TableRow>
+        <TableRow>
 
-    <TableRow>
+            <TextView
+                style="@style/text_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/margin_normal"
+                android:text="@string/text_propricipal" />
 
-        <TextView
-            style="@style/text_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/margin_normal"
-            android:text="@string/text_start_end_time" />
+            <TextView
+                android:id="@+id/tv_principal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </TableRow>
 
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="0dp" />
+        <TableRow>
 
-    </TableRow>
+            <TextView
+                style="@style/text_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/margin_normal"
+                android:text="@string/text_proaffiliation" />
 
-    <TableRow>
+            <TextView
+                android:id="@+id/tv_affiliation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </TableRow>
 
-        <Button
-            android:id="@+id/btn_starttime"
-            style="@style/text_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/margin_normal"
-            android:layout_marginTop="@dimen/margin_small"
-            android:background="@drawable/bg_flat_btn"
-            android:text="@string/text_start_end_time" />
+        <TableRow>
 
-        <Button
-            android:id="@+id/btn_endtime"
-            style="@style/text_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/margin_normal"
-            android:layout_marginTop="@dimen/margin_small"
-            android:background="@drawable/bg_flat_btn"
-            android:gravity="left"
-            android:text="@string/app_name" />
+            <TextView
+                style="@style/text_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/margin_normal"
+                android:text="@string/text_start_end_time" />
 
-    </TableRow>
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="0dp" />
 
-    <TableRow>
+        </TableRow>
 
-        <TextView
-            style="@style/text_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/margin_normal"
-            android:text="@string/text_prodesc" />
+        <TableRow>
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </TableRow>
+            <Button
+                android:id="@+id/btn_starttime"
+                style="@style/text_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/margin_normal"
+                android:layout_marginTop="@dimen/margin_small"
+                android:background="@drawable/bg_flat_btn"
+                android:text="@string/text_start_end_time" />
 
-    <TableRow>
+            <Button
+                android:id="@+id/btn_endtime"
+                style="@style/text_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/margin_normal"
+                android:layout_marginTop="@dimen/margin_small"
+                android:background="@drawable/bg_flat_btn"
+                android:gravity="left"
+                android:text="@string/app_name" />
 
-        <TextView
-            style="@style/text_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/margin_normal"
-            android:text="@string/text_protype" />
+        </TableRow>
 
-        <Button
-            android:id="@+id/btn_category"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_flat_btn"
-            android:gravity="left" />
-    </TableRow>
-</TableLayout>
+        <TableRow>
+
+            <TextView
+                style="@style/text_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/margin_normal"
+                android:text="@string/text_prodesc" />
+
+            <TextView
+                android:id="@+id/tv_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                style="@style/text_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/margin_normal"
+                android:text="@string/text_protype" />
+
+            <TextView
+                android:id="@+id/tv_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left" />
+        </TableRow>
+    </TableLayout>
+</com.scut.gof.coordinator.main.widget.FragContainer>

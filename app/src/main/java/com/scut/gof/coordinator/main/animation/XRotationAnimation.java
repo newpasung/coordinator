@@ -3,7 +3,6 @@ package com.scut.gof.coordinator.main.animation;
 import android.graphics.Camera;
 import android.graphics.Matrix;
 import android.view.animation.Animation;
-import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Transformation;
 
 /**
@@ -22,7 +21,6 @@ public class XRotationAnimation extends Animation {
         centerX=width/2f;
         centerY=height/2f;
         setDuration(1000);
-        setInterpolator(new DecelerateInterpolator());
         setFillAfter(true);
     }
 

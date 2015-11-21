@@ -17,5 +17,4 @@ public class BaseActivity extends AppCompatActivity {
     protected void toast(String text){
         Toast.makeText(this,text,Toast.LENGTH_SHORT).show();
     }
-
 }
