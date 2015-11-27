@@ -10,6 +10,17 @@
 
     <color name="white">#ffffff</color>
     <color name="transparent">#00000000</color>
+    <color name="blue">#5677fc</color>
+    //下面是一系列渐变的bluegray，l1最浅
+    <color name="bluegray_l1">#fafafa</color>
+    <color name="bluegray_l2">#f5f5f5</color>
+    <color name="bluegray_l3">#eeeeee</color>
+    <color name="bluegray_l4">#E6E6E6</color>
+    <color name="bluegray_l5">#DBE6EA</color>
+    <color name="bluegray_l6">#CFE1EA</color>
+    <color name="bluegray_l7">#b0bec5</color>
+
+
     //third library
     <color name="rippelColor">#33006600</color>
 

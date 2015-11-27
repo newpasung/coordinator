@@ -15,6 +15,15 @@ import com.scut.gof.coordinator.main.widget.Switcher;
  */
 public class SettingFragment extends BaseFragment {
 
+    public static SettingFragment newInstance() {
+
+        Bundle args = new Bundle();
+
+        SettingFragment fragment = new SettingFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -26,4 +35,5 @@ public class SettingFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         Switcher switcher=(Switcher)view.findViewById(R.id.switcher);
     }
+
 }

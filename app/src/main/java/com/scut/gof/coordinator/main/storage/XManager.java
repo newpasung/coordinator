@@ -97,32 +97,4 @@ public class XManager {
         editor.apply();
     }
 
-    /**
-     * 把id保存为String，字符分隔符为;
-     * 如：123;123;123;
-     */
-    public static void saveUsersProjectId(Context context, long... params) {
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < params.length; i++) {
-            builder.append(params[i]);
-            builder.append(";");
-        }
-        SharedPreferences.Editor editor = getUserManager(context).edit();
-        editor.putString(PARAM_PROJECT_IDS, builder.toString());
-        editor.apply();
-    }
-
-    public static long[] getUsersProjectId(Context context) {
-        String ids_str = getUserManager(context).getString(PARAM_PROJECT_IDS, "");
-        String[] ids_arr = ids_str.split(";");
-        if (ids_arr == null) {
-            return null;
-        } else {
-            long ids[] = new long[ids_str.length()];
-            for (int i = 0; i < ids_str.length(); i++) {
-                ids[i] = Long.valueOf(ids_arr[i]);
-            }
-            return ids;
-        }
-    }
 }

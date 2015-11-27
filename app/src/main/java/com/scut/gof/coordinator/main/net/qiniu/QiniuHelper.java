@@ -1,7 +1,7 @@
 package com.scut.gof.coordinator.main.net.qiniu;
 
 import android.content.Context;
-import android.util.Log;
+import android.widget.Toast;
 
 import com.loopj.android.http.RequestParams;
 import com.qiniu.android.storage.UpCompletionHandler;
@@ -17,12 +17,17 @@ import org.json.JSONObject;
  */
 public class QiniuHelper {
 
-    public static final int FILETYPE_DEFAULT = 1;
+    public static final int FILETYPE_PROLOGO = 0;
+    public static final int FILETYPE_AVATAR = 1;
 
-    public static void uploadFile(Context mContext, int filetype, final byte[] file, final UpCompletionHandler handler) {
+    /**
+     * 用来向七牛上传文件
+     *
+     * @param option 上传不同类型文件选择不同option，在net.qiniu包下
+     */
+    public static void uploadFile(final Context mContext, UploadOption option, final byte[] file, final UpCompletionHandler handler) {
         final UploadManager manager = new UploadManager();
-        RequestParams params = new RequestParams();
-        params.put("category", filetype);
+        RequestParams params = option.getParams();
         HttpClient.get(mContext, "qiniu/token", params, new JsonResponseHandler() {
             @Override
             public void onSuccess(JSONObject object) {
@@ -35,10 +40,9 @@ public class QiniuHelper {
                     e.printStackTrace();
                 }
             }
-
             @Override
             public void onFailure(String message, String for_param) {
-                Log.i("he", "d");
+                Toast.makeText(mContext, "upload failed", Toast.LENGTH_SHORT).show();
             }
         });
     }

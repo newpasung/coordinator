@@ -4,7 +4,6 @@ package com.scut.gof.coordinator.main.fragment.LoginFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,7 +97,7 @@ public class LoginFragment extends BaseFragment {
                         public void onSuccess(JSONObject response) {
                             try {
                                 XManager.setLoginStatus(getActivity(), true);
-                                UserManager.iniUser(getActivity(), response.getJSONObject("data").getJSONObject("user"));
+                                UserManager.iniUserData(getActivity(), response.getJSONObject("data"));
                                 shouldTrans = true;
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -116,8 +115,7 @@ public class LoginFragment extends BaseFragment {
                             } else {
                                 toast(message);
                             }
-
-                            Log.i("login", message + "  " + for_param);
+                            loginBtn.getAnimation().cancel();
                         }
 
                     });

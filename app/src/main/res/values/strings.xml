@@ -31,9 +31,8 @@
     <string name="text_propricipal">项目负责人</string>
     <string name="text_protype">项目类型</string>
     <string name="text_proaffiliation">项目归属</string>
-
-    <string name="warn_inputproname">你要输入项目名称</string>
-    <string name="warn_chooseprotime">你要选择项目起始时间</string>
+    <string name="text_presenttime"> 0年 0月 0日</string>
+    <string name="text_protype_personal">个人项目</string>
 
     <string name="text_tip_hasnoproject">你没有加入任何项目</string>
     <string name="text_tip_hasnomessage">你没有重要消息</string>
@@ -43,7 +42,7 @@
     <string name="action_feedback">帮助&#38;反馈</string>
     <string name="action_personaldata">个人数据</string>
     <string name="action_home">首页</string>
-    <string name="action_taskflow">任务流</string>
+    <string name="action_task">任务</string>
     <string name="action_submit">提交</string>
     <string name="action_newpro">新建项目</string>
     <string name="action_cancel">取消</string>
@@ -53,7 +52,12 @@
     <string name="action_moreconfig">高级设置</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="action_newtask">新建任务</string>
+    <string name="action_proinfo">项目信息</string>
 
+    <string name="warn_tokeninvalid">你的账号在别处登录，需重新登录</string>
+    <string name="warn_inputproname">你要输入项目名称</string>
+    <string name="warn_chooseprotime">你要选择项目起始时间</string>
     //third library
     <string name="folder_all">All Images</string>
     <string name="preview">Preview</string>

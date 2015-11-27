@@ -5,6 +5,7 @@ package com.scut.gof.coordinator.main.net;
  * Created by gjz on 11/2/15.
  */
 public class RequestParamName {
+    public static final int ERRORCODE_TOKENINVALID = 10004;
     public static final String TOKEN = "token";
     public static final String PHONE = "phone";
     public static final String PASSWORD = "password";

@@ -2,7 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group>
         <item
+            android:id="@+id/btn_showproinfo"
+            android:icon="@drawable/description"
+            android:title="@string/action_proinfo" />
+        <item
             android:id="@+id/btn_taskflow"
-            android:title="@string/action_taskflow" />
+            android:icon="@drawable/assignment"
+            android:title="@string/action_task" />
     </group>
+
 </menu>

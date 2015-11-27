@@ -57,6 +57,10 @@ public class FragmentTransactionExtended implements FragmentManager.OnBackStackC
     }
 
     public void addTransition(int transitionType) {
+        addTransition(transitionType, null);
+    }
+
+    public void addTransition(int transitionType, String tag) {
         this.mTransitionType = transitionType;
         switch (transitionType) {
             case SCALEX:
@@ -131,7 +135,7 @@ public class FragmentTransactionExtended implements FragmentManager.OnBackStackC
             	transitionZoomSlideVertical();
                 break;
         }
-        mFragmentTransaction.replace(mContainerID, mSecondFragment);
+        mFragmentTransaction.replace(mContainerID, mSecondFragment, tag);
     }
 
     private void transitionFade() {

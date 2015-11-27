@@ -18,6 +18,15 @@ public class FeedBackFragment extends BaseFragment {
     public FeedBackFragment() {
     }
 
+    public static FeedBackFragment newInstance() {
+
+        Bundle args = new Bundle();
+
+        FeedBackFragment fragment = new FeedBackFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

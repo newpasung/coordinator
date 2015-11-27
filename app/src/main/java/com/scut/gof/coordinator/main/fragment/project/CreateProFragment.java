@@ -1,35 +1,28 @@
 package com.scut.gof.coordinator.main.fragment.project;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.TextView;
+import android.widget.EditText;
+import android.widget.Spinner;
 
-import com.loopj.android.http.RequestParams;
 import com.scut.gof.coordinator.R;
-import com.scut.gof.coordinator.lib.nereo.multi_image_selector.MultiImageSelectorActivity;
+import com.scut.gof.coordinator.main.activity.CreateProActivity;
+import com.scut.gof.coordinator.main.communication.LocalBrCast;
 import com.scut.gof.coordinator.main.fragment.BaseFragment;
 import com.scut.gof.coordinator.main.interf.BottomBarController;
-import com.scut.gof.coordinator.main.net.HttpClient;
-import com.scut.gof.coordinator.main.net.JsonResponseHandler;
 import com.scut.gof.coordinator.main.net.RequestParamName;
-import com.scut.gof.coordinator.main.storage.model.Project;
+import com.scut.gof.coordinator.main.utils.ViewUtil;
 import com.scut.gof.coordinator.main.widget.BottomToolBar;
-import com.scut.gof.coordinator.main.widget.dialog.ChoiceDialog;
-import com.scut.gof.coordinator.main.widget.dialog.InputDialog;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 
 /**
  * Created by Administrator on 2015/11/3.
@@ -39,17 +32,11 @@ public class CreateProFragment extends BaseFragment implements BottomBarControll
 
     Button mBtnstarttime;
     Button mBtnendtime;
-    TextView mTvCategory;
-    TextView mTvname;
-    TextView mTvaffiliation;
-    TextView mTvprincipal;
-    TextView mTvdesc;
-    ImageButton mBtnpic;
-    int which = 0;
+    Spinner mSpcategory;
+    EditText mEtname;
+    EditText mEtdesc;
     DatePickerDialog pickerDialog;
-    ChoiceDialog choiceDialog;
-    InputDialog inputDialog;
-
+    String[] categories;
     public CreateProFragment() {
         super();
     }
@@ -62,6 +49,7 @@ public class CreateProFragment extends BaseFragment implements BottomBarControll
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        categories = container.getContext().getResources().getStringArray(R.array.project_category);
         return inflater.inflate(R.layout.fragment_createpro, container, false);
     }
 
@@ -70,185 +58,88 @@ public class CreateProFragment extends BaseFragment implements BottomBarControll
         super.onViewCreated(view, savedInstanceState);
         mBtnstarttime = (Button) view.findViewById(R.id.btn_starttime);
         mBtnendtime = (Button) view.findViewById(R.id.btn_endtime);
-        mBtnpic = (ImageButton) view.findViewById(R.id.btn_img);
-        mTvCategory = (TextView) view.findViewById(R.id.tv_category);
-        mTvaffiliation = (TextView) view.findViewById(R.id.tv_affiliation);
-        mTvdesc = (TextView) view.findViewById(R.id.tv_desc);
-        mTvname = (TextView) view.findViewById(R.id.tv_name);
-        mTvprincipal = (TextView) view.findViewById(R.id.tv_principal);
+        mBtnstarttime.setTag(Long.MIN_VALUE);
+        mBtnendtime.setTag(Long.MAX_VALUE);
+        mSpcategory = (Spinner) view.findViewById(R.id.spinner_type);
+        mEtdesc = (EditText) view.findViewById(R.id.et_desc);
+        mEtname = (EditText) view.findViewById(R.id.et_name);
         iniDialog();
         iniListener();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        categories = null;
+    }
+
     protected void iniDialog() {
-        Calendar calendar = Calendar.getInstance();
+        final GregorianCalendar calendar = new GregorianCalendar(Locale.CHINA);
         pickerDialog = DatePickerDialog.newInstance(new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+                GregorianCalendar endCalendar = new GregorianCalendar(year, monthOfYear, dayOfMonth);
+                long time = endCalendar.getTime().getTime();
                 StringBuilder builder = new StringBuilder();
                 builder.append(year);
                 builder.append("-");
                 builder.append(monthOfYear + 1);
                 builder.append("-");
                 builder.append(dayOfMonth);
-                if (which == 0)
+                //下面包括了简单的辨别"起始时间"的逻辑
+                if (view.getTag().equals("startdatepicker")) {
+                    if (time > (long) mBtnendtime.getTag()) {
+                        toastWarn("结束时间应该更早");
+                        return;
+                    }
                     mBtnstarttime.setText(builder.toString());
-                else mBtnendtime.setText(builder.toString());
+                    mBtnstarttime.setTag(new GregorianCalendar(year, monthOfYear, dayOfMonth).getTime().getTime());
+                } else {
+                    if (time < (long) mBtnstarttime.getTag()) {
+                        toastWarn("结束时间应该更久");
+                        mBtnendtime.setText(mBtnstarttime.getText().toString());
+                        return;
+                    }
+                    mBtnendtime.setText(builder.toString());
+                    mBtnendtime.setTag(time);
+                }
             }
-        }, calendar.YEAR, calendar.MONTH, calendar.DAY_OF_MONTH);
-
-        choiceDialog = new ChoiceDialog(getActivity());
-        choiceDialog.addItem("校园体育活动", new ChoiceDialog.OnClickListener() {
-            @Override
-            public void didClick(ChoiceDialog dialog, String itemTitle) {
-                mTvCategory.setText(itemTitle);
-                dialog.dismiss();
-            }
-        })
-                .addItem("校园歌唱比赛", new ChoiceDialog.OnClickListener() {
-                    @Override
-                    public void didClick(ChoiceDialog dialog, String itemTitle) {
-                        mTvCategory.setText(itemTitle);
-                        dialog.dismiss();
-                    }
-                })
-                .addItem("建筑", new ChoiceDialog.OnClickListener() {
-                    @Override
-                    public void didClick(ChoiceDialog dialog, String itemTitle) {
-                        mTvCategory.setText(itemTitle);
-                        dialog.dismiss();
-                    }
-                })
-                .addItem("abc", new ChoiceDialog.OnClickListener() {
-                    @Override
-                    public void didClick(ChoiceDialog dialog, String itemTitle) {
-                        mTvCategory.setText(itemTitle);
-                        dialog.dismiss();
-                    }
-                });
-        inputDialog = new InputDialog(getActivity());
+        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+        pickerDialog.setYearRange(2010, 2030);
     }
 
     //一些关于dialog和表单的点击关系
     protected void iniListener() {
-        mTvCategory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                choiceDialog.show();
-            }
-        });
-        mBtnpic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getAPic();
-            }
-        });
         mBtnstarttime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                which = 0;
                 pickerDialog.show(getFragmentManager(), "startdatepicker");
             }
         });
         mBtnendtime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                which = 1;
                 pickerDialog.show(getFragmentManager(), "enddatepicker");
             }
         });
-        mTvname.setOnClickListener(new View.OnClickListener() {
+        mSpcategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onClick(View v) {
-                inputDialog.show();
-                inputDialog.onEnsure(mTvname);
-            }
-        });
-        mTvprincipal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                inputDialog.show();
-                inputDialog.onEnsure(mTvprincipal);
-            }
-        });
-        mTvaffiliation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                inputDialog.show();
-                inputDialog.onEnsure(mTvaffiliation);
-            }
-        });
-        mTvdesc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                inputDialog.show();
-                inputDialog.onEnsure(mTvdesc);
-            }
-        });
-
-    }
-
-    protected void getAPic() {
-        Intent intent = new Intent(getActivity(), MultiImageSelectorActivity.class);
-        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, 1);
-        startActivityForResult(intent, 1);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1 && resultCode == getActivity().RESULT_OK) {
-            Log.i("picdata", data.toString());
-        }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-    protected void uploadInfo() {
-        String name = mTvname.getText().toString();
-        String affiliation = mTvaffiliation.getText().toString();
-        String starttime = mBtnstarttime.getText().toString();
-        String endtime = mBtnendtime.getText().toString();
-        String category = mTvCategory.getText().toString();
-        String desc = mTvdesc.getText().toString();
-        String principal = mTvprincipal.getText().toString();
-        if (TextUtils.isEmpty(name)) {
-            toastWarn(getString(R.string.warn_inputproname));
-        }
-        if (TextUtils.isEmpty(starttime) || TextUtils.isEmpty(endtime)) {
-            toastWarn(getString(R.string.warn_chooseprotime));
-        }
-        RequestParams params = new RequestParams();
-        params.put(RequestParamName.PROJECT_PRINCIPALID, principal);
-        params.put(RequestParamName.PROJECT_AFFILIATION, affiliation);
-        params.put(RequestParamName.PROJECT_CATEGORY, category);
-        params.put(RequestParamName.PROJECT_DESCRIPTION, desc);
-        params.put(RequestParamName.PROJECT_PLANENDTIME, endtime);
-        params.put(RequestParamName.PROJECT_PLANSTARTTIME, starttime);
-        params.put(RequestParamName.PROJECT_NAME, name);
-        HttpClient.post(getActivity(), "project/newproject", params, new JsonResponseHandler() {
-            @Override
-            public void onSuccess(JSONObject response) {
-                try {
-                    JSONObject data = response.getJSONObject("data");
-                    Project.joinProject(getActivity(), data);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mSpcategory.setTag(categories[position]);
             }
 
             @Override
-            public void onFailure(String message, String for_param) {
-                toast("failure");
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
     }
 
     @Override
     public void refreshView(BottomToolBar bottomToolBar) {
-        bottomToolBar.setText(new String[]{"取消", "", "高级设置"});
+        bottomToolBar.setText(new String[]{getString(R.string.action_cancel)
+                , getString(R.string.action_commit)
+                , getString(R.string.action_moreconfig)});
     }
 
     @Override
@@ -258,11 +149,38 @@ public class CreateProFragment extends BaseFragment implements BottomBarControll
 
     @Override
     public void controllmiddle(BottomToolBar toolBar) {
-
+        if (acceptParam()) {
+            LocalBrCast.sendBroadcast(getActivity(), CreateProActivity.BRCAST_KEY_NEWPRO);
+        }
     }
 
     @Override
     public void controllright(BottomToolBar toolBar) {
-
+        acceptParam();
     }
+
+    /**
+     * 判断输入是否可用，和设置act里的参数
+     */
+    private boolean acceptParam() {
+        if (ViewUtil.isAllTextEmpty(mEtdesc, mEtname)) {
+            toast("资料未填写完整");
+            return false;
+        }
+        if ((long) mBtnendtime.getTag() == Long.MAX_VALUE) {
+            toast("你需要选择结束时间");
+            return false;
+        }
+        if ((long) mBtnstarttime.getTag() == Long.MIN_VALUE) {
+            toast("你需要选择开始时间");
+            return false;
+        }
+        ((CreateProActivity) getActivity()).addReqParams(RequestParamName.PROJECT_NAME, mEtname.getText().toString());
+        ((CreateProActivity) getActivity()).addReqParams(RequestParamName.PROJECT_PLANSTARTTIME, mBtnstarttime.getText().toString());
+        ((CreateProActivity) getActivity()).addReqParams(RequestParamName.PROJECT_PLANENDTIME, mBtnendtime.getText().toString());
+        ((CreateProActivity) getActivity()).addReqParams(RequestParamName.PROJECT_DESCRIPTION, mEtdesc.getText().toString());
+        ((CreateProActivity) getActivity()).addReqParams(RequestParamName.PROJECT_CATEGORY, (String) mSpcategory.getTag());
+        return true;
+    }
+
 }

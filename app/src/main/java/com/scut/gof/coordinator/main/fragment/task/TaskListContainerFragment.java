@@ -1,18 +1,19 @@
 package com.scut.gof.coordinator.main.fragment.task;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.scut.gof.coordinator.R;
-import com.scut.gof.coordinator.main.fragment.BaseSupportFragment;
+import com.scut.gof.coordinator.main.fragment.BaseFragment;
+import com.scut.gof.coordinator.main.interf.BottomBarController;
+import com.scut.gof.coordinator.main.widget.BottomToolBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,14 +21,17 @@ import java.util.List;
 /**
  * Created by Administrator on 2015/11/7.
  */
-public class TaskListContainerFragment extends BaseSupportFragment {
-
+public class TaskListContainerFragment extends BaseFragment implements BottomBarController {
     ViewPager viewPager;
     MyAdapter pagerAdapter;
     List<Fragment> fragments;
     TabLayout tabLayout;
     String[] tabTitles;
     long proid = -1;
+
+    public TaskListContainerFragment() {
+
+    }
 
     public static TaskListContainerFragment newInstance(long proid) {
         Bundle args = new Bundle();
@@ -40,7 +44,9 @@ public class TaskListContainerFragment extends BaseSupportFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        tabTitles = getActivity().getResources().getStringArray(R.array.tasklist_tabtitles);
+        if (getArguments() != null) {
+            proid = getArguments().getLong("proid");
+        }
         return inflater.inflate(R.layout.fragment_tasklistcontainer, container, false);
     }
 
@@ -57,10 +63,14 @@ public class TaskListContainerFragment extends BaseSupportFragment {
     }
 
     protected void iniAdapter() {
+        if (pagerAdapter == null) {
+            pagerAdapter = new MyAdapter(getChildFragmentManager());
+        }
+        pagerAdapter.setList(fragments);
         viewPager.setAdapter(pagerAdapter);
-        pagerAdapter = new MyAdapter(getFragmentManager(), fragments);
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
+
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition(), true);
             }
@@ -79,29 +89,60 @@ public class TaskListContainerFragment extends BaseSupportFragment {
         TabLayout.TabLayoutOnPageChangeListener listener
                 = new TabLayout.TabLayoutOnPageChangeListener(tabLayout);
         viewPager.addOnPageChangeListener(listener);
-        viewPager.setAdapter(pagerAdapter);
     }
 
     protected void iniData() {
-        if (getArguments() != null) {
-            proid = getArguments().getLong("proid");
+        if (fragments == null || fragments.size() == 0) {
+            fragments = new ArrayList<>();
+            fragments.add(TaskListFragment.newInstance(1));
+            fragments.add(TaskListFragment.newInstance(2));
+            fragments.add(TaskListFragment.newInstance(3));
+            tabTitles = getActivity().getResources().getStringArray(R.array.tasklist_tabtitles);
         }
-        fragments = new ArrayList<>();
-        fragments.add(TaskListFragment.newInstance(proid));
-        fragments.add(TaskListFragment.newInstance(proid));
-        fragments.add(TaskListFragment.newInstance(proid));
     }
 
-    class MyAdapter extends FragmentPagerAdapter {
-        List<Fragment> list;
+    @Override
+    public void refreshView(BottomToolBar bottomToolBar) {
+        bottomToolBar.setText(getString(R.string.action_newtask));
+    }
 
-        public MyAdapter(FragmentManager fm, List<Fragment> fragmentList) {
+    @Override
+    public void controllleft(BottomToolBar toolBar) {
+
+    }
+
+    @Override
+    public void controllmiddle(BottomToolBar toolBar) {
+
+    }
+
+    @Override
+    public void controllright(BottomToolBar toolBar) {
+
+    }
+
+    class MyAdapter extends android.support.v13.app.FragmentStatePagerAdapter {
+        List<Fragment> list;
+        FragmentManager manager;
+
+        public MyAdapter(android.app.FragmentManager fm) {
             super(fm);
-            this.list = fragmentList;
+            this.manager = fm;
+        }
+
+        /**
+         * 清除adapter的数据和fragmentmanager绑定的fragment
+         */
+        public void clearData() {
+            list.clear();
+        }
+
+        public void setList(List<Fragment> list) {
+            this.list = list;
         }
 
         @Override
-        public Fragment getItem(int position) {
+        public android.app.Fragment getItem(int position) {
             return list.get(position);
         }
 
@@ -117,12 +158,12 @@ public class TaskListContainerFragment extends BaseSupportFragment {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            if (position < tabTitles.length) {
-                return tabTitles[position];
-            } else {
-                return "";
-            }
+            return tabTitles[position];
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            return POSITION_NONE;
         }
     }
-
 }

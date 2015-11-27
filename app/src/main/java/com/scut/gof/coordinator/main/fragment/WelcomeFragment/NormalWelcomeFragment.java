@@ -36,7 +36,7 @@ public class NormalWelcomeFragment extends BaseFragment {
                 startActivity(intent);
                 getActivity().finish();
             }
-        }, 0);
+        }, 200);
 
     }
 }

@@ -30,14 +30,10 @@ public class HomeActivity extends BaseActivity {
     DrawerLayout mDrwer;
     BottomToolBar mBar;
     FloatingActionButton mBtnfab;
-    UserDataFragment userDataFragment;
-    HomeFragment homeFragment;
-    FeedBackFragment feedBackFragment;
-    SettingFragment settingFragment;
-    //用来记录当前的fragment和上一个fragment
-    Fragment lastFragment;
+    //用来记录当前的fragment
     Fragment curFragment;
     CircleImageView mCiravatar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,14 +74,12 @@ public class HomeActivity extends BaseActivity {
         //设置侧滑栏数据
         PicassoProxy.loadAvatar(this, UserManager.getUserThumbAvatar(this), mCiravatar);
         //设置默认fragment
-        homeFragment = new HomeFragment();
-        getFragmentManager().beginTransaction().replace(R.id.fragment, homeFragment)
+        curFragment = HomeFragment.newInstance();
+        getFragmentManager().beginTransaction().replace(R.id.fragment, curFragment)
                 .commit();
-        if (homeFragment instanceof BottomBarController) {
-            mBar.setButtonListener(homeFragment);
+        if (curFragment instanceof BottomBarController) {
+            mBar.setButtonListener((BottomBarController) curFragment);
         }
-        curFragment = homeFragment;
-        lastFragment = homeFragment;
     }
 
     protected void iniListener() {
@@ -110,81 +104,78 @@ public class HomeActivity extends BaseActivity {
         naviView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
+                if (mBar.getVisibility() == View.VISIBLE) {
+                    mBar.resetImmediate();
+                }
                 switch (item.getItemId()) {
                     case R.id.btn_userdata: {
-                        if (userDataFragment == null) {
-                            userDataFragment = new UserDataFragment();
-                        }
-                        replaceFragment(userDataFragment);
+                        if (curFragment instanceof UserDataFragment) break;
+                        replaceFragment(UserDataFragment.newInstance());
                     }
                     break;
                     case R.id.btn_home: {
-                        if (homeFragment == null) homeFragment = new HomeFragment();
-                        replaceFragment(homeFragment);
+                        if (curFragment instanceof HomeFragment) break;
+                        replaceFragment(HomeFragment.newInstance());
                     }
                     break;
                     case R.id.btn_feedback: {
-                        if (feedBackFragment == null)
-                            feedBackFragment = new FeedBackFragment();
-                        replaceFragment(feedBackFragment);
+                        if (curFragment instanceof FeedBackFragment) break;
+                        replaceFragment(FeedBackFragment.newInstance());
                     }
                     break;
                     case R.id.btn_setting: {
-                        if (settingFragment == null)
-                            settingFragment = new SettingFragment();
-                        replaceFragment(settingFragment);
+                        if (curFragment instanceof SettingFragment) break;
+                        replaceFragment(SettingFragment.newInstance());
                     }
                     break;
                     case R.id.btn_test: {
-                        startActivity(new Intent(HomeActivity.this, ProjectActivity.class));
                     }
                     break;
                 }
+                mDrwer.closeDrawer(Gravity.LEFT);
                 return true;
             }
         });
     }
 
-    //用来切换fragment
-    //TODO 怎么处理缓存呢
+    //用来切换fragment , 不保存状态到回退栈
     protected void replaceFragment(Fragment fragment) {
-        if (curFragment == fragment) {
-            //不应该发生什么
-        }
-        //如果正好是之前点击过的我就pop
-        else if (lastFragment == fragment) {
-            getFragmentManager().popBackStack();
-            curFragment = lastFragment;
-        } else {
-            //怎么清空回退栈呢？？
-            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-            FragmentTransactionExtended fragmentTransactionExtended
-                    = new FragmentTransactionExtended(this, fragmentTransaction, curFragment, fragment, R.id.fragment);
-            fragmentTransactionExtended.addTransition(FragmentTransactionExtended.ZOOM_SLIDE_HORIZONTAL2);
-            //回退栈只保存一个状态，暂时是这样吧
-            fragmentTransactionExtended.commit(true);
-            if (fragment instanceof BottomBarController) {
-                mBar.setButtonListener((BottomBarController) fragment);
+        if (fragment instanceof BottomBarController) {
+            mBar.setButtonListener((BottomBarController) fragment);
+            if (!mBtnfab.isShown()) {
+                mBtnfab.show();
             }
-            lastFragment = curFragment;
-            curFragment = fragment;
+        } else {
+            mBtnfab.hide();
         }
-        mDrwer.closeDrawer(Gravity.LEFT);
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        FragmentTransactionExtended fragmentTransactionExtended
+                = new FragmentTransactionExtended(this, fragmentTransaction, curFragment, fragment, R.id.fragment);
+        fragmentTransactionExtended.addTransition(FragmentTransactionExtended.SLIDE_HORIZONTAL);
+        fragmentTransactionExtended.commit(false);
+        curFragment = fragment;
     }
 
+    //此处逻辑是这样的，按返回键可以返回到homefragment，其他不行
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (mBar.getVisibility() == View.VISIBLE) {
+            if (mBar.getVisibility() == View.VISIBLE || mDrwer.isDrawerVisible(Gravity.LEFT)) {
                 if (mBar.isAnimating()) {
                     return true;
                 }
+                if (mDrwer.isDrawerOpen(Gravity.LEFT)) {
+                    mDrwer.closeDrawer(Gravity.LEFT);
+                }
                 mBar.reset();
+                return true;
+            }
+            if (!(curFragment instanceof HomeFragment)) {
+                replaceFragment(HomeFragment.newInstance());
                 return true;
             }
         }
         return super.onKeyDown(keyCode, event);
     }
-
 }
 

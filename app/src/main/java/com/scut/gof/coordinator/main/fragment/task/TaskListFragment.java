@@ -9,12 +9,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.scut.gof.coordinator.R;
-import com.scut.gof.coordinator.main.fragment.BaseSupportFragment;
+import com.scut.gof.coordinator.main.fragment.BaseFragment;
 
 /**
  * Created by Administrator on 2015/11/7.
  */
-public class TaskListFragment extends BaseSupportFragment {
+public class TaskListFragment extends BaseFragment {
 
     TextView mTvtest;
     long proid = -1;
@@ -38,12 +38,16 @@ public class TaskListFragment extends BaseSupportFragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            proid = bundle.getLong("proid");
+        if (getArguments() != null) {
+            proid = getArguments().getLong("proid");
         }
         mTvtest = (TextView) view.findViewById(R.id.tv_test);
         mTvtest.setText(proid + "");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
     }
 
 }

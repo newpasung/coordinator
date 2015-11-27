@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.scut.gof.coordinator.R;
+import com.scut.gof.coordinator.main.activity.CreateProActivity;
+import com.scut.gof.coordinator.main.communication.LocalBrCast;
 import com.scut.gof.coordinator.main.fragment.BaseFragment;
 import com.scut.gof.coordinator.main.interf.BottomBarController;
 import com.scut.gof.coordinator.main.widget.BottomToolBar;
@@ -24,24 +26,31 @@ public class IniMaterialFragment extends BaseFragment implements BottomBarContro
 
     @Override
     public void refreshView(BottomToolBar bottomToolBar) {
-        bottomToolBar.setText(getString(R.string.action_cancel)
-                , getString(R.string.action_commit)
-                , getString(R.string.action_moreconfig));
+        bottomToolBar.setText(getString(R.string.action_laststep)
+                , ""
+                , getString(R.string.action_commit));
     }
 
     @Override
     public void controllleft(BottomToolBar toolBar) {
-
+        //在act返回上一个frg
     }
 
     @Override
     public void controllmiddle(BottomToolBar toolBar) {
-
     }
 
     @Override
     public void controllright(BottomToolBar toolBar) {
-        //TODO 暂时关闭掉
-        getActivity().finish();
+        if (acceptParam()) {
+            LocalBrCast.sendBroadcast(getActivity(), CreateProActivity.BRCAST_KEY_NEWPRO);
+        }
+    }
+
+    /**
+     * 判断输入是否可用，和设置act里的参数
+     */
+    private boolean acceptParam() {
+        return true;
     }
 }

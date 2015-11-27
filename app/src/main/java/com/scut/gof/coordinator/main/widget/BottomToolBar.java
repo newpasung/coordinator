@@ -32,8 +32,8 @@ import com.scut.gof.coordinator.main.utils.ViewUtil;
  */
 public class BottomToolBar extends RelativeLayout {
 
-    final int INIWIDTH=20;
-    final int INIHEIGHT=20;
+    final int INIWIDTH = 20;
+    final int INIHEIGHT = 20;
     View animView;
     LinearLayout btnContainer;
     Button[] buttons;
@@ -41,9 +41,10 @@ public class BottomToolBar extends RelativeLayout {
     ShapeDrawable shapeDrawable;
     BottomBarController barController;
     //是否需要初始化
-    boolean needIni=true;
+    boolean needIni = true;
     //是否进行动画中
-    boolean isAnimating=false;
+    boolean isAnimating = false;
+
     public BottomToolBar(Context context) {
         super(context);
         init(context);
@@ -71,6 +72,12 @@ public class BottomToolBar extends RelativeLayout {
      * 用于设置三个button显示的字，可以传入1到3个字符串，一个字符串只设置右边的btn
      */
     public void setText(String... text) {
+        if (text == null) {
+            buttons[0].setText("");
+            buttons[1].setText("");
+            buttons[2].setText("");
+            return;
+        }
         if (text.length > 3) return;
         if (text.length == 1) {
             buttons[0].setText("");
@@ -89,9 +96,9 @@ public class BottomToolBar extends RelativeLayout {
 
     protected void init(final Context context) {
         setVisibility(View.INVISIBLE);
-        needIni=true;
+        needIni = true;
         animView = new View(context);
-        RelativeLayout.LayoutParams params=new LayoutParams(INIWIDTH,INIHEIGHT);
+        RelativeLayout.LayoutParams params = new LayoutParams(INIWIDTH, INIHEIGHT);
         animView.setLayoutParams(params);
         animView.setVisibility(INVISIBLE);
         shapeDrawable = new ShapeDrawable(new OvalShape());
@@ -150,12 +157,12 @@ public class BottomToolBar extends RelativeLayout {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        int w=MeasureSpec.makeMeasureSpec(INIWIDTH, MeasureSpec.EXACTLY);
-        int h=MeasureSpec.makeMeasureSpec(INIHEIGHT, MeasureSpec.EXACTLY);
+        int w = MeasureSpec.makeMeasureSpec(INIWIDTH, MeasureSpec.EXACTLY);
+        int h = MeasureSpec.makeMeasureSpec(INIHEIGHT, MeasureSpec.EXACTLY);
         animView.measure(w, h);
-        if(needIni){
+        if (needIni) {
             hideMainBuz();
-            needIni=false;
+            needIni = false;
         }
         //因为onDraw没反应，所以放在这里吧
         if (barController != null) {
@@ -163,12 +170,14 @@ public class BottomToolBar extends RelativeLayout {
         }
     }
 
-    //显示bottombar
+    /**
+     * 带动画显示bottombar,这个不关联fab
+     */
     public void reveal() {
         preProcess();
         setVisibility(VISIBLE);
         //根据宽度决定scale
-        float radius=calScale(animView.getWidth()/2);
+        float radius = calScale(animView.getWidth() / 2);
         animView.setVisibility(VISIBLE);
         animView.animate()
                 .scaleX(radius)
@@ -200,23 +209,23 @@ public class BottomToolBar extends RelativeLayout {
                 .start();
     }
 
-    protected void preProcess(){
+    protected void preProcess() {
         animView.setScaleX(1f);
         animView.setScaleY(1f);
-        animView.setTranslationX(getWidth() / 2 - animView.getWidth()/2);
+        animView.setTranslationX(getWidth() / 2 - animView.getWidth() / 2);
         animView.setTranslationY(getHeight() / 2 - animView.getHeight() / 2);
     }
 
     /**
-     * 协同显示bottombar和隐藏fab，没有fab使用无参reveal
+     * 带动画协同显示bottombar和隐藏fab，没有fab使用无参reveal
      */
     public void reveal(Context context) {
         if (mFloatingButton == null) {
             Log.e("BottomToolbar", "reveal error ,you should call attachFloatingButton() first");
             return;
         }
-        int transX = ViewUtil.getScreenX(mFloatingButton) - DenstityUtil.getScreenWidth(context) / 2 + mFloatingButton.getWidth() / 2;;
-        int transY=DenstityUtil.getScreenHeight(context) -
+        int transX = ViewUtil.getScreenX(mFloatingButton) - DenstityUtil.getScreenWidth(context) / 2 + mFloatingButton.getWidth() / 2;
+        int transY = DenstityUtil.getScreenHeight(context) -
                 ViewUtil.getScreenY(mFloatingButton) - mFloatingButton.getHeight();
         mFloatingButton.animate()
                 .translationX(-transX)
@@ -281,7 +290,7 @@ public class BottomToolBar extends RelativeLayout {
     }
 
     /**
-     * 这个用来重置view和恢复fab，所以必须先执行attachFloatingButton
+     * 这个用来动态地重置view和恢复fab，所以必须先执行attachFloatingButton
      */
     public void reset() {
         if (mFloatingButton == null) {
@@ -294,7 +303,7 @@ public class BottomToolBar extends RelativeLayout {
                 setListener(new Animator.AnimatorListener() {
                     @Override
                     public void onAnimationStart(Animator animation) {
-                        isAnimating=true;
+                        isAnimating = true;
                     }
 
                     @Override
@@ -303,7 +312,7 @@ public class BottomToolBar extends RelativeLayout {
                         animView.setScaleX(1f);
                         animView.setVisibility(INVISIBLE);
                         mFloatingButton.show();
-                        isAnimating=false;
+                        isAnimating = false;
                         setVisibility(INVISIBLE);
                         mFloatingButton.animate()
                                 .translationX(0)
@@ -312,6 +321,7 @@ public class BottomToolBar extends RelativeLayout {
                                 .setInterpolator(new AccelerateDecelerateInterpolator())
                                 .start();
                     }
+
                     @Override
                     public void onAnimationCancel(Animator animation) {
 
@@ -325,31 +335,44 @@ public class BottomToolBar extends RelativeLayout {
                 .start();
     }
 
-    protected float calScale(float radius){
-        Rect barRect =new Rect();
-        Rect viewRect =new Rect();
+    /**
+     * 马上静态地隐藏bottombar和显示出fab
+     */
+    public void resetImmediate() {
+        if (mFloatingButton != null) {
+            mFloatingButton.setTranslationX(0f);
+            mFloatingButton.setTranslationY(0f);
+            mFloatingButton.show();
+        }
+        hideMainBuz();
+        setVisibility(INVISIBLE);
+    }
+
+    protected float calScale(float radius) {
+        Rect barRect = new Rect();
+        Rect viewRect = new Rect();
         getGlobalVisibleRect(barRect);
         animView.getGlobalVisibleRect(viewRect);
-        long dis1=MathUtil.calDis(viewRect.centerX(),viewRect.centerY(),barRect.left,viewRect.centerY());
-        long dis2=MathUtil.calDis(viewRect.centerX(),viewRect.centerY(),barRect.right,viewRect.centerY());
-        dis1 =dis1>dis2?dis1:dis2;
-        return dis1/radius+1;
+        long dis1 = MathUtil.calDis(viewRect.centerX(), viewRect.centerY(), barRect.left, viewRect.centerY());
+        long dis2 = MathUtil.calDis(viewRect.centerX(), viewRect.centerY(), barRect.right, viewRect.centerY());
+        dis1 = dis1 > dis2 ? dis1 : dis2;
+        return dis1 / radius + 1;
     }
 
     //隐藏除动画view外的view
-    protected void hideMainBuz(){
+    protected void hideMainBuz() {
         for (int j = 1; j < getChildCount(); j++) {
             getChildAt(j).setVisibility(INVISIBLE);
         }
     }
 
-    protected void showMainBuz(){
-        for (int i=1;i<getChildCount();i++){
+    protected void showMainBuz() {
+        for (int i = 1; i < getChildCount(); i++) {
             getChildAt(i).setVisibility(VISIBLE);
         }
     }
 
-    public boolean isAnimating(){
+    public boolean isAnimating() {
         return isAnimating;
     }
 
@@ -365,6 +388,7 @@ public class BottomToolBar extends RelativeLayout {
         this.setVisibility(VISIBLE);
         showMainBuz();
         setBackgroundColor(ApiUtil.getColor(getContext(), R.color.colorAccent));
-        needIni=false;
+        needIni = false;
     }
+
 }

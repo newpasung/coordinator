@@ -1,0 +1,13 @@
+<com.scut.gof.coordinator.main.widget.FragContainer xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <fragment
+        android:id="@+id/hostfragment_tasklist"
+        android:name="com.scut.gof.coordinator.main.fragment.task.TaskListContainerFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:tag="hostfragment"
+        tools:layout="@layout/fragment_home" />
+</com.scut.gof.coordinator.main.widget.FragContainer>

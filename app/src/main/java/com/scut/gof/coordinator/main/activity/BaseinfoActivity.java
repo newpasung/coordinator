@@ -1,8 +1,6 @@
 package com.scut.gof.coordinator.main.activity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -18,12 +16,13 @@ import com.scut.gof.coordinator.R;
 import com.scut.gof.coordinator.lib.nereo.multi_image_selector.MultiImageSelectorActivity;
 import com.scut.gof.coordinator.main.UserManager;
 import com.scut.gof.coordinator.main.adapter.UserinfoAdapter;
+import com.scut.gof.coordinator.main.net.qiniu.AvatarOption;
 import com.scut.gof.coordinator.main.net.qiniu.QiniuHelper;
 import com.scut.gof.coordinator.main.utils.ApiUtil;
+import com.scut.gof.coordinator.main.utils.ImageUtil;
 
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 /**
@@ -73,21 +72,8 @@ public class BaseinfoActivity extends BaseActivity {
             return;
         }
         try {
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inJustDecodeBounds = true;
-            Bitmap bitmap = BitmapFactory.decodeFile(picPath, options);
-            options.inJustDecodeBounds = false;
-            int scale;
-            if (options.outHeight <= options.outWidth) {
-                scale = (options.outHeight) / 200;
-            } else {
-                scale = (options.outWidth) / 200;
-            }
-            options.inSampleSize = scale < 1 ? 1 : scale;
-            bitmap = BitmapFactory.decodeFile(picPath, options);
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-            QiniuHelper.uploadFile(this, QiniuHelper.FILETYPE_DEFAULT, outputStream.toByteArray(),
+            QiniuHelper.uploadFile(this, new AvatarOption()
+                    , ImageUtil.getResizedForUpload(picPath, ImageUtil.COMPRESSEFFECT_SMALLER),
                     new UpCompletionHandler() {
                         @Override
                         public void complete(String s, ResponseInfo responseInfo, JSONObject jsonObject) {

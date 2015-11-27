@@ -1,24 +1,24 @@
 package com.scut.gof.coordinator.main.storage.model;
 
-import android.content.Context;
-
+import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
-import com.scut.gof.coordinator.main.storage.XManager;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Administrator on 2015/11/4.
  */
 @Table(name = "project")
 public class Project extends Model {
+    @Column(name = "thumbnaillogourl")
+    String thumbnaillogourl;
     //项目id
     @Column(name = "proid")
     private long proid;
@@ -40,10 +40,13 @@ public class Project extends Model {
     //项目类型
     @Column(name = "category")
     private String category;
-
     //项目归属
     @Column(name = "affiliation")
     private String affiliation;
+    @Column(name = "status")
+    private int status;
+    @Column(name = "prologo")
+    private String prologo;
 
     public Project() {
         super();
@@ -58,7 +61,7 @@ public class Project extends Model {
      *
      * @return 是否插入成功
      */
-    public static boolean insertOrUpdate(JSONObject data) {
+    public static Project insertOrUpdate(JSONObject data) throws NullPointerException {
         Project project;
         try {
             long id = data.getLong("proid");
@@ -88,38 +91,46 @@ public class Project extends Model {
             if (data.has("affiliation")) {
                 project.affiliation = data.getString("affiliation");
             }
+            if (data.has("prologo")) {
+                project.prologo = data.getString("prologo");
+            }
+            if (data.has("thumbnaillogourl")) {
+                project.thumbnaillogourl = data.getString("thumbnaillogourl");
+            }
+            if (data.has("status")) {
+                project.status = data.getInt("status");
+            }
             project.save();
-            return true;
+            return project;
         } catch (JSONException e) {
             e.printStackTrace();
-            return false;
+            return null;
         }
     }
 
-    public static List<Project> getUsersProjects(Context context) {
-        List<Project> projects = new ArrayList<>();
-        long[] id = XManager.getUsersProjectId(context);
-        if (id != null) {
-            for (int i = 0; i < id.length; i++) {
-                projects.add(getProById(id[i]));
-            }
-        }
-        return projects;
-    }
-
-    public static void joinProject(Context context, JSONObject data) {
-        if (insertOrUpdate(data)) {
+    public static ArrayList<Project> insertOrUpdate(JSONArray data) {
+        ArrayList<Project> list = new ArrayList<>();
+        ActiveAndroid.beginTransaction();
+        boolean isOk = true;
+        JSONObject projectdata;
+        Project project;
+        for (int i = 0; i < data.length(); i++) {
             try {
-                long old_ids[] = XManager.getUsersProjectId(context);
-                if (old_ids == null) return;
-                long new_ids[] = new long[old_ids.length];
-                long id = data.getLong("proid");
-                new_ids[new_ids.length - 1] = id;
-                XManager.saveUsersProjectId(context, new_ids);
+                projectdata = data.getJSONObject(i);
+                project = insertOrUpdate(projectdata);
+                if (project != null) {
+                    list.add(project);
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
+                isOk = false;
             }
         }
+        if (isOk) {
+            ActiveAndroid.setTransactionSuccessful();
+        }
+        ActiveAndroid.endTransaction();
+        return list;
     }
 
     public String getAffiliation() {
@@ -152,5 +163,17 @@ public class Project extends Model {
 
     public String getProname() {
         return proname;
+    }
+
+    public String getPrologo() {
+        return prologo;
+    }
+
+    public String getThumbnailLogo() {
+        return thumbnaillogourl;
+    }
+
+    public int getStatus() {
+        return status;
     }
 }

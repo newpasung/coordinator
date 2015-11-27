@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.scut.gof.coordinator.main.widget.FragContainer xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bluegray_l1"
+                android:padding="@dimen/padding_normal">
+
+                <com.scut.gof.coordinator.main.widget.CircleImageView
+                    android:id="@+id/cir_prologo"
+                    android:layout_width="@dimen/avatar_large"
+                    android:layout_height="@dimen/avatar_large"
+                    tools:src="@drawable/landscape" />
+
+                <TextView
+                    android:id="@+id/tv_pronama"
+                    style="@style/text_headline_bold_themecolor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_normal"
+                    android:layout_toRightOf="@+id/cir_prologo"
+                    tools:text="@string/test_sentence_20" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:background="@color/bluegray_l2"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/padding_small"
+                android:paddingRight="@dimen/margin_small">
+
+                <TextView
+                    style="@style/text_caption_big"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_small"
+                    android:text="@string/text_prodesc" />
+
+                <TextView
+                    android:id="@+id/tv_desc"
+                    style="@style/text_body"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_medium"
+                    android:layout_marginTop="@dimen/margin_tiny"
+                    tools:text="@string/test_sentence_100" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/llcontainer_principal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/margin_normal"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:background="@color/bluegray_l4"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/padding_small"
+                android:paddingRight="@dimen/margin_small">
+
+                <TextView
+                    style="@style/text_caption_big"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_small"
+                    android:text="@string/text_propricipal" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_medium"
+                    android:layout_marginTop="@dimen/margin_tiny"
+                    android:gravity="center">
+
+                    <com.scut.gof.coordinator.main.widget.CircleImageView
+                        android:id="@+id/cir_principalavatar"
+                        android:layout_width="@dimen/avatar_normal"
+                        android:layout_height="@dimen/avatar_normal"
+                        tools:src="@drawable/landscape" />
+
+                    <TextView
+                        android:id="@+id/tv_principal"
+                        style="@style/text_body"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_normal"
+                        tools:text="@string/test_sentence_20" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_edittip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/margin_small"
+                android:text="以下不支持更改"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/bluegray_l3"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/padding_small"
+                android:paddingRight="@dimen/margin_small">
+
+                <TextView
+                    style="@style/text_caption_big"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_small"
+                    android:text="@string/text_start_end_time" />
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    style="@style/text_body"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_medium"
+                    android:layout_marginTop="@dimen/margin_tiny"
+                    tools:text="@string/test_sentence_20" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:background="@color/bluegray_l5"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/padding_small"
+                android:paddingRight="@dimen/margin_small">
+
+                <TextView
+                    style="@style/text_caption_big"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_small"
+                    android:text="@string/text_protype" />
+
+                <TextView
+                    android:id="@+id/tv_category"
+                    style="@style/text_body"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_medium"
+                    android:layout_marginTop="@dimen/margin_tiny"
+                    tools:text="@string/test_sentence_20" />
+
+                <TextView
+                    style="@style/text_caption_big"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_small"
+                    android:text="@string/text_proaffiliation" />
+
+                <TextView
+                    android:id="@+id/tv_affliation"
+                    style="@style/text_body"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_medium"
+                    android:layout_marginTop="@dimen/margin_tiny"
+                    tools:text="@string/test_sentence_20" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+</com.scut.gof.coordinator.main.widget.FragContainer>

@@ -5,14 +5,13 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.scut.gof.coordinator.R;
 import com.scut.gof.coordinator.lib.com.davemorrissey.labs.subscaleview.ImageSource;
 import com.scut.gof.coordinator.lib.com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
+import com.scut.gof.coordinator.main.net.AsyncHandler;
 import com.scut.gof.coordinator.main.net.HttpClient;
-import com.scut.gof.coordinator.main.widget.dialog.WaitingDialog;
 
-import org.apache.http.Header;
 
 /**
  * Created by Administrator on 2015/10/3.
@@ -36,18 +35,18 @@ public class ImageBrowserActivity extends BaseActivity {
             url = getIntent().getStringExtra(EXTRA_PARAMETER_PICURL);
         }
         if (url != null) {
-            final WaitingDialog dialog = new WaitingDialog(this);
-            dialog.show();
-            HttpClient.getByte(ImageBrowserActivity.this, url, new AsyncHttpResponseHandler() {
+            final MaterialDialog dialog = new MaterialDialog.Builder(this)
+                    .progress(true, 0).show();
+            HttpClient.getByte(ImageBrowserActivity.this, url, new AsyncHandler() {
                 @Override
-                public void onSuccess(int i, Header[] headers, byte[] bytes) {
-                    scaleView.setImage(ImageSource.bitmap(BitmapFactory.decodeByteArray(bytes, 0, bytes.length)));
-                    source = bytes;
+                public void onSuccess(byte[] responseBody) {
+                    scaleView.setImage(ImageSource.bitmap(BitmapFactory.decodeByteArray(responseBody, 0, responseBody.length)));
+                    source = responseBody;
                     dialog.dismiss();
                 }
 
                 @Override
-                public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+                public void onFailure(int statusCode) {
                     dialog.dismiss();
                 }
             });

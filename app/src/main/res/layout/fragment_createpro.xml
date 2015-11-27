@@ -1,147 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.scut.gof.coordinator.main.widget.FragContainer xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        android:padding="@dimen/padding_normal"
-        android:stretchColumns="1">
+        android:padding="@dimen/padding_normal">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cardCornerRadius="@dimen/radius_normal"
+            app:cardElevation="@dimen/evelation_l1">
 
-            <ImageButton
-                android:id="@+id/btn_img"
-                android:layout_width="@dimen/img_thumbnail"
-                android:layout_height="@dimen/img_thumbnail"
-                android:scaleType="centerInside"
-                android:src="@drawable/add" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/background"
+                android:orientation="vertical"
+                android:padding="@dimen/padding_normal">
 
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="0dp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-        </LinearLayout>
+                    <TextView
+                        style="@style/text_entry"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/margin_normal"
+                        android:text="@string/text_proname" />
 
-        <TableRow>
+                    <EditText
+                        android:id="@+id/et_name"
+                        style="@style/text_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionDone"
+                        android:maxLines="2"
+                        tools:text="@string/test_sentence_100" />
+                </LinearLayout>
 
-            <TextView
-                style="@style/text_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/margin_normal"
-                android:text="@string/text_proname" />
+                <TextView
+                    style="@style/text_entry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:text="@string/text_start_end_time" />
 
-            <TextView
-                android:id="@+id/tv_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </TableRow>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="1dp"
+                    android:layout_marginTop="@dimen/margin_small">
 
-        <TableRow>
+                    <Button
+                        android:id="@+id/btn_starttime"
+                        style="@style/text_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/bg_flat_btn"
+                        android:gravity="center"
+                        android:minWidth="88dp"
+                        android:text="@string/text_presenttime" />
 
-            <TextView
-                style="@style/text_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/margin_normal"
-                android:text="@string/text_propricipal" />
+                    <com.scut.gof.coordinator.main.widget.CircleImageView
+                        android:id="@+id/cir_arrow"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/margin_normal"
+                        android:layout_marginRight="@dimen/margin_normal"
+                        android:layout_toRightOf="@+id/btn_starttime"
+                        android:src="@drawable/black_arrow_forward" />
 
-            <TextView
-                android:id="@+id/tv_principal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </TableRow>
+                    <Button
+                        android:id="@+id/btn_endtime"
+                        style="@style/text_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/cir_arrow"
+                        android:background="@drawable/bg_flat_btn"
+                        android:gravity="center"
+                        android:minWidth="88dp"
+                        android:text="@string/text_presenttime" />
+                </RelativeLayout>
 
-        <TableRow>
+                <include layout="@layout/linedivider_black54" />
 
-            <TextView
-                style="@style/text_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/margin_normal"
-                android:text="@string/text_proaffiliation" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tv_affiliation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </TableRow>
+                    <TextView
+                        style="@style/text_entry"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/margin_normal"
+                        android:text="@string/text_protype" />
 
-        <TableRow>
+                    <Spinner
+                        android:id="@+id/spinner_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:entries="@array/project_category" />
+                </LinearLayout>
 
-            <TextView
-                style="@style/text_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/margin_normal"
-                android:text="@string/text_start_end_time" />
+                <include layout="@layout/linedivider_black54" />
 
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="0dp" />
+                <TextView
+                    style="@style/text_entry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_normal"
+                    android:text="@string/text_prodesc" />
 
-        </TableRow>
-
-        <TableRow>
-
-            <Button
-                android:id="@+id/btn_starttime"
-                style="@style/text_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/margin_normal"
-                android:layout_marginTop="@dimen/margin_small"
-                android:background="@drawable/bg_flat_btn"
-                android:text="@string/text_start_end_time" />
-
-            <Button
-                android:id="@+id/btn_endtime"
-                style="@style/text_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/margin_normal"
-                android:layout_marginTop="@dimen/margin_small"
-                android:background="@drawable/bg_flat_btn"
-                android:gravity="left"
-                android:text="@string/app_name" />
-
-        </TableRow>
-
-        <TableRow>
-
-            <TextView
-                style="@style/text_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/margin_normal"
-                android:text="@string/text_prodesc" />
-
-            <TextView
-                android:id="@+id/tv_desc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </TableRow>
-
-        <TableRow>
-
-            <TextView
-                style="@style/text_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/margin_normal"
-                android:text="@string/text_protype" />
-
-            <TextView
-                android:id="@+id/tv_category"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="left" />
-        </TableRow>
-    </TableLayout>
+                <EditText
+                    android:id="@+id/et_desc"
+                    style="@style/text_body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:imeOptions="actionDone"
+                    android:minHeight="40dp"
+                    tools:text="@string/test_sentence_100" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+    </ScrollView>
 </com.scut.gof.coordinator.main.widget.FragContainer>

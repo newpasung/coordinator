@@ -22,6 +22,15 @@ public class UserDataFragment extends BaseFragment {
     public UserDataFragment() {
     }
 
+    public static UserDataFragment newInstance() {
+
+        Bundle args = new Bundle();
+
+        UserDataFragment fragment = new UserDataFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

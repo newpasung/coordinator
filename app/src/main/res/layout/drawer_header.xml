@@ -13,7 +13,7 @@
         android:layout_height="@dimen/avatar_large"
         android:layout_marginBottom="@dimen/margin_small"
         android:layout_marginTop="@dimen/margin_medium"
-        android:src="@drawable/tencent" />
+        android:src="@drawable/holywhite" />
 
     <RelativeLayout
         android:id="@+id/rl_container"
@@ -22,19 +22,19 @@
         android:layout_below="@+id/drawer_avatar">
 
         <TextView
-            android:id="@+id/tv_name"
+            android:id="@+id/drawer_name"
             style="@style/text_body_bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:singleLine="true"
             android:text="@string/test_sentence_20" />
         <TextView
-            android:id="@+id/tv_desc"
+            android:id="@+id/drawer_desc"
             style="@style/text_body"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/tv_name"
-            android:layout_below="@id/tv_name"
+            android:layout_alignLeft="@+id/drawer_name"
+            android:layout_below="@id/drawer_name"
             android:layout_marginTop="@dimen/margin_small"
             android:singleLine="true"
             android:text="@string/test_sentence_20" />

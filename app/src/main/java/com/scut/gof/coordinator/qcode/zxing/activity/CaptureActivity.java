@@ -21,8 +21,6 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
@@ -113,7 +111,6 @@ public class CaptureActivity extends Activity implements Callback {
     private MediaPlayer mediaPlayer;
     private boolean playBeep;
     private boolean vibrate;
-    private Button cancelScanButton;
 
     /**
      * Called when the activity is first created.
@@ -126,7 +123,6 @@ public class CaptureActivity extends Activity implements Callback {
         // R.string.scan_card);
         CameraManager.init(getApplication());
         viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
-        cancelScanButton = (Button) this.findViewById(R.id.btn_cancel_scan);
         hasSurface = false;
         inactivityTimer = new InactivityTimer(this);
     }
@@ -152,15 +148,6 @@ public class CaptureActivity extends Activity implements Callback {
         }
         initBeepSound();
         vibrate = true;
-
-        // quit the scan view
-        cancelScanButton.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                CaptureActivity.this.finish();
-            }
-        });
     }
 
     @Override

@@ -23,7 +23,7 @@
             android:name="AA_DB_VERSION"
             android:value="1" />
         <activity
-            android:name=".main.activity.LeadActivity"
+            android:name=".main.activity.WelcomeActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" >
@@ -38,19 +38,15 @@
             android:theme="@style/HomeActivityStyle"
             android:windowSoftInputMode="adjustPan" />
 
-        <activity android:name=".main.activity.WelcomeActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
-
         <activity android:name=".main.activity.LoginActivity"
             android:screenOrientation="portrait" >
         </activity>
 
         <activity
-            android:name=".main.activity.ProinfoActivty"
+            android:name=".main.activity.CreateProActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan|stateVisible"></activity>
 
         <activity
             android:name=".main.activity.ProjectActivity"

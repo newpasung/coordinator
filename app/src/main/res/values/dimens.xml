@@ -12,7 +12,8 @@
 
     <dimen name="padding_small">8dp</dimen>
     <dimen name="padding_normal">16dp</dimen>
-    
+    <dimen name="padding_middle">24dp</dimen>
+
     <dimen name="textsize_l1">12sp</dimen>
     <dimen name="textsize_l2">14sp</dimen>
     <dimen name="textsize_l3">16sp</dimen>

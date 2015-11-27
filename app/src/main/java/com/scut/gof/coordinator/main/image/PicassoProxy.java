@@ -18,6 +18,7 @@ public class PicassoProxy {
      * 一般情况下的图片加载配置
      */
     public static void load(Context context, String url, ImageView view) {
+        if (url.equals("")) return;
         Picasso.with(context).load(url)
                 .config(Bitmap.Config.RGB_565)
                 .placeholder(R.drawable.holywhite)
@@ -26,6 +27,7 @@ public class PicassoProxy {
     }
 
     public static void loadAvatar(Context context, String url, ImageView view) {
+        if (url.equals("")) return;
         Picasso.with(context).load(url).fit()
                 .config(Bitmap.Config.RGB_565)
                 .placeholder(R.drawable.holywhite)
@@ -34,6 +36,7 @@ public class PicassoProxy {
     }
 
     public static void loadBigImg(Context context, String url, ImageView view, Callback callback) {
+        if (url.equals("")) return;
         Picasso.with(context).load(url).fit()
                 .config(Bitmap.Config.RGB_565)
                 .placeholder(R.drawable.holywhite)
