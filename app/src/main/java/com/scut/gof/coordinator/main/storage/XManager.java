@@ -2,6 +2,7 @@ package com.scut.gof.coordinator.main.storage;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 /**
  * Created by Administrator on 2015/11/1.
@@ -21,8 +22,7 @@ public class XManager {
     //一些用户相关的参数
     public static String PARAM_TOKEN = "token";//用户token
     public static String PARAM_UID = "uid";//用户uid
-    public static String PARAM_PROJECT_IDS = "projectids";//用户相关的所有项目id
-
+    public static String PARAM_RECENTPROJECT = "recentprojectsid";//最近浏览过的5个自己的项目
     public static synchronized SharedPreferences getSystemManager(Context context){
         if(sysPref==null){
             sysPref=context.getSharedPreferences(FILENAME_SYSTEM, Context.MODE_PRIVATE);
@@ -95,6 +95,57 @@ public class XManager {
         SharedPreferences.Editor editor =getUserManager(context).edit();
         editor.putLong(PARAM_UID, uid);
         editor.apply();
+    }
+
+    public static void setMyRecentProject(Context context, String proid) {
+        String pastData = getMyRecentProid(context);
+        String[] str_proids = pastData.split(";");
+        StringBuilder builder = new StringBuilder();
+        if (str_proids == null) {
+            //一个旧数据都木有
+            builder.append(proid);
+            builder.append(";");
+        } else {
+            String[] new_str_proids = new String[str_proids.length <= 5 ? str_proids.length : 5];
+            if (pastData.contains(proid)) {
+                //旧数据中有，就把他放到首位
+                new_str_proids[0] = proid;
+                for (int i = 0, j = 1; i < new_str_proids.length; i++) {
+                    if (!str_proids[i].equals(proid)) {
+                        new_str_proids[j++] = str_proids[i];
+                    } else {
+                        continue;
+                    }
+                }
+            } else {
+                //旧数据中木有这个项目的id
+                //会舍弃掉最后一个proid数据
+                for (int i = new_str_proids.length - 1; i >= 1; i--) {
+                    new_str_proids[i] = new_str_proids[i - 1];
+                }
+                new_str_proids[0] = proid;
+            }
+            for (int i = 0; i < new_str_proids.length; i++) {
+                builder.append(new_str_proids[i]);
+                builder.append(";");
+            }
+        }
+        SharedPreferences.Editor editor = getUserManager(context).edit();
+        editor.putString(PARAM_RECENTPROJECT, builder.toString());
+        editor.commit();
+        Log.i("setMyRecentProject", builder.toString());
+    }
+
+    public static String getMyRecentProid(Context context) {
+        return getUserManager(context).getString(PARAM_RECENTPROJECT, "");
+    }
+
+    /**
+     * 删除所有xml文件数据
+     */
+    public static void clearData(Context context) {
+        getUserManager(context).edit().clear().commit();
+        getSystemManager(context).edit().clear().commit();
     }
 
 }

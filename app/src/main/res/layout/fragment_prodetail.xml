@@ -29,7 +29,7 @@
                 <TextView
                     android:id="@+id/tv_pronama"
                     style="@style/text_headline_bold_themecolor"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_normal"
                     android:layout_toRightOf="@+id/cir_prologo"
@@ -37,6 +37,7 @@
             </RelativeLayout>
 
             <LinearLayout
+                android:id="@+id/llcontainer_desc"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/margin_normal"

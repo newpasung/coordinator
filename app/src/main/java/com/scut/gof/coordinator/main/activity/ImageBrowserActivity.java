@@ -1,6 +1,7 @@
 package com.scut.gof.coordinator.main.activity;
 
-import android.graphics.BitmapFactory;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -9,12 +10,14 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.scut.gof.coordinator.R;
 import com.scut.gof.coordinator.lib.com.davemorrissey.labs.subscaleview.ImageSource;
 import com.scut.gof.coordinator.lib.com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
-import com.scut.gof.coordinator.main.net.AsyncHandler;
-import com.scut.gof.coordinator.main.net.HttpClient;
+import com.scut.gof.coordinator.main.image.PicassoProxy;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 
 /**
  * Created by Administrator on 2015/10/3.
+ * 浏览图片，传入url
  */
 public class ImageBrowserActivity extends BaseActivity {
     public final static String EXTRA_PARAMETER_PICCOUNT = "piccount";
@@ -22,8 +25,6 @@ public class ImageBrowserActivity extends BaseActivity {
     SubsamplingScaleImageView scaleView;
     int piccount = 0;
     String url;
-    byte[] source;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,22 +37,34 @@ public class ImageBrowserActivity extends BaseActivity {
         }
         if (url != null) {
             final MaterialDialog dialog = new MaterialDialog.Builder(this)
+                    .content("图片加载中")
                     .progress(true, 0).show();
-            HttpClient.getByte(ImageBrowserActivity.this, url, new AsyncHandler() {
+            PicassoProxy.loadBigImg(this, url, new Target() {
                 @Override
-                public void onSuccess(byte[] responseBody) {
-                    scaleView.setImage(ImageSource.bitmap(BitmapFactory.decodeByteArray(responseBody, 0, responseBody.length)));
-                    source = responseBody;
+                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                    scaleView.setImage(ImageSource.bitmap(bitmap));
                     dialog.dismiss();
                 }
 
                 @Override
-                public void onFailure(int statusCode) {
+                public void onBitmapFailed(Drawable errorDrawable) {
+                    toast("亲，是不是网络故障了");
                     dialog.dismiss();
                 }
+
+                @Override
+                public void onPrepareLoad(Drawable placeHolderDrawable) {
+                }
             });
+            iniListener();
+        } else {
+            toastWarn("当你看到这个说明出bug了");
         }
-        iniListener();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     protected void iniListener() {

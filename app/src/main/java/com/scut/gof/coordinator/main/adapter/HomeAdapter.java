@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.scut.gof.coordinator.R;
+import com.scut.gof.coordinator.main.image.PicassoProxy;
 import com.scut.gof.coordinator.main.storage.model.Project;
 import com.scut.gof.coordinator.main.widget.CircleImageView;
 
@@ -67,7 +68,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
                 ((HeadHolder) holder).mTv.setText(mContext.getString(R.string.text_importantmsg));
             }break;
             case TYPE_PROJECT:{
-                ((ProHolder)holder).mCir.setImageResource(R.drawable.tencent);
+                PicassoProxy.loadAvatar(mContext, getProData(position).getThumbnailLogo(), ((ProHolder) holder).mCir);
                 ((ProHolder) holder).mTvname.setText(getProData(position).getProname());
                 ((ProHolder)holder).mRlcontainer.setOnClickListener(new View.OnClickListener() {
                     @Override

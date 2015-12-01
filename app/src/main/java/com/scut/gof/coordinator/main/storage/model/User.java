@@ -48,6 +48,34 @@ public class User extends Model {
         this.locale = "";
     }
 
+    /**
+     * 直插入简单数据，加快效率
+     */
+    public static boolean insertOrUpdateSimply(JSONObject user) {
+        User mUser = null;
+        try {
+            long id = user.getLong("uid");
+            mUser = User.getUserById(id);
+            if (mUser == null) {
+                mUser = new User();
+            }
+            if (user.has("name")) {
+                mUser.name = user.getString("name");
+            }
+            if (user.has("thumbnailavatar")) {
+                mUser.thumbnailavatar = user.getString("thumbnailavatar");
+            }
+            if (user.has("avatar")) {
+                mUser.avatar = user.getString("avatar");
+            }
+            mUser.save();
+            return true;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public static boolean insertOrUpdate(JSONObject jsonObject) {
         User user = null;
         try {

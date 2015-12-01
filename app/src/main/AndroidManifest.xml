@@ -58,6 +58,7 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".main.activity.ImageBrowserActivity"
+            android:label="查看图片"
             android:screenOrientation="portrait"></activity>
         <activity android:name=".qcode.zxing.activity.CaptureActivity"></activity>
         <activity android:name=".qcode.androidzhang.zxingframe.CheckResult"></activity>

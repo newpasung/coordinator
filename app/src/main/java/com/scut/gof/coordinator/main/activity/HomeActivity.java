@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.scut.gof.coordinator.R;
 import com.scut.gof.coordinator.main.UserManager;
@@ -32,7 +33,10 @@ public class HomeActivity extends BaseActivity {
     FloatingActionButton mBtnfab;
     //用来记录当前的fragment
     Fragment curFragment;
+    //下面是侧栏顶部显示的几个信息
     CircleImageView mCiravatar;
+    TextView mTvname;
+    TextView mTvsignature;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,16 +70,22 @@ public class HomeActivity extends BaseActivity {
         toolbar.setTitleTextColor(Color.WHITE);
         mDrwer = (DrawerLayout) findViewById(R.id.drawerlayout);
         mDrwer.setScrimColor(getResources().getColor(R.color.black_54));
+
         mCiravatar = (CircleImageView) drawerHeader.findViewById(R.id.drawer_avatar);
+        mTvname = (TextView) drawerHeader.findViewById(R.id.drawer_name);
+        mTvsignature = (TextView) drawerHeader.findViewById(R.id.drawer_desc);
+
         mBar = (BottomToolBar) findViewById(R.id.bottombar);
         mBtnfab = (FloatingActionButton) findViewById(R.id.btn_fab);
         //为底部工具栏附上按钮
         mBar.attachFloatingButton(mBtnfab);
         //设置侧滑栏数据
         PicassoProxy.loadAvatar(this, UserManager.getUserThumbAvatar(this), mCiravatar);
+        mTvname.setText(UserManager.getUserName(this));
+        mTvsignature.setText(UserManager.getSignature(this));
         //设置默认fragment
         curFragment = HomeFragment.newInstance();
-        getFragmentManager().beginTransaction().replace(R.id.fragment, curFragment)
+        getFragmentManager().beginTransaction().add(R.id.fragment_container, curFragment)
                 .commit();
         if (curFragment instanceof BottomBarController) {
             mBar.setButtonListener((BottomBarController) curFragment);
@@ -150,7 +160,7 @@ public class HomeActivity extends BaseActivity {
         }
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         FragmentTransactionExtended fragmentTransactionExtended
-                = new FragmentTransactionExtended(this, fragmentTransaction, curFragment, fragment, R.id.fragment);
+                = new FragmentTransactionExtended(this, fragmentTransaction, curFragment, fragment, R.id.fragment_container);
         fragmentTransactionExtended.addTransition(FragmentTransactionExtended.SLIDE_HORIZONTAL);
         fragmentTransactionExtended.commit(false);
         curFragment = fragment;

@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -56,6 +57,12 @@ public class ProjectActivity extends BaseActivity {
     }
 
     @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(0, R.anim.slide_out_bottom);
+    }
+
+    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (mBottomBar.getVisibility() == View.VISIBLE) {
@@ -96,8 +103,10 @@ public class ProjectActivity extends BaseActivity {
 
         mBtnfab = (FloatingActionButton) findViewById(R.id.btn_fab);
         mBottomBar = (BottomToolBar) findViewById(R.id.bottombar);
-        if (project.getPrologo() != null && !project.getThumbnailLogo().equals("")) {
+        if (!TextUtils.isEmpty(project.getThumbnailLogo())) {
             PicassoProxy.loadAvatar(this, project.getThumbnailLogo(), mCirprologo);
+        } else {
+            PicassoProxy.loadAvatar(this, project.getPrologo(), mCirprologo);
         }
         mBottomBar.attachFloatingButton(mBtnfab);
         mTvproname.setText(project.getProname());
@@ -112,7 +121,7 @@ public class ProjectActivity extends BaseActivity {
         setSupportActionBar(toolbar);
         //加载默认fragment
         curFragment = TaskListContainerFragment.newInstance(proid);
-        getFragmentManager().beginTransaction().replace(R.id.fragment, curFragment)
+        getFragmentManager().beginTransaction().add(R.id.fragment_container, curFragment)
                 .commit();
     }
 
@@ -160,6 +169,7 @@ public class ProjectActivity extends BaseActivity {
         }
         if (fragment instanceof BottomBarController) {
             mBottomBar.setButtonListener((BottomBarController) fragment);
+            mBtnfab.show();
         } else {
             if (mBtnfab.isShown()) {
                 mBtnfab.hide();
@@ -167,7 +177,7 @@ public class ProjectActivity extends BaseActivity {
         }
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         FragmentTransactionExtended fragmentTransactionExtended
-                = new FragmentTransactionExtended(this, fragmentTransaction, curFragment, fragment, R.id.fragment);
+                = new FragmentTransactionExtended(this, fragmentTransaction, curFragment, fragment, R.id.fragment_container);
         fragmentTransactionExtended.addTransition(FragmentTransactionExtended.SLIDE_HORIZONTAL);
         fragmentTransactionExtended.commit(false);
         curFragment = fragment;

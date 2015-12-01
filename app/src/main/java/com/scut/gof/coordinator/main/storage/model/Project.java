@@ -10,7 +10,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Administrator on 2015/11/4.
@@ -27,10 +29,10 @@ public class Project extends Model {
     private String proname;
     //计划开始时间
     @Column(name = "planstarttime")
-    private String planstarttime;
+    private long planstarttime;
     //计划终止时间
     @Column(name = "planendtime")
-    private String planendtime;
+    private long planendtime;
     //负责人
     @Column(name = "principalid")
     private long principalid;
@@ -74,10 +76,15 @@ public class Project extends Model {
                 project.proname = data.getString("proname");
             }
             if (data.has("planstarttime")) {
-                project.planstarttime = data.getString("planstarttime");
+                project.planstarttime = data.getLong("planstarttime");
             }
             if (data.has("planendtime")) {
-                project.planendtime = data.getString("planendtime");
+                project.planendtime = data.getLong("planendtime");
+            }
+            if (data.has("principal")) {
+                JSONObject principal = data.getJSONObject("principal");
+                project.principalid = principal.getInt("uid");
+                User.insertOrUpdateSimply(principal);
             }
             if (data.has("principalid")) {
                 project.principalid = data.getLong("principalid");
@@ -133,6 +140,22 @@ public class Project extends Model {
         return list;
     }
 
+    public static void updateLogo(JSONObject data) {
+        try {
+            Project project = getProById(data.getLong("proid"));
+            if (project == null) return;
+            if (data.has("prologo")) {
+                project.prologo = data.getString("prologo");
+            }
+            if (data.has("thumbnaillogourl")) {
+                project.thumbnaillogourl = data.getString("thumbnaillogourl");
+            }
+            project.save();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
     public String getAffiliation() {
         return affiliation;
     }
@@ -146,11 +169,15 @@ public class Project extends Model {
     }
 
     public String getPlanendtime() {
-        return planendtime;
+        Date date = new Date(this.planstarttime);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(date);
     }
 
     public String getPlanstarttime() {
-        return planstarttime;
+        Date date = new Date(this.planstarttime);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(date);
     }
 
     public long getPrincipalid() {
@@ -175,5 +202,9 @@ public class Project extends Model {
 
     public int getStatus() {
         return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

@@ -8,13 +8,13 @@ import com.loopj.android.http.RequestParams;
 public class AvatarOption extends UploadOption {
 
     public AvatarOption() {
-        setCategory(QiniuHelper.FILETYPE_AVATAR);
+        super();
+        setCategory(FILETYPE_AVATAR);
     }
 
     @Override
     RequestParams getParams() {
-        RequestParams params = new RequestParams();
-        params.put("category", category);
-        return params;
+        this.mParams.put("category", category);
+        return this.mParams;
     }
 }

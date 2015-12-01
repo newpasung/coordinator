@@ -24,7 +24,8 @@ public class RelaProject extends Model {
     private long uid;
     @Column(name = "role")
     private int role;
-
+    @Column(name = "mark")
+    private int mark;
     /**
      * 应该传入一个至少包含proid的数据,数据中不含uid需要传入uid
      */
@@ -41,6 +42,9 @@ public class RelaProject extends Model {
             relaProject.uid = uid;
             if (data.has("role")) {
                 relaProject.role = data.getInt("role");
+            }
+            if (data.has("mark")) {
+                relaProject.mark = data.getInt("mark");
             }
             relaProject.save();
         } catch (JSONException e) {
@@ -139,7 +143,16 @@ public class RelaProject extends Model {
      * 获取某个人所在的所有项目
      */
     public static List<RelaProject> getRelaProjects(long uid) {
-        return new Select().from(RelaProject.class).where("uid=" + uid).execute();
+        return new Select().from(RelaProject.class).where("uid=" + uid).orderBy("proid").execute();
+    }
+
+    public static List<RelaProject> getRelaProjects(long uid, int maxcount) {
+        return new Select().from(RelaProject.class).where("uid=" + uid)
+                .orderBy("proid").limit(maxcount).execute();
+    }
+
+    public int getMark() {
+        return mark;
     }
 
     public long getProid() {

@@ -44,7 +44,7 @@ public class HomeFragment extends BaseFragment implements BottomBarController {
     HomeAdapter adapter;
     HomeAdapter.MOnClick clickListener = new HomeAdapter.MOnClick() {
         @Override
-        public void onClick(int type, long id) {
+        public void onClick(int type, final long id) {
             switch (type) {
                 case HomeAdapter.TYPE_PROJECT: {
                     final Intent intent = new Intent(getActivity(), ProjectActivity.class);
@@ -53,7 +53,10 @@ public class HomeFragment extends BaseFragment implements BottomBarController {
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
+                            //点一下就加入到最近浏览项目那里
+                            UserManager.addRecentProid(getActivity(), id);
                             startActivity(intent);
+                            getActivity().overridePendingTransition(R.anim.slide_in_bottom, 0);
                         }
                     }, 100);
                 }
@@ -65,7 +68,6 @@ public class HomeFragment extends BaseFragment implements BottomBarController {
     }
 
     public static HomeFragment newInstance() {
-
         Bundle args = new Bundle();
         HomeFragment fragment = new HomeFragment();
         fragment.setArguments(args);
@@ -101,10 +103,19 @@ public class HomeFragment extends BaseFragment implements BottomBarController {
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (adapter != null) {
+            adapter.setProData(UserManager.getRecentProject(getActivity()));
+            adapter.notifyDataSetChanged();
+        }
+    }
+
     protected void iniData(){
         proData.clear();
         msgData.clear();
-        proData = UserManager.getMyProjects(getActivity());
+        proData = UserManager.getRecentProject(getActivity());
         msgData.add("未处理消息的概括1好长啊好长啊好长啊好长啊好长啊好长啊好长啊好长啊好长啊好长啊");
         msgData.add("未处理消息的概括2");
         msgData.add("未处理消息的概括3");
@@ -137,9 +148,9 @@ public class HomeFragment extends BaseFragment implements BottomBarController {
             public void onSuccess(JSONObject response) {
                 try {
                     JSONObject object = response.getJSONObject("data");
-                    List<Project> data = Project.insertOrUpdate(object.getJSONArray("projects"));
+                    Project.insertOrUpdate(object.getJSONArray("projects"));
                     RelaProject.insertOrUpdate(object.getJSONArray("projects"), UserManager.getUserid(getActivity()));
-                    adapter.setProData(data);
+                    adapter.setProData(UserManager.getRecentProject(getActivity()));
                     adapter.notifyDataSetChanged();
                     mSwipelayout.setRefreshing(false);
                 } catch (JSONException e) {
@@ -149,7 +160,6 @@ public class HomeFragment extends BaseFragment implements BottomBarController {
 
             @Override
             public void onFailure(String message, String for_param) {
-                toast("onfailure");
                 mSwipelayout.setRefreshing(false);
             }
         });

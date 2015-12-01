@@ -8,9 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TableRow;
 
+import com.activeandroid.ActiveAndroid;
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.scut.gof.coordinator.R;
 import com.scut.gof.coordinator.main.activity.BaseinfoActivity;
+import com.scut.gof.coordinator.main.activity.LoginActivity;
 import com.scut.gof.coordinator.main.fragment.BaseFragment;
+import com.scut.gof.coordinator.main.storage.XManager;
 
 /**
  * Created by Administrator on 2015/10/31.
@@ -19,6 +24,7 @@ import com.scut.gof.coordinator.main.fragment.BaseFragment;
 public class UserDataFragment extends BaseFragment {
 
     TableRow mRowbaseinfo;
+    TableRow mRowexitapp;
     public UserDataFragment() {
     }
 
@@ -40,10 +46,43 @@ public class UserDataFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         mRowbaseinfo = (TableRow) view.findViewById(R.id.row_baseinfo);
+        mRowexitapp = (TableRow) view.findViewById(R.id.row_exitapp);
         mRowbaseinfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), BaseinfoActivity.class));
+            }
+        });
+        mRowexitapp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new MaterialDialog.Builder(getActivity())
+                        .title("将注销账号")
+                        .content("我们会删除你在本应用内的配置文件和缓存文件")
+                        .positiveText("清楚")
+                        .negativeText("取消")
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(MaterialDialog dialog, DialogAction which) {
+                                XManager.clearData(dialog.getContext());
+                                ActiveAndroid.clearCache();
+                                getActivity().deleteDatabase("coordinator.db");
+                                ActiveAndroid.dispose();
+                                ActiveAndroid.initialize(getActivity().getApplication());
+                                Intent intent = new Intent();
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                intent.setClass(getActivity(), LoginActivity.class);
+                                dialog.dismiss();
+                                startActivity(intent);
+                            }
+                        })
+                        .onNegative(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(MaterialDialog dialog, DialogAction which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .show();
             }
         });
     }

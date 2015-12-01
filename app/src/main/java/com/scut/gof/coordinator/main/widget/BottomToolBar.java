@@ -382,13 +382,19 @@ public class BottomToolBar extends RelativeLayout {
     }
 
     /**
-     * 因为这个view默认隐藏，可以使用这个来设置可见
+     * 因为这个view默认隐藏，可以使用这个来设置可见,设置一个静态的bar
      */
     public void iniStaticBar() {
         this.setVisibility(VISIBLE);
         showMainBuz();
         setBackgroundColor(ApiUtil.getColor(getContext(), R.color.colorAccent));
         needIni = false;
+    }
+
+    public void hideFab() {
+        if (mFloatingButton != null) {
+            mFloatingButton.hide();
+        }
     }
 
 }

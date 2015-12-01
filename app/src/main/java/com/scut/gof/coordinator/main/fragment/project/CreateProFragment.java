@@ -89,7 +89,7 @@ public class CreateProFragment extends BaseFragment implements BottomBarControll
                 //下面包括了简单的辨别"起始时间"的逻辑
                 if (view.getTag().equals("startdatepicker")) {
                     if (time > (long) mBtnendtime.getTag()) {
-                        toastWarn("结束时间应该更早");
+                        toastWarn("开始时间应该更早");
                         return;
                     }
                     mBtnstarttime.setText(builder.toString());
@@ -127,10 +127,8 @@ public class CreateProFragment extends BaseFragment implements BottomBarControll
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 mSpcategory.setTag(categories[position]);
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
     }
@@ -176,8 +174,8 @@ public class CreateProFragment extends BaseFragment implements BottomBarControll
             return false;
         }
         ((CreateProActivity) getActivity()).addReqParams(RequestParamName.PROJECT_NAME, mEtname.getText().toString());
-        ((CreateProActivity) getActivity()).addReqParams(RequestParamName.PROJECT_PLANSTARTTIME, mBtnstarttime.getText().toString());
-        ((CreateProActivity) getActivity()).addReqParams(RequestParamName.PROJECT_PLANENDTIME, mBtnendtime.getText().toString());
+        ((CreateProActivity) getActivity()).addReqParams(RequestParamName.PROJECT_PLANSTARTTIME, String.valueOf((long) mBtnstarttime.getTag()));
+        ((CreateProActivity) getActivity()).addReqParams(RequestParamName.PROJECT_PLANENDTIME, String.valueOf((long) mBtnendtime.getTag()));
         ((CreateProActivity) getActivity()).addReqParams(RequestParamName.PROJECT_DESCRIPTION, mEtdesc.getText().toString());
         ((CreateProActivity) getActivity()).addReqParams(RequestParamName.PROJECT_CATEGORY, (String) mSpcategory.getTag());
         return true;

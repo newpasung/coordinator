@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.scut.gof.coordinator.R;
 import com.scut.gof.coordinator.main.fragment.BaseFragment;
 import com.scut.gof.coordinator.main.interf.BottomBarController;
+import com.scut.gof.coordinator.main.storage.model.Project;
 import com.scut.gof.coordinator.main.widget.BottomToolBar;
 
 import java.util.ArrayList;
@@ -103,7 +104,11 @@ public class TaskListContainerFragment extends BaseFragment implements BottomBar
 
     @Override
     public void refreshView(BottomToolBar bottomToolBar) {
-        bottomToolBar.setText(getString(R.string.action_newtask));
+        if (Project.getProById(proid).getStatus() == 1) {
+            bottomToolBar.setText(getString(R.string.action_newtask));
+        } else {
+            bottomToolBar.hideFab();
+        }
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.scut.gof.coordinator.main.net.qiniu;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import com.loopj.android.http.RequestParams;
 import com.qiniu.android.storage.UpCompletionHandler;
@@ -16,9 +15,6 @@ import org.json.JSONObject;
  * Created by Administrator on 2015/9/21.
  */
 public class QiniuHelper {
-
-    public static final int FILETYPE_PROLOGO = 0;
-    public static final int FILETYPE_AVATAR = 1;
 
     /**
      * 用来向七牛上传文件
@@ -42,7 +38,7 @@ public class QiniuHelper {
             }
             @Override
             public void onFailure(String message, String for_param) {
-                Toast.makeText(mContext, "upload failed", Toast.LENGTH_SHORT).show();
+                handler.complete(message, null, null);
             }
         });
     }

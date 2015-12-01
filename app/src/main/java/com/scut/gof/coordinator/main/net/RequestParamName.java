@@ -5,7 +5,12 @@ package com.scut.gof.coordinator.main.net;
  * Created by gjz on 11/2/15.
  */
 public class RequestParamName {
+    public static final int ERRORCODE_DEFAULT = 10000;
+    public static final int ERRORCODE_PERMISSIONDENY = 10001;
+    public static final int ERRORCODE_DATABASEEXECPTION = 10002;
+    public static final int ERRORCODE_QINIUERROR = 10003;
     public static final int ERRORCODE_TOKENINVALID = 10004;
+
     public static final String TOKEN = "token";
     public static final String PHONE = "phone";
     public static final String PASSWORD = "password";

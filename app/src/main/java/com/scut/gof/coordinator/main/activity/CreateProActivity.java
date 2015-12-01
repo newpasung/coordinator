@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 import com.loopj.android.http.RequestParams;
@@ -166,7 +167,7 @@ public class CreateProActivity extends BaseActivity {
     }
 
     public void addReqParams(String param, String value) {
-        requestParams.add(param, value);
+        requestParams.put(param, value);
     }
 
     public void uploadInfo() {
@@ -189,6 +190,7 @@ public class CreateProActivity extends BaseActivity {
 
             @Override
             public void onFailure(String message, String for_param) {
+                Log.i("NewProFail", message);
             }
         });
     }

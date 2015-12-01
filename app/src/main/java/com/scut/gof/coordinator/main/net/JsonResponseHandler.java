@@ -2,6 +2,8 @@ package com.scut.gof.coordinator.main.net;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -54,8 +56,15 @@ public abstract class JsonResponseHandler extends JsonHttpResponseHandler{
                     }
                     return;
                 }
+                if (response.getInt("errorCode") == RequestParamName.ERRORCODE_DATABASEEXECPTION) {
+                    final Context context = weakReference.get();
+                    if (context != null) {
+                        Toast.makeText(context, "后台bug", Toast.LENGTH_SHORT).show();
+                    }
+                }
                 String message = response.getString("message");
                 String for_param = response.getString("for_param");
+                Log.i("HTTPONFAILURE", message);
                 onFailure(message, for_param);
             }
         } catch (JSONException e) {
@@ -76,7 +85,22 @@ public abstract class JsonResponseHandler extends JsonHttpResponseHandler{
     @Override
     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
         if (throwable != null && throwable.getCause() != null) {
-            if (throwable.getCause().toString().contains("Network is unreachable")) {
+            if (throwable.getCause().toString().contains("Network is unreachable")
+                    || throwable.getCause().toString().contains("timed out")) {
+                final Context context = weakReference.get();
+                if (context != null) {
+                    new MaterialDialog.Builder(context)
+                            .positiveText("好的")
+                            .title("网络环境错误")
+                            .content("请检查你的手机能否正常上网")
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(MaterialDialog dialog, DialogAction which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .show();
+                }
                 onFailure("请检查网络是否正常!", "common");
                 return;
             }
@@ -86,6 +110,22 @@ public abstract class JsonResponseHandler extends JsonHttpResponseHandler{
 
     @Override
     public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+        if (statusCode == 500) {
+            final Context context = weakReference.get();
+            if (context != null) {
+                new MaterialDialog.Builder(context)
+                        .positiveText("了解")
+                        .title("深感抱歉")
+                        .content("服务器维护中")
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(MaterialDialog dialog, DialogAction which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .show();
+            }
+        }
         onFailure("请求异常", "common");
     }
 
