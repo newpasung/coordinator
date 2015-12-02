@@ -57,8 +57,13 @@ public class PicassoProxy {
                 .config(Bitmap.Config.RGB_565)
                 .placeholder(R.drawable.holywhite)
                 .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
+                .tag("bigimage")
                 .error(R.drawable.holywhite)
                 .into(target);
+    }
+
+    public static void cancelLoadBigImg(Context context) {
+        Picasso.with(context).cancelTag("bigimage");
     }
 
 }

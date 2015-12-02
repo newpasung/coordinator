@@ -255,35 +255,45 @@ public class BottomToolBar extends RelativeLayout {
     }
 
     public void reset(final Animator.AnimatorListener listener) {
+        if (mFloatingButton == null) {
+            Log.e("BottomToolbar", "reveal error ,you should call attachFloatingButton() first");
+            return;
+        }
         hideMainBuz();
         animView.animate().scaleY(1f).scaleX(1f).
                 setInterpolator(new DecelerateInterpolator()).setDuration(120).
                 setListener(new Animator.AnimatorListener() {
                     @Override
                     public void onAnimationStart(Animator animation) {
+                        listener.onAnimationStart(animation);
                         isAnimating = true;
                     }
 
                     @Override
                     public void onAnimationEnd(Animator animation) {
+                        listener.onAnimationEnd(animation);
                         animView.setScaleY(1f);
                         animView.setScaleX(1f);
                         animView.setVisibility(INVISIBLE);
-                        setVisibility(INVISIBLE);
+                        mFloatingButton.show();
                         isAnimating = false;
-                        if (listener != null) {
-                            listener.onAnimationEnd(animation);
-                        }
+                        setVisibility(INVISIBLE);
+                        mFloatingButton.animate()
+                                .translationX(0)
+                                .translationY(0)
+                                .setDuration(250)
+                                .setInterpolator(new AccelerateDecelerateInterpolator())
+                                .start();
                     }
 
                     @Override
                     public void onAnimationCancel(Animator animation) {
-
+                        listener.onAnimationCancel(animation);
                     }
 
                     @Override
                     public void onAnimationRepeat(Animator animation) {
-
+                        listener.onAnimationRepeat(animation);
                     }
                 })
                 .start();

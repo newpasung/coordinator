@@ -3,6 +3,7 @@ package com.scut.gof.coordinator.main.storage.model;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 
 import org.json.JSONException;
@@ -52,6 +53,10 @@ public class Material extends Model {
     public static Material getMaterial(long proid, long mid) {
         return new Select().from(Material.class).where("proid=" + proid)
                 .and("mid=" + mid).executeSingle();
+    }
+
+    public static void clearData() {
+        new Delete().from(Material.class).where("proid <> -2").execute();
     }
 
     public static void insertOrUpdate(JSONObject data) {

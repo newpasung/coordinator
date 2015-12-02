@@ -4,6 +4,7 @@ import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 
 import org.json.JSONArray;
@@ -26,6 +27,11 @@ public class RelaProject extends Model {
     private int role;
     @Column(name = "mark")
     private int mark;
+
+    public static void clearData() {
+        new Delete().from(RelaProject.class).where("proid <> -1").execute();
+    }
+
     /**
      * 应该传入一个至少包含proid的数据,数据中不含uid需要传入uid
      */

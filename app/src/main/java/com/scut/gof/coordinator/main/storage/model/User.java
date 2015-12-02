@@ -3,6 +3,7 @@ package com.scut.gof.coordinator.main.storage.model;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 
 import org.json.JSONException;
@@ -46,6 +47,10 @@ public class User extends Model {
         this.workphone = "";
         this.signature = "";
         this.locale = "";
+    }
+
+    public static void clearData() {
+        new Delete().from(User.class).where("uid <> -2").execute();
     }
 
     /**

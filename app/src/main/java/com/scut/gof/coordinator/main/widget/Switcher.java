@@ -18,16 +18,19 @@ import android.widget.RelativeLayout;
 import com.scut.gof.coordinator.R;
 import com.scut.gof.coordinator.main.utils.DenstityUtil;
 
+/**
+ * 这是一个转换器--，左右拨的一个开关
+ */
+
 public class Switcher extends CustomView {
 
-    private int backgroundColor = Color.parseColor("#4CAF50");
-
-    private Ball ball;
-
+	// Move ball to first position in view
+	boolean placedBall = false;
+	private int backgroundColor = Color.parseColor("#4CAF50");
+	private Ball ball;
     private boolean check      = false;
     private boolean eventCheck = false;
     private boolean press      = false;
-
     private OnCheckListener onCheckListener;
     private Bitmap bitmap;
 
@@ -161,7 +164,7 @@ public class Switcher extends CustomView {
 
 	/**
 	 * Make a dark color to press effect
-	 * 
+	 *
 	 * @return
 	 */
 	protected int makePressColor() {
@@ -173,9 +176,6 @@ public class Switcher extends CustomView {
 		b = (b - 30 < 0) ? 0 : b - 30;
 		return Color.argb(70, r, g, b);
 	}
-
-	// Move ball to first position in view
-	boolean placedBall = false;
 
 	private void placeBall() {
 		ball.setX(getHeight() / 2 - ball.getWidth() / 2);
@@ -205,6 +205,14 @@ public class Switcher extends CustomView {
 
 	public boolean isCheck() {
 		return check;
+	}
+
+	public void setOncheckListener(OnCheckListener onCheckListener) {
+		this.onCheckListener = onCheckListener;
+	}
+
+	public interface OnCheckListener {
+		public void onCheck(Switcher view, boolean check);
 	}
 
 	class Ball extends View {
@@ -241,14 +249,6 @@ public class Switcher extends CustomView {
 			objectAnimator.start();
 		}
 
-	}
-
-	public void setOncheckListener(OnCheckListener onCheckListener) {
-		this.onCheckListener = onCheckListener;
-	}
-
-	public interface OnCheckListener {
-		public void onCheck(Switcher view, boolean check);
 	}
 
 }

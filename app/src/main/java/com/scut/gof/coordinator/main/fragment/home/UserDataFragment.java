@@ -8,14 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TableRow;
 
-import com.activeandroid.ActiveAndroid;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.scut.gof.coordinator.R;
 import com.scut.gof.coordinator.main.activity.BaseinfoActivity;
 import com.scut.gof.coordinator.main.activity.LoginActivity;
 import com.scut.gof.coordinator.main.fragment.BaseFragment;
-import com.scut.gof.coordinator.main.storage.XManager;
+import com.scut.gof.coordinator.main.storage.StorageHelper;
 
 /**
  * Created by Administrator on 2015/10/31.
@@ -64,11 +63,8 @@ public class UserDataFragment extends BaseFragment {
                         .onPositive(new MaterialDialog.SingleButtonCallback() {
                             @Override
                             public void onClick(MaterialDialog dialog, DialogAction which) {
-                                XManager.clearData(dialog.getContext());
-                                ActiveAndroid.clearCache();
-                                getActivity().deleteDatabase("coordinator.db");
-                                ActiveAndroid.dispose();
-                                ActiveAndroid.initialize(getActivity().getApplication());
+                                //来清空数据吧！
+                                StorageHelper.clearData(getActivity());
                                 Intent intent = new Intent();
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 intent.setClass(getActivity(), LoginActivity.class);

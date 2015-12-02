@@ -67,6 +67,12 @@ public class ImageBrowserActivity extends BaseActivity {
         super.onResume();
     }
 
+    @Override
+    protected void onPause() {
+        PicassoProxy.cancelLoadBigImg(this);
+        super.onPause();
+    }
+
     protected void iniListener() {
         scaleView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override

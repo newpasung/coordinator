@@ -4,6 +4,7 @@ import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 
 import org.json.JSONArray;
@@ -52,6 +53,13 @@ public class Project extends Model {
 
     public Project() {
         super();
+    }
+
+    /**
+     * 清空所有数据的哦
+     */
+    public static void clearData() {
+        new Delete().from(Project.class).where("proid <> -2").execute();
     }
 
     public static Project getProById(long proid) {

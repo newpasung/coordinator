@@ -7,6 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -39,12 +42,28 @@ public class CreateProActivity extends BaseActivity {
     public static final String BRCAST_KEY_NEWPRO = "UPLOADNEWPRODATA";
     //这个act管理的frg的总数
     final int FRAGMENT_COUNT = 2;
+    final int MSG_WHAT_ONUPLOADINFO = 1;
     CreateProFragment createProFragment;
     IniMaterialFragment iniMaterialFragment;
     List<Fragment> fragmentList;
     BottomToolBar bottomToolBar;
     int curFrgIndex = 0;
     RequestParams requestParams;
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == MSG_WHAT_ONUPLOADINFO) {
+                //新建项目成功之后跳转
+                if (msg.obj == null) return;
+                Intent intent = new Intent();
+                intent.putExtra(ProjectActivity.EXTRA_PROID, (long) msg.obj);
+                intent.setClass(CreateProActivity.this, ProjectActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        }
+    };
+
     BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -85,8 +104,10 @@ public class CreateProActivity extends BaseActivity {
         });
         bottomToolBar = (BottomToolBar) findViewById(R.id.bottombar);
         bottomToolBar.iniStaticBar();
+        //加一个布局解决状态栏变白-，-
+        ((DrawerLayout) findViewById(R.id.drawerlayout)).setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         //设置默认的fragment
-        getFragmentManager().beginTransaction().replace(R.id.fragment, createProFragment, "default")
+        getFragmentManager().beginTransaction().add(R.id.fragment_container, createProFragment, "default")
                 .commit();
         fragmentList.add(createProFragment);
         curFrgIndex = 0;
@@ -145,7 +166,7 @@ public class CreateProActivity extends BaseActivity {
         }
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         FragmentTransactionExtended fragmentTransactionExtended
-                = new FragmentTransactionExtended(this, fragmentTransaction, fragmentList.get(curFrgIndex), fragmentList.get(curFrgIndex + 1), R.id.fragment);
+                = new FragmentTransactionExtended(this, fragmentTransaction, fragmentList.get(curFrgIndex), fragmentList.get(curFrgIndex + 1), R.id.fragment_container);
         fragmentTransactionExtended.addTransition(FragmentTransactionExtended.ROTATE_DOWN);
         fragmentTransactionExtended.commit(true);
         curFrgIndex++;
@@ -171,18 +192,20 @@ public class CreateProActivity extends BaseActivity {
     }
 
     public void uploadInfo() {
+        final long uid = UserManager.getUserid(this);
         HttpClient.post(this, "project/newproject", requestParams, new JsonResponseHandler() {
             @Override
             public void onSuccess(JSONObject response) {
                 try {
                     JSONObject data = response.getJSONObject("data");
                     Project project = Project.insertOrUpdate(data.getJSONObject("project"));
-                    RelaProject.insertOrUpdate(data.getJSONObject("project"), UserManager.getUserid(CreateProActivity.this));
-                    Intent intent = new Intent();
-                    intent.putExtra(ProjectActivity.EXTRA_PROID, project.getProid());
-                    intent.setClass(CreateProActivity.this, ProjectActivity.class);
-                    startActivity(intent);
-                    finish();
+                    RelaProject.insertOrUpdate(data.getJSONObject("project"), uid);
+                    Message message = new Message();
+                    message.what = MSG_WHAT_ONUPLOADINFO;
+                    if (project != null) {
+                        message.obj = project.getProid();
+                    }
+                    mHandler.sendMessage(message);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

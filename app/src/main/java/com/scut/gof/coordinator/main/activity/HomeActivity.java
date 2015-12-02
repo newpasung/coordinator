@@ -37,7 +37,8 @@ public class HomeActivity extends BaseActivity {
     CircleImageView mCiravatar;
     TextView mTvname;
     TextView mTvsignature;
-
+    //缓存一个homefragment
+    HomeFragment mHomeFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +85,8 @@ public class HomeActivity extends BaseActivity {
         mTvname.setText(UserManager.getUserName(this));
         mTvsignature.setText(UserManager.getSignature(this));
         //设置默认fragment
-        curFragment = HomeFragment.newInstance();
+        mHomeFragment = HomeFragment.newInstance();
+        curFragment = mHomeFragment;
         getFragmentManager().beginTransaction().add(R.id.fragment_container, curFragment)
                 .commit();
         if (curFragment instanceof BottomBarController) {
@@ -125,7 +127,7 @@ public class HomeActivity extends BaseActivity {
                     break;
                     case R.id.btn_home: {
                         if (curFragment instanceof HomeFragment) break;
-                        replaceFragment(HomeFragment.newInstance());
+                        replaceFragment(mHomeFragment);
                     }
                     break;
                     case R.id.btn_feedback: {

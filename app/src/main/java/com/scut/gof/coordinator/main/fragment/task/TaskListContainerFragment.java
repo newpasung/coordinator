@@ -28,6 +28,7 @@ public class TaskListContainerFragment extends BaseFragment implements BottomBar
     List<Fragment> fragments;
     TabLayout tabLayout;
     String[] tabTitles;
+    Project project;
     long proid = -1;
 
     public TaskListContainerFragment() {
@@ -47,6 +48,7 @@ public class TaskListContainerFragment extends BaseFragment implements BottomBar
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (getArguments() != null) {
             proid = getArguments().getLong("proid");
+            project = Project.getProById(proid);
         }
         return inflater.inflate(R.layout.fragment_tasklistcontainer, container, false);
     }
@@ -95,16 +97,17 @@ public class TaskListContainerFragment extends BaseFragment implements BottomBar
     protected void iniData() {
         if (fragments == null || fragments.size() == 0) {
             fragments = new ArrayList<>();
-            fragments.add(TaskListFragment.newInstance(1));
-            fragments.add(TaskListFragment.newInstance(2));
-            fragments.add(TaskListFragment.newInstance(3));
+            fragments.add(TaskListFragment.newInstance(proid));
+            fragments.add(TaskListFragment.newInstance(proid));
+            fragments.add(TaskListFragment.newInstance(proid));
             tabTitles = getActivity().getResources().getStringArray(R.array.tasklist_tabtitles);
         }
     }
 
     @Override
     public void refreshView(BottomToolBar bottomToolBar) {
-        if (Project.getProById(proid).getStatus() == 1) {
+        if (project == null) return;
+        if (project.getStatus() == 1) {
             bottomToolBar.setText(getString(R.string.action_newtask));
         } else {
             bottomToolBar.hideFab();

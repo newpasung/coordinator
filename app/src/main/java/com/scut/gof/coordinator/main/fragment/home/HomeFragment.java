@@ -1,8 +1,10 @@
 package com.scut.gof.coordinator.main.fragment.home;
 
+import android.animation.Animator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,9 +36,8 @@ import java.util.List;
  * A placeholder fragment containing a simple view.
  */
 public class HomeFragment extends BaseFragment implements BottomBarController {
-
-    public static String TAGNAME = "basefragment";
-    int lastVisibleView = 0;
+    final int MSG_WHAT_ONFAILE_REFRESH = 0;
+    final int MSG_WHAT_ONSUCCESS_REFRESH = 1;
     RecyclerView mRec;
     SwipeRefreshLayout mSwipelayout;
     List<Project> proData = new ArrayList<>();
@@ -64,8 +65,18 @@ public class HomeFragment extends BaseFragment implements BottomBarController {
             }
         }
     };
-    public HomeFragment() {
-    }
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == MSG_WHAT_ONFAILE_REFRESH) {
+                adapter.setProData(UserManager.getRecentProject(getActivity()));
+                adapter.notifyDataSetChanged();
+                mSwipelayout.setRefreshing(false);
+            } else if (msg.what == MSG_WHAT_ONSUCCESS_REFRESH) {
+                mSwipelayout.setRefreshing(false);
+            }
+        }
+    };
 
     public static HomeFragment newInstance() {
         Bundle args = new Bundle();
@@ -130,7 +141,27 @@ public class HomeFragment extends BaseFragment implements BottomBarController {
 
     @Override
     public void controllleft(BottomToolBar toolBar) {
-        startActivity(new Intent(getActivity(), CreateProActivity.class));
+        toolBar.reset(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                startActivity(new Intent(getActivity(), CreateProActivity.class));
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
     }
 
     @Override
@@ -143,16 +174,17 @@ public class HomeFragment extends BaseFragment implements BottomBarController {
     }
 
     private void refreshProjects() {
+        final long uid = UserManager.getUserid(getActivity());
         HttpClient.post(getActivity(), "project/relaproject", new RequestParams(), new JsonResponseHandler() {
             @Override
             public void onSuccess(JSONObject response) {
                 try {
                     JSONObject object = response.getJSONObject("data");
                     Project.insertOrUpdate(object.getJSONArray("projects"));
-                    RelaProject.insertOrUpdate(object.getJSONArray("projects"), UserManager.getUserid(getActivity()));
-                    adapter.setProData(UserManager.getRecentProject(getActivity()));
-                    adapter.notifyDataSetChanged();
-                    mSwipelayout.setRefreshing(false);
+                    RelaProject.insertOrUpdate(object.getJSONArray("projects"), uid);
+                    Message msg = new Message();
+                    msg.what = MSG_WHAT_ONSUCCESS_REFRESH;
+                    mHandler.sendMessage(msg);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -160,7 +192,9 @@ public class HomeFragment extends BaseFragment implements BottomBarController {
 
             @Override
             public void onFailure(String message, String for_param) {
-                mSwipelayout.setRefreshing(false);
+                Message msg = new Message();
+                msg.what = MSG_WHAT_ONFAILE_REFRESH;
+                mHandler.sendMessage(msg);
             }
         });
     }
