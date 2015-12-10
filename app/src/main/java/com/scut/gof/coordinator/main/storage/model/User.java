@@ -50,7 +50,7 @@ public class User extends Model {
     }
 
     public static void clearData() {
-        new Delete().from(User.class).where("uid <> -2").execute();
+        new Delete().from(User.class).execute();
     }
 
     /**

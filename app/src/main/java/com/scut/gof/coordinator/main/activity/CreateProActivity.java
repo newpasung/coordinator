@@ -16,7 +16,6 @@ import android.view.View;
 
 import com.loopj.android.http.RequestParams;
 import com.scut.gof.coordinator.R;
-import com.scut.gof.coordinator.main.UserManager;
 import com.scut.gof.coordinator.main.communication.LocalBrCast;
 import com.scut.gof.coordinator.main.fragment.FragmentTransactionExtended;
 import com.scut.gof.coordinator.main.fragment.material.IniMaterialFragment;
@@ -25,7 +24,6 @@ import com.scut.gof.coordinator.main.interf.BottomBarController;
 import com.scut.gof.coordinator.main.net.HttpClient;
 import com.scut.gof.coordinator.main.net.JsonResponseHandler;
 import com.scut.gof.coordinator.main.storage.model.Project;
-import com.scut.gof.coordinator.main.storage.model.RelaProject;
 import com.scut.gof.coordinator.main.widget.BottomToolBar;
 
 import org.json.JSONException;
@@ -39,7 +37,6 @@ import java.util.List;
  * Created by Administrator on 2015/11/3
  */
 public class CreateProActivity extends BaseActivity {
-    public static final String BRCAST_KEY_NEWPRO = "UPLOADNEWPRODATA";
     //这个act管理的frg的总数
     final int FRAGMENT_COUNT = 2;
     final int MSG_WHAT_ONUPLOADINFO = 1;
@@ -67,19 +64,23 @@ public class CreateProActivity extends BaseActivity {
     BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(BRCAST_KEY_NEWPRO)) {
-                uploadInfo();
+            if (intent.getAction().equals(LocalBrCast.PARAM_NEWPROJECT)) {
+                if (createProFragment.canUpload()) {
+                    uploadInfo();
+                } else {
+                    toast("基础信息未填写完整");
+                }
             }
         }
     };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.proinfoactivity_frg_container);
+        setContentView(R.layout.activity_staticbottombar_container);
         requestParams = new RequestParams();
         iniUI();
         iniListener();
-        LocalBrCast.register(this, BRCAST_KEY_NEWPRO, receiver);
+        LocalBrCast.register(this, LocalBrCast.PARAM_NEWPROJECT, receiver);
     }
 
     @Override
@@ -167,24 +168,15 @@ public class CreateProActivity extends BaseActivity {
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         FragmentTransactionExtended fragmentTransactionExtended
                 = new FragmentTransactionExtended(this, fragmentTransaction, fragmentList.get(curFrgIndex), fragmentList.get(curFrgIndex + 1), R.id.fragment_container);
-        fragmentTransactionExtended.addTransition(FragmentTransactionExtended.ROTATE_DOWN);
+        fragmentTransactionExtended.addTransition(FragmentTransactionExtended.SLIDE_HORIZONTAL);
         fragmentTransactionExtended.commit(true);
         curFrgIndex++;
-        switchBarListener();
     }
 
     //用来切换fragment//TODO 加上缓存处理
     protected void lastFragment() {
         getFragmentManager().popBackStack();
         curFrgIndex--;
-        switchBarListener();
-    }
-
-    protected void switchBarListener() {
-        Fragment fragment = fragmentList.get(curFrgIndex);
-        if (fragment instanceof BottomBarController) {
-            bottomToolBar.setButtonListener((BottomBarController) fragment);
-        }
     }
 
     public void addReqParams(String param, String value) {
@@ -192,14 +184,12 @@ public class CreateProActivity extends BaseActivity {
     }
 
     public void uploadInfo() {
-        final long uid = UserManager.getUserid(this);
         HttpClient.post(this, "project/newproject", requestParams, new JsonResponseHandler() {
             @Override
             public void onSuccess(JSONObject response) {
                 try {
                     JSONObject data = response.getJSONObject("data");
                     Project project = Project.insertOrUpdate(data.getJSONObject("project"));
-                    RelaProject.insertOrUpdate(data.getJSONObject("project"), uid);
                     Message message = new Message();
                     message.what = MSG_WHAT_ONUPLOADINFO;
                     if (project != null) {

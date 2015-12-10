@@ -124,6 +124,7 @@ public class LoginFragment extends BaseFragment {
                             if (shouldTrans) {
                                 startActivity(new Intent(getActivity(), HomeActivity.class));
                                 getActivity().finish();
+                                shouldTrans = false;
                             }
                         }
 
@@ -132,6 +133,7 @@ public class LoginFragment extends BaseFragment {
                             if (shouldTrans) {
                                 startActivity(new Intent(getActivity(), HomeActivity.class));
                                 getActivity().finish();
+                                shouldTrans = false;
                             }
                         }
                     });

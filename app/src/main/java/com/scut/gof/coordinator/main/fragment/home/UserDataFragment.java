@@ -15,6 +15,7 @@ import com.scut.gof.coordinator.main.activity.BaseinfoActivity;
 import com.scut.gof.coordinator.main.activity.LoginActivity;
 import com.scut.gof.coordinator.main.fragment.BaseFragment;
 import com.scut.gof.coordinator.main.storage.StorageHelper;
+import com.scut.gof.coordinator.main.storage.XManager;
 
 /**
  * Created by Administrator on 2015/10/31.
@@ -65,6 +66,7 @@ public class UserDataFragment extends BaseFragment {
                             public void onClick(MaterialDialog dialog, DialogAction which) {
                                 //来清空数据吧！
                                 StorageHelper.clearData(getActivity());
+                                XManager.setOpenedStatus(getActivity(), true);
                                 Intent intent = new Intent();
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 intent.setClass(getActivity(), LoginActivity.class);

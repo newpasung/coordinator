@@ -9,9 +9,16 @@ import com.activeandroid.ActiveAndroid;
  */
 public class CooApplication extends Application {
 
+    public static Application application;
+
+    public static Application getInstance() {
+        return application;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
+        application = this;
         ActiveAndroid.initialize(this);
     }
 
@@ -20,4 +27,5 @@ public class CooApplication extends Application {
         super.onTerminate();
         ActiveAndroid.dispose();
     }
+
 }

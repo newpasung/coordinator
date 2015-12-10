@@ -5,6 +5,9 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by Administrator on 2015/10/29.
  */
@@ -39,6 +42,14 @@ public class ViewUtil {
             }
         }
         return isEmpty;
+    }
+
+    /**
+     * @param precision 表示精度，1精度为day
+     */
+    public static String displayTime(long time, int precision) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(new Date(time)).toString();
     }
 
 }

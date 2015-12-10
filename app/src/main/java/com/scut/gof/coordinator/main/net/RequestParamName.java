@@ -10,6 +10,7 @@ public class RequestParamName {
     public static final int ERRORCODE_DATABASEEXECPTION = 10002;
     public static final int ERRORCODE_QINIUERROR = 10003;
     public static final int ERRORCODE_TOKENINVALID = 10004;
+    public static final int ERRORCODE_ILLEGLESTATE = 10005;
 
     public static final String TOKEN = "token";
     public static final String PHONE = "phone";

@@ -32,11 +32,13 @@ public class BaseinfoActivity extends BaseActivity {
     final int REQUESTCODE_GETAPIC = 1;
     RecyclerView mRecinfo;
     String picPath = "";
-
+    long uid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_baseinfo);
+        uid = getIntent().getLongExtra("uid", 0);
+        if (uid == 0) uid = UserManager.getUserid(this);
         iniUI();
         iniListener();
     }
@@ -44,8 +46,8 @@ public class BaseinfoActivity extends BaseActivity {
     protected void iniUI() {
         mRecinfo = (RecyclerView) findViewById(R.id.recyclerview);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         toolbar.setTitle(UserManager.getUserName(this));
+        setSupportActionBar(toolbar);
         CollapsingToolbarLayout collapsingToolbarLayout
                 = (CollapsingToolbarLayout) findViewById(R.id.collapsingtoolbar);
         collapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);

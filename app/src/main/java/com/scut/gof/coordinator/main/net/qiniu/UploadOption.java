@@ -13,6 +13,7 @@ public abstract class UploadOption {
 
     public UploadOption() {
         this.mParams = new RequestParams();
+        setCategory();
     }
 
     public void setCategory(int category) {
@@ -20,4 +21,6 @@ public abstract class UploadOption {
     }
 
     abstract RequestParams getParams();
+
+    abstract void setCategory();
 }

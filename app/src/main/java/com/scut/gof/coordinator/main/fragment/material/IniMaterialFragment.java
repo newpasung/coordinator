@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.scut.gof.coordinator.R;
-import com.scut.gof.coordinator.main.activity.CreateProActivity;
 import com.scut.gof.coordinator.main.communication.LocalBrCast;
 import com.scut.gof.coordinator.main.fragment.BaseFragment;
 import com.scut.gof.coordinator.main.interf.BottomBarController;
@@ -43,7 +42,7 @@ public class IniMaterialFragment extends BaseFragment implements BottomBarContro
     @Override
     public void controllright(BottomToolBar toolBar) {
         if (acceptParam()) {
-            LocalBrCast.sendBroadcast(getActivity(), CreateProActivity.BRCAST_KEY_NEWPRO);
+            LocalBrCast.sendBroadcast(getActivity(), LocalBrCast.PARAM_NEWPROJECT);
         }
     }
 

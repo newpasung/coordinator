@@ -2,12 +2,12 @@ package com.scut.gof.coordinator.main.activity;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -57,6 +57,16 @@ public class ProjectActivity extends BaseActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (mBottomBar != null) {
+            if (mBottomBar.getVisibility() == View.VISIBLE) {
+                mBottomBar.reset();
+            }
+        }
+    }
+
+    @Override
     public void finish() {
         super.finish();
         overridePendingTransition(0, R.anim.slide_out_bottom);
@@ -103,11 +113,7 @@ public class ProjectActivity extends BaseActivity {
 
         mBtnfab = (FloatingActionButton) findViewById(R.id.btn_fab);
         mBottomBar = (BottomToolBar) findViewById(R.id.bottombar);
-        if (!TextUtils.isEmpty(project.getThumbnailLogo())) {
-            PicassoProxy.loadAvatar(this, project.getThumbnailLogo(), mCirprologo);
-        } else {
-            PicassoProxy.loadAvatar(this, project.getPrologo(), mCirprologo);
-        }
+        PicassoProxy.loadAvatar(ProjectActivity.this, project.getThumbnailLogo(), mCirprologo);
         mBottomBar.attachFloatingButton(mBtnfab);
         mTvproname.setText(project.getProname());
         mTvdesc.setText(project.getDescription());
@@ -132,6 +138,16 @@ public class ProjectActivity extends BaseActivity {
                 mDraw.openDrawer(Gravity.LEFT);
             }
         });
+        mCirprologo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProjectActivity.this, ImageBrowserActivity.class);
+                intent.putExtra(ImageBrowserActivity.EXTRA_PARAMETER_PICCOUNT, 1);
+                intent.putExtra(ImageBrowserActivity.EXTRA_PARAMETER_PICURL, project.getPrologo());
+                startActivity(intent);
+            }
+        });
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {

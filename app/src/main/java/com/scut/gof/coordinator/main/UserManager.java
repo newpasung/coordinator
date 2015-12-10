@@ -3,6 +3,7 @@ package com.scut.gof.coordinator.main;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.activeandroid.query.Select;
 import com.scut.gof.coordinator.main.storage.XManager;
 import com.scut.gof.coordinator.main.storage.model.Project;
 import com.scut.gof.coordinator.main.storage.model.RelaProject;
@@ -78,26 +79,22 @@ public class UserManager {
         JSONArray projectdata = data.getJSONArray("projects");
         //添加进project数据
         Project.insertOrUpdate(projectdata);
-        //把用户增加到项目关系中
-        RelaProject.insertOrUpdate(projectdata, uid);
     }
 
-    public static ArrayList<Project> getMyProjects(Context context) {
-        ArrayList<Project> projects = new ArrayList<>();
-        List<RelaProject> relaProjects = RelaProject.getRelaProjects(XManager.getUid(context));
-        Project temp;
-        //--不会sql排序，所以。。。把最新的放前面
-        for (int i = relaProjects.size() - 1; i >= 0; i--) {
-            temp = Project.getProById(relaProjects.get(i).getProid());
-            projects.add(temp);
-        }
+    public static List<Project> getMyProjects(Context context) {
+        List<Project> projects;
+        long uid = getUserid(context);
+        projects = new Select().from(Project.class).innerJoin(RelaProject.class)
+                .on("relaproject.uid = " + uid + " and project.proid = relaproject.proid")
+                .orderBy("project.proid DESC")
+                .execute();
         return projects;
     }
 
     public static ArrayList<Project> getRecentProject(Context context) {
         String str_ids = XManager.getMyRecentProid(context);
         ArrayList<Project> resultList = new ArrayList<>();
-        ArrayList<Project> relaProjects = getMyProjects(context);
+        List<Project> relaProjects = getMyProjects(context);
         ArrayList<Project> unaliveProject = new ArrayList<>();//记录不可用的project
         if (TextUtils.isEmpty(str_ids)) {
             //毛都没有，就把所有都有用的发过去吧

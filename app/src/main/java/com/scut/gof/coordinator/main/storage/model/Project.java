@@ -6,6 +6,8 @@ import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
+import com.scut.gof.coordinator.CooApplication;
+import com.scut.gof.coordinator.main.UserManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,7 +52,8 @@ public class Project extends Model {
     private int status;
     @Column(name = "prologo")
     private String prologo;
-
+    @Column(name = "mark")
+    private int mark;
     public Project() {
         super();
     }
@@ -59,7 +62,7 @@ public class Project extends Model {
      * 清空所有数据的哦
      */
     public static void clearData() {
-        new Delete().from(Project.class).where("proid <> -2").execute();
+        new Delete().from(Project.class).execute();
     }
 
     public static Project getProById(long proid) {
@@ -91,7 +94,7 @@ public class Project extends Model {
             }
             if (data.has("principal")) {
                 JSONObject principal = data.getJSONObject("principal");
-                project.principalid = principal.getInt("uid");
+                project.principalid = principal.getLong("uid");
                 User.insertOrUpdateSimply(principal);
             }
             if (data.has("principalid")) {
@@ -115,7 +118,18 @@ public class Project extends Model {
             if (data.has("status")) {
                 project.status = data.getInt("status");
             }
+            if (data.has("mark")) {
+                project.mark = data.getInt("mark");
+            }
             project.save();
+            if (data.has("principalid")) {
+                RelaProject.insertOrUpdate(data, project.principalid);
+            } else {
+                if (data.has("role")) {
+                    RelaProject.insertOrUpdate(project.proid, UserManager.getUserid(CooApplication.getInstance()), data.getInt("role"));
+                }
+            }
+            RelaProject.insertOrUpdate(data, project.principalid);
             return project;
         } catch (JSONException e) {
             e.printStackTrace();
@@ -215,4 +229,5 @@ public class Project extends Model {
     public void setStatus(int status) {
         this.status = status;
     }
+
 }

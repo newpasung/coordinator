@@ -56,7 +56,7 @@ public class Material extends Model {
     }
 
     public static void clearData() {
-        new Delete().from(Material.class).where("proid <> -2").execute();
+        new Delete().from(Material.class).execute();
     }
 
     public static void insertOrUpdate(JSONObject data) {

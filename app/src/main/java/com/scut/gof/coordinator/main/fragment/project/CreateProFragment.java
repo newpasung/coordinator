@@ -37,6 +37,7 @@ public class CreateProFragment extends BaseFragment implements BottomBarControll
     EditText mEtdesc;
     DatePickerDialog pickerDialog;
     String[] categories;
+    boolean canUpload;
     public CreateProFragment() {
         super();
     }
@@ -89,6 +90,8 @@ public class CreateProFragment extends BaseFragment implements BottomBarControll
                 //下面包括了简单的辨别"起始时间"的逻辑
                 if (view.getTag().equals("startdatepicker")) {
                     if (time > (long) mBtnendtime.getTag()) {
+                        mBtnstarttime.setText(mBtnendtime.getText().toString());
+                        mBtnstarttime.setTag(mBtnendtime.getTag());
                         toastWarn("开始时间应该更早");
                         return;
                     }
@@ -98,6 +101,7 @@ public class CreateProFragment extends BaseFragment implements BottomBarControll
                     if (time < (long) mBtnstarttime.getTag()) {
                         toastWarn("结束时间应该更久");
                         mBtnendtime.setText(mBtnstarttime.getText().toString());
+                        mBtnendtime.setTag(mBtnstarttime.getTag());
                         return;
                     }
                     mBtnendtime.setText(builder.toString());
@@ -148,13 +152,14 @@ public class CreateProFragment extends BaseFragment implements BottomBarControll
     @Override
     public void controllmiddle(BottomToolBar toolBar) {
         if (acceptParam()) {
-            LocalBrCast.sendBroadcast(getActivity(), CreateProActivity.BRCAST_KEY_NEWPRO);
+            canUpload = true;
+            LocalBrCast.sendBroadcast(getActivity(), LocalBrCast.PARAM_NEWPROJECT);
         }
     }
 
     @Override
     public void controllright(BottomToolBar toolBar) {
-        acceptParam();
+        canUpload = acceptParam();
     }
 
     /**
@@ -179,6 +184,10 @@ public class CreateProFragment extends BaseFragment implements BottomBarControll
         ((CreateProActivity) getActivity()).addReqParams(RequestParamName.PROJECT_DESCRIPTION, mEtdesc.getText().toString());
         ((CreateProActivity) getActivity()).addReqParams(RequestParamName.PROJECT_CATEGORY, (String) mSpcategory.getTag());
         return true;
+    }
+
+    public boolean canUpload() {
+        return this.canUpload;
     }
 
 }

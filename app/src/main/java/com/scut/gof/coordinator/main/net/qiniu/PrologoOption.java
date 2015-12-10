@@ -10,8 +10,6 @@ public class PrologoOption extends UploadOption {
     public PrologoOption(long proid) {
         super();
         this.proid = proid;
-        this.category = FILETYPE_PROLOGO;
-        setCategory(FILETYPE_PROLOGO);
     }
 
     @Override
@@ -19,5 +17,10 @@ public class PrologoOption extends UploadOption {
         this.mParams.put("proid", this.proid);
         this.mParams.put("category", this.category);
         return this.mParams;
+    }
+
+    @Override
+    void setCategory() {
+        setCategory(FILETYPE_PROLOGO);
     }
 }

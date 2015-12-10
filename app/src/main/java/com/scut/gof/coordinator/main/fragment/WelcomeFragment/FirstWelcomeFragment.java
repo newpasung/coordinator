@@ -1,6 +1,5 @@
 package com.scut.gof.coordinator.main.fragment.WelcomeFragment;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,8 +12,7 @@ import android.widget.ImageView;
 import android.widget.ViewSwitcher;
 
 import com.scut.gof.coordinator.R;
-import com.scut.gof.coordinator.main.activity.HomeActivity;
-import com.scut.gof.coordinator.main.activity.LoginActivity;
+import com.scut.gof.coordinator.main.communication.LocalBrCast;
 import com.scut.gof.coordinator.main.fragment.BaseFragment;
 import com.scut.gof.coordinator.main.storage.XManager;
 
@@ -90,10 +88,7 @@ public class FirstWelcomeFragment extends BaseFragment implements View.OnTouchLi
                     //已经是最后一张，进入下一个activity
                     else {
                         XManager.setOpenedStatus(getActivity(), true);//设置已经打开过app
-                        boolean isLogined = XManager.isLogined(getActivity());//通过是否已登录决定进入的下一个activity
-                        Intent intent = new Intent(getActivity(), isLogined ? HomeActivity.class : LoginActivity.class);
-                        startActivity(intent);
-                        getActivity().finish();
+                        LocalBrCast.sendBroadcast(getActivity(), LocalBrCast.PARAM_WELACT_TRANSACTIVITY);
                     }
                 }
 

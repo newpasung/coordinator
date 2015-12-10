@@ -5,6 +5,7 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -116,9 +117,6 @@ public class HomeActivity extends BaseActivity {
         naviView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
-                if (mBar.getVisibility() == View.VISIBLE) {
-                    mBar.resetImmediate();
-                }
                 switch (item.getItemId()) {
                     case R.id.btn_userdata: {
                         if (curFragment instanceof UserDataFragment) break;
@@ -141,10 +139,20 @@ public class HomeActivity extends BaseActivity {
                     }
                     break;
                     case R.id.btn_test: {
+                        toastWarn("test");
                     }
                     break;
                 }
-                mDrwer.closeDrawer(Gravity.LEFT);
+                //卡顿。试下这样解决？
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (mBar.getVisibility() == View.VISIBLE) {
+                            mBar.resetImmediate();
+                        }
+                        mDrwer.closeDrawer(Gravity.LEFT);
+                    }
+                }, 1);
                 return true;
             }
         });

@@ -35,8 +35,8 @@ public abstract class JsonResponseHandler extends JsonHttpResponseHandler{
             if (status == 1) {
                 onSuccess(response);
             }else{
+                final Context context = weakReference.get();
                 if (response.getInt("errorCode") == RequestParamName.ERRORCODE_TOKENINVALID) {
-                    final Context context = weakReference.get();
                     if (context != null) {
                         new MaterialDialog.Builder(context)
                                 .positiveText("了解")
@@ -54,13 +54,18 @@ public abstract class JsonResponseHandler extends JsonHttpResponseHandler{
                                 })
                                 .show();
                     }
+                    weakReference.clear();
                     return;
                 }
                 if (response.getInt("errorCode") == RequestParamName.ERRORCODE_DATABASEEXECPTION) {
-                    final Context context = weakReference.get();
                     if (context != null) {
                         Toast.makeText(context, "后台bug", Toast.LENGTH_SHORT).show();
                     }
+                    weakReference.clear();
+                }
+                if (response.getInt("errorCode") == RequestParamName.ERRORCODE_ILLEGLESTATE) {
+                    onFailure(response.getString("message"), RequestParamName.ERRORCODE_ILLEGLESTATE + "");
+                    return;
                 }
                 String message = response.getString("message");
                 String for_param = response.getString("for_param");
@@ -101,6 +106,7 @@ public abstract class JsonResponseHandler extends JsonHttpResponseHandler{
                             })
                             .show();
                 }
+                weakReference.clear();
                 onFailure("请检查网络是否正常!", "common");
                 return;
             }
@@ -124,6 +130,7 @@ public abstract class JsonResponseHandler extends JsonHttpResponseHandler{
                             }
                         })
                         .show();
+                weakReference.clear();
             }
         }
         onFailure("请求异常", "common");

@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.scut.gof.coordinator.main.widget.FragContainer xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_small"
+            android:padding="@dimen/padding_normal"
+            app:cardCornerRadius="@dimen/radius_normal"
+            app:cardElevation="@dimen/evelation_l1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/background"
+                android:orientation="vertical"
+                android:padding="@dimen/padding_normal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/text_entry"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/margin_normal"
+                        android:text="@string/text_taskname" />
+
+                    <EditText
+                        android:id="@+id/et_name"
+                        style="@style/text_headline_bold_themecolor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionDone"
+                        android:maxLines="2"
+                        tools:text="@string/test_sentence_100" />
+                </LinearLayout>
+
+                <TextView
+                    style="@style/text_entry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:text="@string/text_latest_starttime" />
+
+                <com.scut.gof.coordinator.main.widget.RippleView
+                    android:id="@+id/rl_starttime_selector"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/padding_tiny">
+
+                    <TextView
+                        android:id="@+id/tv_starttime"
+                        style="@style/text_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/iv_dropdowncircle1"
+                        android:singleLine="true"
+                        tools:text="@string/test_sentence_100" />
+
+                    <ImageView
+                        android:id="@+id/iv_dropdowncircle1"
+                        android:layout_width="@dimen/dropdowncircle_size"
+                        android:layout_height="@dimen/dropdowncircle_size"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/dropdown_circle" />
+                </com.scut.gof.coordinator.main.widget.RippleView>
+
+
+                <include layout="@layout/linedivider_black54" />
+
+                <TextView
+                    style="@style/text_entry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_normal"
+                    android:text="@string/text_endtime" />
+
+                <com.scut.gof.coordinator.main.widget.RippleView
+                    android:id="@+id/rl_endtime_selector"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/padding_tiny">
+
+                    <TextView
+                        android:id="@+id/tv_endtime"
+                        style="@style/text_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/iv_dropdowncircle2"
+                        android:singleLine="true"
+                        tools:text="@string/test_sentence_100" />
+
+                    <ImageView
+                        android:id="@+id/iv_dropdowncircle2"
+                        android:layout_width="@dimen/dropdowncircle_size"
+                        android:layout_height="@dimen/dropdowncircle_size"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/dropdown_circle" />
+                </com.scut.gof.coordinator.main.widget.RippleView>
+
+
+                <include layout="@layout/linedivider_black54" />
+
+                <com.scut.gof.coordinator.main.widget.RippleView
+                    android:id="@+id/rl_category_selector"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/padding_tiny"
+                    android:paddingTop="@dimen/padding_small">
+
+                    <TextView
+                        android:id="@+id/tv_entry_category"
+                        style="@style/text_entry"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginRight="@dimen/margin_normal"
+                        android:text="@string/text_taskcategory" />
+
+                    <TextView
+                        android:id="@+id/tv_category"
+                        style="@style/text_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@+id/iv_dropdowncircle3"
+                        android:layout_toRightOf="@+id/tv_entry_category"
+                        android:singleLine="true"
+                        android:text="@string/text_taskdeafultcategory" />
+
+                    <ImageView
+                        android:id="@+id/iv_dropdowncircle3"
+                        android:layout_width="@dimen/dropdowncircle_size"
+                        android:layout_height="@dimen/dropdowncircle_size"
+                        android:layout_alignParentRight="true"
+                        android:background="@drawable/dropdown_circle" />
+                </com.scut.gof.coordinator.main.widget.RippleView>
+
+                <include layout="@layout/linedivider_black54" />
+
+                <TextView
+                    style="@style/text_entry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_normal"
+                    android:text="@string/text_taskcontent" />
+
+                <EditText
+                    android:id="@+id/et_content"
+                    style="@style/text_body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_non_compulsion"
+                    android:imeOptions="actionDone"
+                    android:minHeight="40dp"
+                    tools:text="@string/test_sentence_100" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/text_entry"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/margin_normal"
+                        android:text="@string/text_taskpriority" />
+
+                    <Spinner
+                        android:id="@+id/spinner_priority"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:entries="@array/task_priority" />
+                </LinearLayout>
+
+                <include layout="@layout/linedivider_black54" />
+
+                <TextView
+                    style="@style/text_entry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_normal"
+                    android:text="@string/text_taskdesc" />
+
+                <EditText
+                    android:id="@+id/et_desc"
+                    style="@style/text_body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:hint="@string/hint_non_compulsion"
+                    android:imeOptions="actionDone"
+                    tools:text="@string/test_sentence_100" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+    </ScrollView>
+
+</com.scut.gof.coordinator.main.widget.FragContainer>

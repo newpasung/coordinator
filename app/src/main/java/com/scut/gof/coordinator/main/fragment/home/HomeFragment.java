@@ -23,7 +23,6 @@ import com.scut.gof.coordinator.main.interf.BottomBarController;
 import com.scut.gof.coordinator.main.net.HttpClient;
 import com.scut.gof.coordinator.main.net.JsonResponseHandler;
 import com.scut.gof.coordinator.main.storage.model.Project;
-import com.scut.gof.coordinator.main.storage.model.RelaProject;
 import com.scut.gof.coordinator.main.widget.BottomToolBar;
 
 import org.json.JSONException;
@@ -174,14 +173,12 @@ public class HomeFragment extends BaseFragment implements BottomBarController {
     }
 
     private void refreshProjects() {
-        final long uid = UserManager.getUserid(getActivity());
         HttpClient.post(getActivity(), "project/relaproject", new RequestParams(), new JsonResponseHandler() {
             @Override
             public void onSuccess(JSONObject response) {
                 try {
                     JSONObject object = response.getJSONObject("data");
                     Project.insertOrUpdate(object.getJSONArray("projects"));
-                    RelaProject.insertOrUpdate(object.getJSONArray("projects"), uid);
                     Message msg = new Message();
                     msg.what = MSG_WHAT_ONSUCCESS_REFRESH;
                     mHandler.sendMessage(msg);

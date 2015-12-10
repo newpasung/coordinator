@@ -10,6 +10,7 @@
     <dimen name="margin_medium">24dp</dimen>
     <dimen name="margin_tiny">2dp</dimen>
 
+    <dimen name="padding_tiny">2dp</dimen>
     <dimen name="padding_small">8dp</dimen>
     <dimen name="padding_normal">16dp</dimen>
     <dimen name="padding_middle">24dp</dimen>
@@ -21,7 +22,6 @@
     <dimen name="textsize_l5">24sp</dimen>
     <dimen name="textsize_l6">34sp</dimen>
     <dimen name="textsize_l7">45sp</dimen>
-
     <dimen name="evelation_l1">4dp</dimen>
 
     <dimen name="dialog_width">260dp</dimen>
@@ -39,7 +39,10 @@
     <dimen name="paper_projectheight">80dp</dimen>
 
     <dimen name="dialog_minHeight">128dp</dimen>
-
+    <dimen name="dropdowncircle_size">24dp</dimen>
+    <dimen name="iconsize_normal">40dp</dimen>
+    <dimen name="iconsize_small">28dp</dimen>
+    <dimen name="fab_marginLeft">3dp</dimen>
     //from official
     <dimen name="drawer_header_content_height">56dp</dimen>
     <dimen name="dialog_flat_btn_height">36dp</dimen>

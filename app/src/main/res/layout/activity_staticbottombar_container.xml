@@ -16,7 +16,8 @@
 
         <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_above="@+id/bottombar">
 
             <android.support.design.widget.AppBarLayout
                 android:id="@+id/appbarlayout"
@@ -40,7 +41,6 @@
                 tools:layout="@layout/fragment_createpro"></LinearLayout>
         </android.support.design.widget.CoordinatorLayout>
 
-
         <com.scut.gof.coordinator.main.widget.BottomToolBar
             android:id="@+id/bottombar"
             android:layout_width="match_parent"
@@ -48,7 +48,6 @@
             android:layout_alignParentBottom="true" />
 
     </RelativeLayout>
-
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigationview"

@@ -51,19 +51,19 @@ public class PicassoProxy {
     /**
      * 这个下载数据但是不会加载图片，可以自己处理数据哦，哼哼
      */
-    public static void loadBigImg(Context context, String url, Target target) {
+    public static void loadBigImg(Context context, String url, String tag, Target target) {
         if (TextUtils.isEmpty(url)) return;
         Picasso.with(context).load(url)
                 .config(Bitmap.Config.RGB_565)
                 .placeholder(R.drawable.holywhite)
                 .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
-                .tag("bigimage")
+                .tag(tag)
                 .error(R.drawable.holywhite)
                 .into(target);
     }
 
-    public static void cancelLoadBigImg(Context context) {
-        Picasso.with(context).cancelTag("bigimage");
+    public static void cancelLoad(Context context, String tag) {
+        Picasso.with(context).cancelTag(tag);
     }
 
 }

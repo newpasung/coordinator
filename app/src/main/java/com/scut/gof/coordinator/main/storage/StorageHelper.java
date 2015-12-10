@@ -7,6 +7,7 @@ import com.activeandroid.ActiveAndroid;
 import com.scut.gof.coordinator.main.storage.model.Material;
 import com.scut.gof.coordinator.main.storage.model.Project;
 import com.scut.gof.coordinator.main.storage.model.RelaProject;
+import com.scut.gof.coordinator.main.storage.model.RelaTask;
 import com.scut.gof.coordinator.main.storage.model.User;
 
 import java.io.File;
@@ -22,9 +23,10 @@ public class StorageHelper {
     public static void clearData(Context context) {
         XManager.clearData(context);
         ActiveAndroid.clearCache();
+        RelaProject.clearData();
+        RelaTask.clearData();
         Project.clearData();
         Material.clearData();
-        RelaProject.clearData();
         User.clearData();
         //删除内部缓存文件
         deleteFilesByDirectory(context.getCacheDir());

@@ -25,10 +25,12 @@ public class ImageBrowserActivity extends BaseActivity {
     SubsamplingScaleImageView scaleView;
     int piccount = 0;
     String url;
+    String tag;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_imagebrowser);
+        tag = String.valueOf(System.currentTimeMillis());
         scaleView = (SubsamplingScaleImageView) findViewById(R.id.subscaleview);
         scaleView.setMinimumDpi(80);
         if (getIntent() != null) {
@@ -39,7 +41,7 @@ public class ImageBrowserActivity extends BaseActivity {
             final MaterialDialog dialog = new MaterialDialog.Builder(this)
                     .content("图片加载中")
                     .progress(true, 0).show();
-            PicassoProxy.loadBigImg(this, url, new Target() {
+            PicassoProxy.loadBigImg(this, url, tag, new Target() {
                 @Override
                 public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
                     scaleView.setImage(ImageSource.bitmap(bitmap));
@@ -48,8 +50,7 @@ public class ImageBrowserActivity extends BaseActivity {
 
                 @Override
                 public void onBitmapFailed(Drawable errorDrawable) {
-                    toast("亲，是不是网络故障了");
-                    dialog.dismiss();
+                    dialog.setContent("加载失败");
                 }
 
                 @Override
@@ -69,7 +70,7 @@ public class ImageBrowserActivity extends BaseActivity {
 
     @Override
     protected void onPause() {
-        PicassoProxy.cancelLoadBigImg(this);
+        PicassoProxy.cancelLoad(this, tag);
         super.onPause();
     }
 

@@ -1,7 +1,9 @@
 package com.scut.gof.coordinator.main.fragment.task;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -11,9 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.scut.gof.coordinator.R;
+import com.scut.gof.coordinator.main.activity.CreateTaskActivity;
 import com.scut.gof.coordinator.main.fragment.BaseFragment;
 import com.scut.gof.coordinator.main.interf.BottomBarController;
 import com.scut.gof.coordinator.main.storage.model.Project;
+import com.scut.gof.coordinator.main.storage.model.Task;
 import com.scut.gof.coordinator.main.widget.BottomToolBar;
 
 import java.util.ArrayList;
@@ -23,6 +27,7 @@ import java.util.List;
  * Created by Administrator on 2015/11/7.
  */
 public class TaskListContainerFragment extends BaseFragment implements BottomBarController {
+    final int REQUESTCODE_NEWTASK = 1;
     ViewPager viewPager;
     MyAdapter pagerAdapter;
     List<Fragment> fragments;
@@ -97,9 +102,9 @@ public class TaskListContainerFragment extends BaseFragment implements BottomBar
     protected void iniData() {
         if (fragments == null || fragments.size() == 0) {
             fragments = new ArrayList<>();
-            fragments.add(TaskListFragment.newInstance(proid));
-            fragments.add(TaskListFragment.newInstance(proid));
-            fragments.add(TaskListFragment.newInstance(proid));
+            fragments.add(TaskListFragment.newInstance(proid, 0));
+            fragments.add(TaskListFragment.newInstance(proid, 1));
+            fragments.add(TaskListFragment.newInstance(proid, 2));
             tabTitles = getActivity().getResources().getStringArray(R.array.tasklist_tabtitles);
         }
     }
@@ -126,7 +131,17 @@ public class TaskListContainerFragment extends BaseFragment implements BottomBar
 
     @Override
     public void controllright(BottomToolBar toolBar) {
+        Intent intent = new Intent(getActivity(), CreateTaskActivity.class);
+        intent.putExtra("proid", proid);
+        startActivityForResult(intent, REQUESTCODE_NEWTASK);
+    }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUESTCODE_NEWTASK && resultCode == Activity.RESULT_OK) {
+            ((TaskListFragment) fragments.get(0))
+                    .addTaskOnBottom(Task.getTaskById(data.getLongExtra("tid", 0)));
+        }
     }
 
     class MyAdapter extends android.support.v13.app.FragmentStatePagerAdapter {
@@ -136,13 +151,6 @@ public class TaskListContainerFragment extends BaseFragment implements BottomBar
         public MyAdapter(android.app.FragmentManager fm) {
             super(fm);
             this.manager = fm;
-        }
-
-        /**
-         * 清除adapter的数据和fragmentmanager绑定的fragment
-         */
-        public void clearData() {
-            list.clear();
         }
 
         public void setList(List<Fragment> list) {

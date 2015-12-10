@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.scut.gof.coordinator.main.widget.RippleView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/padding_normal">
+
+    <com.scut.gof.coordinator.main.widget.CircleImageView
+        android:id="@+id/icon"
+        android:layout_width="@dimen/iconsize_normal"
+        android:layout_height="@dimen/iconsize_normal"
+        tools:src="@drawable/description" />
+
+    <TextView
+        android:id="@+id/tv_caption"
+        style="@style/text_caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/icon"
+        android:layout_marginLeft="@dimen/margin_normal"
+        android:layout_toRightOf="@+id/icon"
+        android:singleLine="true"
+        tools:text="@string/test_sentence_20" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        style="@style/text_body"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tv_caption"
+        android:layout_below="@+id/tv_caption"
+        android:layout_marginTop="@dimen/margin_tiny"
+        tools:text="@string/test_sentence_100" />
+
+</com.scut.gof.coordinator.main.widget.RippleView>
