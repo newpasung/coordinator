@@ -19,6 +19,7 @@ public class XManager {
     //一些用户无关的参数
     public static String PARAM_OPENED = "hasopened";//是否已经打开过app，用于判断是否显示引导页
     public static String PARAM_LOGINED = "haslogined";//是否已经登录
+    public static String PARAM_LASTOPENTIME = "lastopentime";//上一次打开应用的时间，毫秒
     //一些用户相关的参数
     public static String PARAM_TOKEN = "token";//用户token
     public static String PARAM_UID = "uid";//用户uid
@@ -57,6 +58,10 @@ public class XManager {
         return getSystemManager(context).getBoolean(PARAM_OPENED,false);
     }
 
+    public static long getLastOpenTime(Context context) {
+        return getSystemManager(context).getLong(PARAM_LASTOPENTIME, 0);
+    }
+
     /**
      * 设置是否已经打开过app
      * @param status  是否打开
@@ -65,6 +70,12 @@ public class XManager {
         SharedPreferences.Editor editor =getSystemManager(context).edit();
         editor.putBoolean(PARAM_OPENED, status);
         editor.apply();
+    }
+
+    public static void setLastOpenTime(Context context, long time) {
+        SharedPreferences.Editor editor = getSystemManager(context).edit();
+        editor.putLong(PARAM_LASTOPENTIME, System.currentTimeMillis());
+        editor.commit();
     }
 
     //获取用户token，如果没有则返回空字符串

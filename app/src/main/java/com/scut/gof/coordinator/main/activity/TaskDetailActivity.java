@@ -54,6 +54,7 @@ public class TaskDetailActivity extends BaseActivity {
     FloatingActionButton mBtnmark;
     DetailInfoAdapter adapter;
     WeakReference<Context> contextWeakReference;
+    HashMap<Integer, Object> extraData;
     DetailInfoAdapter.OnListitemClick onListitem = new DetailInfoAdapter.OnListitemClick() {
         @Override
         public void onClick(final TextView textView, int titleResId) {
@@ -126,8 +127,10 @@ public class TaskDetailActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_taskdetail);
-        iniData();
+        iniData(true);
+        adapter = new DetailInfoAdapter(contents, extraData, iconRes, titles, onListitem);
         iniUI();
+        netRefreshTask();
     }
 
     @Override
@@ -152,22 +155,25 @@ public class TaskDetailActivity extends BaseActivity {
         if (requestCode == REQUESTCODE_GETCATEGORY && resultCode == RESULT_OK) {
             String category = data.getStringExtra("category");
             adapter.modifyContent(R.string.text_taskcategory, category);
-            netModifyBaseinfo("category", category);
+            netModifyCategory(category);
         }
     }
 
-    private void iniData() {
-        long tid = getIntent().getLongExtra("tid", 0);
-        if (tid == 0) finish();
-        mTask = Task.getTaskById(tid);
+    //再利用，虽然效率不咋地
+    private void iniData(boolean firsttime) {
+        if (firsttime) {
+            long tid = getIntent().getLongExtra("tid", 0);
+            if (tid == 0) finish();
+            mTask = Task.getTaskById(tid);
+        }
         User creator = User.getUserById(mTask.getCreator());
         final int displaycount = 10;
         iconRes = new int[displaycount];
         titles = new int[displaycount];
         contents = new String[displaycount];
+        extraData = new HashMap<>();
         int index = 0;
         int extraDataIndex = -1;
-        HashMap<Integer, Object> extraData = new HashMap<>();
         titles[index] = R.string.text_creator;
         iconRes[index] = extraDataIndex;
         extraData.put(extraDataIndex--, creator.getThumbnailavatar());
@@ -199,7 +205,6 @@ public class TaskDetailActivity extends BaseActivity {
         titles[index] = R.string.text_tag;
         iconRes[index] = R.drawable.tag;
         contents[index++] = mTask.getTag().equals("") ? "无" : mTask.getTag();
-        adapter = new DetailInfoAdapter(contents, extraData, iconRes, titles, onListitem);
     }
 
     private boolean isEditable() {
@@ -482,7 +487,7 @@ public class TaskDetailActivity extends BaseActivity {
 
     private void modifyCategory() {
         Intent intent = new Intent(this, TaskCategorySelectorActivity.class);
-        intent.putExtra("tid", mTask.getTid());
+        intent.putExtra("proid", mTask.getProid());
         startActivityForResult(intent, REQUESTCODE_GETCATEGORY);
     }
 
@@ -560,6 +565,49 @@ public class TaskDetailActivity extends BaseActivity {
                 try {
                     Task task = Task.insertOrUpdate(response.getJSONObject("data").getJSONObject("task"));
                     if (task != null) mTask = task;
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(String message, String for_param) {
+
+            }
+        });
+    }
+
+    private void netModifyCategory(String category) {
+        RequestParams params = new RequestParams();
+        params.put("tid", mTask.getTid());
+        params.put("category", category);
+        HttpClient.post(TaskDetailActivity.this, "task/modifycategory", params, new JsonResponseHandler() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                try {
+                    Task.insertOrUpdate(response.getJSONObject("data").getJSONArray("tasks"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(String message, String for_param) {
+
+            }
+        });
+    }
+
+    private void netRefreshTask() {
+        RequestParams params = new RequestParams();
+        params.put("tid", mTask.getTid());
+        HttpClient.get(TaskDetailActivity.this, "task/ataskinfo", params, new JsonResponseHandler() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                try {
+                    mTask = Task.insertOrUpdate(response.getJSONObject("data").getJSONObject("task"));
+                    iniData(false);
+                    adapter.refreshData(contents, extraData, iconRes, titles);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

@@ -38,6 +38,7 @@
     <string name="text_taskname">任务名</string>
     <string name="text_taskcategory">任务分类</string>
     <string name="text_taskcontent">任务详细</string>
+    <string name="text_tagtip">写一个优雅的标签</string>
     <string name="text_taskdesc">任务备注</string>
     <string name="text_taskpriority">任务优先级</string>
     <string name="text_taskdeafultcategory">默认</string>
@@ -70,6 +71,7 @@
     <string name="action_exitapp">注销当前账号</string>
     <string name="action_accepttask">认领任务</string>
     <string name="action_delete">删除</string>
+    <string name="action_add">增加</string>
     <string name="warn_tokeninvalid">你的账号在别处登录，需重新登录</string>
     <string name="warn_inputproname">你要输入项目名称</string>
     <string name="warn_chooseprotime">你要选择项目起始时间</string>

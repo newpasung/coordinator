@@ -1,5 +1,7 @@
 package com.scut.gof.coordinator.main.fragment.task;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 
 import com.scut.gof.coordinator.R;
 import com.scut.gof.coordinator.main.activity.CreateTaskActivity;
+import com.scut.gof.coordinator.main.activity.TaskCategorySelectorActivity;
 import com.scut.gof.coordinator.main.communication.LocalBrCast;
 import com.scut.gof.coordinator.main.fragment.BaseFragment;
 import com.scut.gof.coordinator.main.interf.BottomBarController;
@@ -30,14 +33,17 @@ import java.util.Locale;
  */
 public class CreateBaseTaskFragment extends BaseFragment implements BottomBarController {
 
+    final int REQUESTCODE_GETCATEGORY = 1;
     DatePickerDialog pickerDialog;
     //用来点击的控件
     RelativeLayout mRlstatime;
     RelativeLayout mRlendtime;
     RelativeLayout mRlcategory;
+    long proid;
     private EditText mEtname;
     private EditText mEtcontent;
     private EditText mEtdesc;
+    private EditText mEttag;
     private TextView mTvstarttime;
     private TextView mTvendtime;
     private TextView mTvcategory;
@@ -59,6 +65,7 @@ public class CreateBaseTaskFragment extends BaseFragment implements BottomBarCon
         mEtname = (EditText) view.findViewById(R.id.et_name);
         mEtcontent = (EditText) view.findViewById(R.id.et_content);
         mEtdesc = (EditText) view.findViewById(R.id.et_desc);
+        mEttag = (EditText) view.findViewById(R.id.et_tag);
         mSppriority = (Spinner) view.findViewById(R.id.spinner_priority);
         mTvstarttime = (TextView) view.findViewById(R.id.tv_starttime);
         mTvendtime = (TextView) view.findViewById(R.id.tv_endtime);
@@ -74,9 +81,17 @@ public class CreateBaseTaskFragment extends BaseFragment implements BottomBarCon
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        proid = getArguments().getLong("proid");
         canNetUpload = false;
         iniDialog();
         iniListener();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUESTCODE_GETCATEGORY && resultCode == Activity.RESULT_OK) {
+            mTvcategory.setText(data.getStringExtra("category"));
+        }
     }
 
     private void iniListener() {
@@ -111,12 +126,9 @@ public class CreateBaseTaskFragment extends BaseFragment implements BottomBarCon
         mRlcategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        toast("选择分类");
-                    }
-                }, 80);
+                Intent intent = new Intent(getActivity(), TaskCategorySelectorActivity.class);
+                intent.putExtra("proid", proid);
+                startActivityForResult(intent, REQUESTCODE_GETCATEGORY);
             }
         });
         mSppriority.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -229,10 +241,12 @@ public class CreateBaseTaskFragment extends BaseFragment implements BottomBarCon
         desc = TextUtils.isEmpty(desc) ? "" : desc;
         String priority = String.valueOf((int) mSppriority.getTag());
         String category = mTvcategory.getText().toString();
+        String tag = TextUtils.isEmpty(mEttag.getText().toString()) ? "" : mEttag.getText().toString();
         ((CreateTaskActivity) getActivity()).addReqParams("content", content);
         ((CreateTaskActivity) getActivity()).addReqParams("priority", priority);
         ((CreateTaskActivity) getActivity()).addReqParams("description", desc);
         ((CreateTaskActivity) getActivity()).addReqParams("category", category);
+        ((CreateTaskActivity) getActivity()).addReqParams("tag", tag);
         return true;
     }
 

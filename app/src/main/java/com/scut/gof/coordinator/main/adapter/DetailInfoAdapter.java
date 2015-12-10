@@ -34,6 +34,14 @@ public class DetailInfoAdapter extends RecyclerView.Adapter {
         this.listener = listitemClick;
     }
 
+    public void refreshData(String[] contents, HashMap<Integer, Object> extraData, int[] iconRes, int[] titles) {
+        this.contents = contents;
+        this.extraData = extraData;
+        this.iconRes = iconRes;
+        this.titles = titles;
+        notifyDataSetChanged();
+    }
+
     public void modifyContent(int title, String content) {
         for (int i = 0; i < titles.length; i++) {
             if (titles[i] == title) {

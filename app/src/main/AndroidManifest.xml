@@ -79,6 +79,7 @@
             android:windowSoftInputMode="adjustPan|stateVisible"></activity>
         <activity
             android:name=".main.activity.TaskCategorySelectorActivity"
+            android:label="任务分类"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name=".main.activity.UserSimpleListActivity"

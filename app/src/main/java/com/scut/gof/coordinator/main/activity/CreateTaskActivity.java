@@ -94,7 +94,7 @@ public class CreateTaskActivity extends BaseActivity {
 
     protected void iniUI() {
         fragmentList = new ArrayList<>();
-        baseTaskFragment = new CreateBaseTaskFragment();
+        baseTaskFragment = CreateBaseTaskFragment.newInstance(proid);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.mipmap.arrow_back);

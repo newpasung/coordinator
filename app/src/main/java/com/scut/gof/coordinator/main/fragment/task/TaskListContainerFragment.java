@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.scut.gof.coordinator.R;
 import com.scut.gof.coordinator.main.activity.CreateTaskActivity;
+import com.scut.gof.coordinator.main.activity.TaskHierarchyActivity;
 import com.scut.gof.coordinator.main.fragment.BaseFragment;
 import com.scut.gof.coordinator.main.interf.BottomBarController;
 import com.scut.gof.coordinator.main.storage.model.Project;
@@ -113,7 +114,7 @@ public class TaskListContainerFragment extends BaseFragment implements BottomBar
     public void refreshView(BottomToolBar bottomToolBar) {
         if (project == null) return;
         if (project.getStatus() == 1) {
-            bottomToolBar.setText(getString(R.string.action_newtask));
+            bottomToolBar.setText("任务层级视图", "", getString(R.string.action_newtask));
         } else {
             bottomToolBar.hideFab();
         }
@@ -121,7 +122,9 @@ public class TaskListContainerFragment extends BaseFragment implements BottomBar
 
     @Override
     public void controllleft(BottomToolBar toolBar) {
-
+        Intent intent = new Intent(getActivity(), TaskHierarchyActivity.class);
+        intent.putExtra("proid", proid);
+        startActivity(intent);
     }
 
     @Override

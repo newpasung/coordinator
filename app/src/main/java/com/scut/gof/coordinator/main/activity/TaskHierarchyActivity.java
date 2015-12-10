@@ -10,14 +10,15 @@ import com.scut.gof.coordinator.R;
 public class TaskHierarchyActivity extends BaseActivity {
 
     long tid;
-
+    long proid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_taskhierarchy);
         tid = getIntent().getLongExtra("tid", 0);
-        if (tid == 0) {
-            toast("tid错误");
+        proid = getIntent().getLongExtra("proid", 0);
+        if (tid == 0 && proid == 0) {
+            toast("id错误");
             finish();
         }
     }
