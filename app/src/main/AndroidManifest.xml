@@ -47,51 +47,54 @@
             android:windowSoftInputMode="adjustPan" />
 
         <activity android:name=".main.activity.LoginActivity"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".main.activity.TaskDetailActivity"
             android:label=""
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".main.activity.CreateProActivity"
+            android:label="新建项目"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan|stateVisible"></activity>
+            android:windowSoftInputMode="adjustPan|stateVisible" />
 
         <activity
             android:name=".main.activity.ProjectActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".main.activity.BaseinfoActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".main.activity.ImageBrowserActivity"
             android:label="查看图片"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".main.activity.CreateTaskActivity"
+            android:label="新建任务"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan|stateVisible"></activity>
+            android:windowSoftInputMode="adjustPan|stateVisible" />
         <activity
             android:name=".main.activity.TaskCategorySelectorActivity"
             android:label="任务分类"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".main.activity.UserSimpleListActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".main.activity.TaskHierarchyActivity"
-            android:screenOrientation="portrait"></activity>
+            android:label="任务列表"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".qcode.zxing.activity.CaptureActivity"></activity>
-        <activity android:name=".qcode.androidzhang.zxingframe.CheckResult"></activity>
-        <activity android:name=".qcode.androidzhang.zxingframe.ZxingFrame"></activity>
-        <activity android:name=".lib.nereo.multi_image_selector.MultiImageSelectorActivity"></activity>
+        <activity android:name=".qcode.zxing.activity.CaptureActivity" />
+        <activity android:name=".qcode.androidzhang.zxingframe.CheckResult" />
+        <activity android:name=".qcode.androidzhang.zxingframe.ZxingFrame" />
+        <activity android:name=".lib.nereo.multi_image_selector.MultiImageSelectorActivity" />
     </application>
 
 </manifest>

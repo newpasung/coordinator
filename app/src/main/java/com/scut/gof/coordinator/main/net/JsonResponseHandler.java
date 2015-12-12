@@ -55,7 +55,6 @@ public abstract class JsonResponseHandler extends JsonHttpResponseHandler{
                                 .show();
                     }
                     weakReference.clear();
-                    return;
                 }
                 if (response.getInt("errorCode") == RequestParamName.ERRORCODE_DATABASEEXECPTION) {
                     if (context != null) {
@@ -65,11 +64,10 @@ public abstract class JsonResponseHandler extends JsonHttpResponseHandler{
                 }
                 if (response.getInt("errorCode") == RequestParamName.ERRORCODE_ILLEGLESTATE) {
                     onFailure(response.getString("message"), RequestParamName.ERRORCODE_ILLEGLESTATE + "");
-                    return;
                 }
                 String message = response.getString("message");
                 String for_param = response.getString("for_param");
-                Log.i("HTTPONFAILURE", message);
+                Log.i("httpclient_onFail", message);
                 onFailure(message, for_param);
             }
         } catch (JSONException e) {

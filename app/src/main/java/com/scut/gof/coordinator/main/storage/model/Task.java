@@ -32,7 +32,6 @@ public class Task extends Model {
     public static final int TASKSTATUS_ON = 1;
     public static final int TASKSTATUS_COMMIT = 2;
     public static final int TASKSTATUS_DELETED = 3;
-    final int RELATION_ININUM = -1;
     final int RELATION_NORELATION = -2;
     @Column(name = "tid")
     private long tid;
@@ -70,13 +69,14 @@ public class Task extends Model {
     private int peoplecount;
     @Column(name = "creator")
     private long creator;
-    private int role = -1;
+    private int role;
 
     public Task() {
         content = "";
         description = "";
         category = "";
         tag = "";
+        role = RELATION_NORELATION;
     }
 
     public static Task insertOrUpdate(JSONObject data) {
@@ -143,7 +143,13 @@ public class Task extends Model {
             }
             task.save();
             if (data.has("taskrelation")) {
-                RelaTask.insertOrUpdate(data.getJSONArray("taskrelation"));
+                Object relationdata = data.get("taskrelation");
+                if (relationdata instanceof JSONArray) {
+                    RelaTask.insertOrUpdate((JSONArray) relationdata);
+                }
+                if (relationdata instanceof JSONObject) {
+                    RelaTask.insertOrUpdate((JSONObject) relationdata);
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -300,16 +306,12 @@ public class Task extends Model {
     }
 
     public String getDisplayPeopleCount() {
-        if (peopleneedcount > peoplecount) {
             StringBuilder builder = new StringBuilder();
             builder.append("人数:");
             builder.append(peoplecount);
             builder.append("/");
             builder.append(peopleneedcount);
             return builder.toString();
-        } else {
-            return "";
-        }
     }
 
     public long getCreator() {
@@ -338,14 +340,12 @@ public class Task extends Model {
 
     //传入我的uid
     public int getRole() {
-        if (role == RELATION_ININUM) {
-            long uid = UserManager.getUserid(CooApplication.getInstance());
-            RelaTask relaTask = new Select("role").from(RelaTask.class).where("tid=" + this.tid + " and uid =" + uid).executeSingle();
-            if (relaTask != null) {
-                role = relaTask.getRole();
-            } else {
-                role = RELATION_NORELATION;
-            }
+        long uid = UserManager.getUserid(CooApplication.getInstance());
+        RelaTask relaTask = new Select().from(RelaTask.class).where("tid=" + this.tid + " and uid =" + uid).executeSingle();
+        if (relaTask != null) {
+            role = relaTask.getRole();
+        } else {
+            role = RELATION_NORELATION;
         }
         return role;
     }

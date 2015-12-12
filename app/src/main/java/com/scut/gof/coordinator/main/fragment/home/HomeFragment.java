@@ -49,7 +49,7 @@ public class HomeFragment extends BaseFragment implements BottomBarController {
                 case HomeAdapter.TYPE_PROJECT: {
                     final Intent intent = new Intent(getActivity(), ProjectActivity.class);
                     intent.putExtra(ProjectActivity.EXTRA_PROID, id);
-                    //为什么延迟100ms呢，为了按钮动画不阻塞
+                    //为什么延迟1ms呢，为了按钮动画不阻塞
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -58,7 +58,7 @@ public class HomeFragment extends BaseFragment implements BottomBarController {
                             startActivity(intent);
                             getActivity().overridePendingTransition(R.anim.slide_in_bottom, 0);
                         }
-                    }, 100);
+                    }, 50);
                 }
                 break;
             }

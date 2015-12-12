@@ -143,6 +143,7 @@ public class TaskCategorySelectorActivity extends BaseActivity {
         final MaterialDialog dialog = new MaterialDialog.Builder(TaskCategorySelectorActivity.this)
                 .progress(true, 0, false)
                 .show();
+        dialog.setCanceledOnTouchOutside(false);
         RequestParams params = new RequestParams();
         params.put("proid", proid);
         HttpClient.post(this, "task/categories", params, new JsonResponseHandler() {

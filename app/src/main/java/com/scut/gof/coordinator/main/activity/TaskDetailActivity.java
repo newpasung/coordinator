@@ -24,6 +24,7 @@ import com.scut.gof.coordinator.main.net.HttpClient;
 import com.scut.gof.coordinator.main.net.JsonResponseHandler;
 import com.scut.gof.coordinator.main.storage.model.Task;
 import com.scut.gof.coordinator.main.storage.model.User;
+import com.scut.gof.coordinator.main.thread.TaskExecutor;
 import com.scut.gof.coordinator.main.utils.ViewUtil;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
@@ -41,9 +42,10 @@ import java.util.Locale;
  */
 public class TaskDetailActivity extends BaseActivity {
 
-    public static final int RESULTCODE_DELETE = 0;
+    public static final int RESULTCODE_DELETE = 1;
     public static final int REQUESTCODE_GETCATEGORY = 1;
     public static final int REQUESTCODE_CHECKCHILDTASK = 2;
+    public static final int REQUESTCODE_NEWTASK = 3;
     Task mTask;
     int iconRes[];
     int titles[];
@@ -52,6 +54,7 @@ public class TaskDetailActivity extends BaseActivity {
     TextView mTvname;
     TextView mTvcontent;
     FloatingActionButton mBtnmark;
+    MaterialDialog waitingDialog;
     DetailInfoAdapter adapter;
     WeakReference<Context> contextWeakReference;
     HashMap<Integer, Object> extraData;
@@ -156,7 +159,11 @@ public class TaskDetailActivity extends BaseActivity {
             String category = data.getStringExtra("category");
             adapter.modifyContent(R.string.text_taskcategory, category);
             netModifyCategory(category);
+        } else if (requestCode == REQUESTCODE_NEWTASK && resultCode == RESULT_OK) {
+            mTask = Task.getTaskById(mTask.getTid());
+            adapter.modifyContent(R.string.text_childtask, mTask.getDisplayChildtaskStatus());
         }
+
     }
 
     //再利用，虽然效率不咋地
@@ -167,6 +174,19 @@ public class TaskDetailActivity extends BaseActivity {
             mTask = Task.getTaskById(tid);
         }
         User creator = User.getUserById(mTask.getCreator());
+        if (creator == null) {
+            //没有数据，等待联网咯
+            final int displaycount = 0;
+            iconRes = new int[displaycount];
+            titles = new int[displaycount];
+            contents = new String[displaycount];
+            extraData = new HashMap<>();
+            waitingDialog = new MaterialDialog.Builder(TaskDetailActivity.this)
+                    .progress(true, 0, false)
+                    .show();
+            waitingDialog.setCanceledOnTouchOutside(false);
+            return;
+        }
         final int displaycount = 10;
         iconRes = new int[displaycount];
         titles = new int[displaycount];
@@ -217,9 +237,16 @@ public class TaskDetailActivity extends BaseActivity {
     }
 
     private void checkChildTask() {
-        Intent intent = new Intent(this, TaskHierarchyActivity.class);
-        intent.putExtra("tid", mTask.getTid());
-        startActivityForResult(intent, REQUESTCODE_CHECKCHILDTASK);
+        if (mTask.getChildcount() > 0) {
+            Intent intent = new Intent(this, TaskHierarchyActivity.class);
+            intent.putExtra("tid", mTask.getTid());
+            startActivityForResult(intent, REQUESTCODE_CHECKCHILDTASK);
+        } else {
+            if (mTask.getProid() == 0) return;
+            Intent intent = new Intent(this, CreateTaskActivity.class);
+            intent.putExtra("proid", mTask.getProid());
+            startActivityForResult(intent, REQUESTCODE_NEWTASK);
+        }
     }
 
     private void iniUI() {
@@ -377,6 +404,11 @@ public class TaskDetailActivity extends BaseActivity {
                     @Override
                     public void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
                         if (which == mTask.getStatus()) return;
+                        if (mTask.getStatus() == 0 && which == 1 && mTask.getPeopleneedcount() - mTask.getPeoplecount() > 1) {
+                            //从准备中移到到进行中，要保证够人数，算上自己
+                            toastWarn("参与任务人数不足");
+                            return;
+                        }
                         netChangeStatus(which);
                         adapter.modifyContent(R.string.text_taskstatus
                                 , getResources().getStringArray(R.array.tasklist_tabtitles)[which]);
@@ -532,18 +564,23 @@ public class TaskDetailActivity extends BaseActivity {
         }
         HttpClient.post(TaskDetailActivity.this, "task/changestatus", params, new JsonResponseHandler() {
             @Override
-            public void onSuccess(JSONObject response) {
-                try {
-                    Task.updateTaskStatus(response.getJSONObject("data").getJSONArray("tasks"));
+            public void onSuccess(final JSONObject response) {
+                TaskExecutor.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Task.insertOrUpdate(response.getJSONObject("data").getJSONArray("tasks"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
                     if (status == 3) {
                         Intent intent = new Intent();
                         intent.putExtra("tid", mTask.getTid());
                         setResult(RESULTCODE_DELETE, intent);
                         finish();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
             }
 
             @Override
@@ -608,6 +645,9 @@ public class TaskDetailActivity extends BaseActivity {
                     mTask = Task.insertOrUpdate(response.getJSONObject("data").getJSONObject("task"));
                     iniData(false);
                     adapter.refreshData(contents, extraData, iconRes, titles);
+                    if (waitingDialog != null && waitingDialog.isShowing()) {
+                        waitingDialog.dismiss();
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -615,7 +655,9 @@ public class TaskDetailActivity extends BaseActivity {
 
             @Override
             public void onFailure(String message, String for_param) {
-
+                if (waitingDialog != null && waitingDialog.isShowing()) {
+                    waitingDialog.dismiss();
+                }
             }
         });
     }

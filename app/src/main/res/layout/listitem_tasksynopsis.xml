@@ -4,9 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tv_name"
-        style="@style/text_display1"
+
+    <LinearLayout
+        android:id="@+id/ll_namecontainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/iv_connermark"
@@ -14,9 +14,27 @@
         android:layout_marginLeft="@dimen/margin_small"
         android:layout_marginTop="@dimen/margin_tiny"
         android:layout_toLeftOf="@+id/iv_connermark"
-        android:paddingRight="@dimen/padding_small"
-        android:singleLine="true"
-        tools:text="@string/test_sentence_100" />
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingRight="@dimen/padding_small">
+
+        <com.scut.gof.coordinator.main.widget.CircleImageView
+            android:id="@+id/cir_muscle"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/muscle"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/text_display1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/padding_tiny"
+            android:singleLine="true"
+            tools:text="@string/test_sentence_100" />
+    </LinearLayout>
+
 
     <ImageView
         android:id="@+id/iv_connermark"
@@ -32,7 +50,7 @@
         android:id="@+id/ll1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_name"
+        android:layout_below="@+id/ll_namecontainer"
         android:orientation="vertical"
         android:paddingLeft="@dimen/margin_small">
 
@@ -61,7 +79,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_tiny"
-                android:background="@drawable/frame4_accentcolor_radius"
+                android:background="@drawable/frame4_lightaccentcolor_radius"
                 android:visibility="gone" />
         </LinearLayout>
 

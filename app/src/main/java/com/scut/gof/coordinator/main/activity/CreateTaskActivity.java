@@ -80,6 +80,10 @@ public class CreateTaskActivity extends BaseActivity {
         requestParams = new RequestParams();
         if (getIntent() != null) {
             proid = getIntent().getLongExtra("proid", 0);
+            if (proid == 0) {
+                finish();
+                toast("no proid");
+            }
         }
         iniUI();
         iniListener();

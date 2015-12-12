@@ -1,6 +1,7 @@
 package com.scut.gof.coordinator.main.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.scut.gof.coordinator.R;
 import com.scut.gof.coordinator.main.storage.model.Task;
 import com.scut.gof.coordinator.main.utils.DenstityUtil;
+import com.scut.gof.coordinator.main.widget.CircleImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +36,6 @@ public class TaskSynopsisAdapter extends RecyclerView.Adapter {
     }
 
     public void setTaskArrayList(List<Task> taskArrayList) {
-        this.taskArrayList.clear();
         this.taskArrayList = taskArrayList;
     }
 
@@ -49,7 +50,7 @@ public class TaskSynopsisAdapter extends RecyclerView.Adapter {
         ,R.drawable.frame4_orange_radius,R.drawable.frame4_purple_radius};
         index =index>res.length-1?0:index;
         return res[index++];*/
-        return R.drawable.frame4_green_radius;
+        return R.drawable.frame4_lightgreen_radius;
     }
 
     @Override
@@ -66,52 +67,71 @@ public class TaskSynopsisAdapter extends RecyclerView.Adapter {
         if (!isDataEmpty()) {
             if (holder instanceof MHolder) {
                 MHolder mHolder = (MHolder) holder;
+                final Task task = getTask(position);
                 Context context = mHolder.mTvname.getContext();
                 mHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        listener.onItemViewClick(getTask(position).getTid());
+                        listener.onItemViewClick(task.getTid());
                     }
                 });
-                mHolder.mTvname.setText(getTask(position).getTname());
-                mHolder.mTvtime.setText(getTask(position).getDisplayTimeDuration());
-                if (TextUtils.isEmpty(getTask(position).getDisplayTaskstatus(context))) {
+                mHolder.mTvname.setText(task.getTname());
+                mHolder.mTvtime.setText(task.getDisplayTimeDuration());
+                //显示任务的状态
+                if (TextUtils.isEmpty(task.getDisplayTaskstatus(context))) {
                     mHolder.mTvtaskstatus.setVisibility(View.GONE);
                 } else {
-                    mHolder.mTvtaskstatus.setText(getTask(position).getDisplayTaskstatus(context));
+                    mHolder.mTvtaskstatus.setText(task.getDisplayTaskstatus(context));
+                    mHolder.mTvtaskstatus.setVisibility(View.VISIBLE);
                 }
-                if (getTask(position).getStatus() == 0 && getTask(position).getRole() != 2) {
-                    //准备中的任务,且还没接受任务
-                    mHolder.mBtnright_container.setVisibility(View.VISIBLE);
+                //设置是否显示接受任务和肌肉
+                mHolder.mCirmuscle.setVisibility(View.GONE);
+                mHolder.mBtnright_container.setVisibility(View.VISIBLE);
+                mHolder.mBtnright_container.setCardElevation(mHolder.itemView.getContext()
+                        .getResources().getDimension(R.dimen.evelation_l1));
+                if (task.getPeopleneedcount() - task.getPeoplecount() > 0 && task.getStatus() == 0 && task.getRole() != 2) {
+                    //准备中的任务,且还没接受任务,且人数不够
                     mHolder.mBtnaction_right.setText(context.getString(R.string.action_accepttask));
+                } else if (task.getRole() == 2) {
+                    //我是这个任务的成员
+                    mHolder.mCirmuscle.setVisibility(View.VISIBLE);
+                    mHolder.mBtnright_container.setCardElevation(0);
+                    mHolder.mBtnaction_right.setText(context.getString(R.string.action_quittask));
                 } else {
                     mHolder.mBtnright_container.setVisibility(View.GONE);
                 }
                 mHolder.mBtnaction_right.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        listener.onBtnright(getTask(position).getTid());
+                        listener.onBtnright(task);
                     }
                 });
-                if (getTask(position).getPriority() != 1) {
+                //显示右上角的标记
+                if (task.getPriority() != 1) {
                     mHolder.mIvconnermark.setVisibility(View.GONE);
                 } else {
                     mHolder.mIvconnermark.setBackgroundResource(R.drawable.mark_emergency);
                     mHolder.mIvconnermark.setVisibility(View.VISIBLE);
                 }
-                mHolder.mTvcategory.setText(getTask(position).getCategory());
+                //显示任务分类
+                mHolder.mTvcategory.setText(task.getCategory());
                 mHolder.mTvcategory.setBackgroundResource(randomBackground());
-                if (!getTask(position).getTag().equals("")) {
-                    mHolder.mTvtag.setText(getTask(position).getTag());
+                //显示标签
+                if (!task.getTag().equals("")) {
+                    mHolder.mTvtag.setText(task.getTag());
                     mHolder.mTvtag.setVisibility(View.VISIBLE);
                     mHolder.mTvtag.setBackgroundResource(randomBackground());
+                } else {
+                    mHolder.mTvtag.setVisibility(View.GONE);
                 }
-                if (!TextUtils.isEmpty(getTask(position).getDisplayPeopleCount())) {
-                    mHolder.mTvpeople.setText(getTask(position).getDisplayPeopleCount());
+                //显示人数
+                if (!TextUtils.isEmpty(task.getDisplayPeopleCount())) {
+                    mHolder.mTvpeople.setText(task.getDisplayPeopleCount());
                     mHolder.mTvpeople.setVisibility(View.VISIBLE);
+                } else {
+                    mHolder.mTvpeople.setVisibility(View.GONE);
                 }
             }
-
         }
         if (holder instanceof EmptyHolder) {
             EmptyHolder mHolder = (EmptyHolder) holder;
@@ -155,7 +175,7 @@ public class TaskSynopsisAdapter extends RecyclerView.Adapter {
     }
 
     public interface MActionListener {
-        void onBtnright(long tid);
+        void onBtnright(Task task);
 
         void onItemViewClick(long tid);
     }
@@ -166,7 +186,8 @@ public class TaskSynopsisAdapter extends RecyclerView.Adapter {
         TextView mTvtaskstatus;
         ImageView mIvconnermark;
         Button mBtnaction_right;
-        View mBtnright_container;
+        CardView mBtnright_container;
+        CircleImageView mCirmuscle;
         //三个可能存在的标签
         TextView mTvcategory;
         TextView mTvtag;
@@ -179,17 +200,17 @@ public class TaskSynopsisAdapter extends RecyclerView.Adapter {
             this.mTvtaskstatus = (TextView) itemView.findViewById(R.id.tv_taskstatus);
             this.mIvconnermark = (ImageView) itemView.findViewById(R.id.iv_connermark);
             this.mBtnaction_right = (Button) itemView.findViewById(R.id.btn_action_right);
-            this.mBtnright_container = itemView.findViewById(R.id.btn_right_container);
+            this.mBtnright_container = (CardView) itemView.findViewById(R.id.btn_right_container);
             this.mTvcategory = (TextView) itemView.findViewById(R.id.tv_tag_category);
             this.mTvtag = (TextView) itemView.findViewById(R.id.tv_tag);
             this.mTvpeople = (TextView) itemView.findViewById(R.id.tv_people);
+            mCirmuscle = (CircleImageView) itemView.findViewById(R.id.cir_muscle);
         }
     }
 
     class EmptyHolder extends RecyclerView.ViewHolder {
         ImageView mIvtip;
         LinearLayout mContainer;
-
         public EmptyHolder(View itemView) {
             super(itemView);
             mIvtip = (ImageView) itemView.findViewById(R.id.iv_nodatatip);

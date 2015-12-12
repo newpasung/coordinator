@@ -1,6 +1,8 @@
 package com.scut.gof.coordinator.main.fragment.task;
 
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,6 +18,7 @@ import com.loopj.android.http.RequestParams;
 import com.scut.gof.coordinator.R;
 import com.scut.gof.coordinator.main.activity.TaskDetailActivity;
 import com.scut.gof.coordinator.main.adapter.TaskSynopsisAdapter;
+import com.scut.gof.coordinator.main.communication.LocalBrCast;
 import com.scut.gof.coordinator.main.fragment.BaseFragment;
 import com.scut.gof.coordinator.main.net.HttpClient;
 import com.scut.gof.coordinator.main.net.JsonResponseHandler;
@@ -25,6 +28,7 @@ import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,9 +44,15 @@ public class TaskListFragment extends BaseFragment {
     boolean shouldRefresh;
     long proid;
     int status;
+    WeakReference<Context> contextWeakReference;
     TaskSynopsisAdapter.MActionListener actionListener = new TaskSynopsisAdapter.MActionListener() {
         @Override
-        public void onBtnright(long tid) {
+        public void onBtnright(Task task) {
+            if (task.getRole() == 2) {
+                netQuitTask(task.getTid());
+            } else {
+                netJoinTask(task.getTid());
+            }
         }
 
         @Override
@@ -52,6 +62,16 @@ public class TaskListFragment extends BaseFragment {
             startActivityForResult(intent, REQUESTCODE_DETAIL);
         }
     };
+
+    BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            taskArrayList = Task.getTasksByStatus(proid, status);
+            mTaskAdapter.setTaskArrayList(taskArrayList);
+            mTaskAdapter.notifyDataSetChanged();
+        }
+    };
+
     public TaskListFragment() {
         shouldRefresh = true;
     }
@@ -63,6 +83,18 @@ public class TaskListFragment extends BaseFragment {
         TaskListFragment fragment = new TaskListFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        LocalBrCast.register(getActivity(), LocalBrCast.PARAM_REFRESHADAPTER, receiver);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        LocalBrCast.unregisterReceiver(getActivity(), receiver);
     }
 
     @Nullable
@@ -107,7 +139,6 @@ public class TaskListFragment extends BaseFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUESTCODE_DETAIL && resultCode == TaskDetailActivity.RESULTCODE_DELETE) {
-            this.taskArrayList.clear();
             this.taskArrayList = Task.getTasksByStatus(proid, status);
             mTaskAdapter.setTaskArrayList(taskArrayList);
             mTaskAdapter.notifyDataSetChanged();
@@ -142,8 +173,8 @@ public class TaskListFragment extends BaseFragment {
             @Override
             public void onSuccess(JSONObject response) {
                 try {
-                    mTaskAdapter.setTaskArrayList(
-                            Task.insertOrUpdate(response.getJSONObject("data").getJSONArray("tasks")));
+                    taskArrayList = Task.insertOrUpdate(response.getJSONObject("data").getJSONArray("tasks"));
+                    mTaskAdapter.setTaskArrayList(taskArrayList);
                     mTaskAdapter.notifyDataSetChanged();
                     mSwiperefresh.setRefreshing(false);
                 } catch (JSONException e) {
@@ -154,6 +185,80 @@ public class TaskListFragment extends BaseFragment {
             @Override
             public void onFailure(String message, String for_param) {
                 mSwiperefresh.setRefreshing(false);
+            }
+        });
+    }
+
+    public void netJoinTask(final long tid) {
+        contextWeakReference = new WeakReference<Context>(getActivity());
+        RequestParams params = new RequestParams();
+        params.put("tid", tid);
+        HttpClient.post(getActivity(), "task/jointask", params, new JsonResponseHandler() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                try {
+                    Task task = Task.insertOrUpdate(response.getJSONObject("data").getJSONObject("task"));
+                    if (task.getStatus() != status) {
+                        /*for (int i =0 ;i<taskArrayList.size();i++){
+                            if (taskArrayList.get(i).getTid()==task.getTid()){
+                                taskArrayList.remove(i);
+                                mTaskAdapter.setTaskArrayList(taskArrayList);
+                                break;
+                            }
+                        }*/
+                        Context context = contextWeakReference.get();
+                        if (context != null)
+                            LocalBrCast.sendBroadcast(context, LocalBrCast.PARAM_REFRESHADAPTER);
+                    } else {
+                        taskArrayList = Task.getTasksByStatus(proid, status);
+                        mTaskAdapter.setTaskArrayList(taskArrayList);
+                    }
+                    mTaskAdapter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(String message, String for_param) {
+
+            }
+        });
+    }
+
+    public void netQuitTask(final long tid) {
+        contextWeakReference = new WeakReference<Context>(getActivity());
+        RequestParams params = new RequestParams();
+        params.put("tid", tid);
+        HttpClient.post(getActivity(), "task/quittask", params, new JsonResponseHandler() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                try {
+                    Task task = Task.insertOrUpdate(response.getJSONObject("data").getJSONObject("task"));
+                    if (task.getStatus() != status) {
+                        /*for (int i =0 ;i<taskArrayList.size();i++){
+                            if (taskArrayList.get(i).getTid()==task.getTid()){
+                                taskArrayList.remove(i);
+                                mTaskAdapter.setTaskArrayList(taskArrayList);
+                                break;
+                            }
+                        }*/
+                        Context context = contextWeakReference.get();
+                        if (context != null)
+                            LocalBrCast.sendBroadcast(context, LocalBrCast.PARAM_REFRESHADAPTER);
+                    } else {
+                        taskArrayList = Task.getTasksByStatus(proid, status);
+                        mTaskAdapter.setTaskArrayList(taskArrayList);
+                    }
+                    mTaskAdapter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(String message, String for_param) {
+
             }
         });
     }

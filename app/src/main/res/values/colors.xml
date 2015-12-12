@@ -2,7 +2,8 @@
 <resources>
     <color name="colorPrimary">#259b24</color>
     <color name="colorPrimaryDark">#0a7e07</color>
-    <color name="colorAccent">#e91e63</color>
+    <color name="colorPrimaryLight">#42bd41</color>
+    <color name="colorAccent">#f50057</color>
     //material 建议的几种黑色，按视觉效果选择
     <color name="black_24">#3D000000</color>
     <color name="black_54">#8A000000</color>
@@ -14,6 +15,11 @@
     <color name="purple">#9c27b0</color>
     <color name="white">#ffffff</color>
     <color name="blue">#5677fc</color>
+    //比基本色浅一点
+    <color name="orange_light">#ffb74d</color>
+    <color name="purple_light">#ba68c8</color>
+    <color name="blue_light">#91a7ff</color>
+    <color name="pink_light">#f06292</color>
 
     <color name="transparent">#00000000</color>
     //下面是一系列渐变的bluegray，l1最浅

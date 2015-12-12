@@ -69,7 +69,8 @@
     <string name="action_newtask">新建任务</string>
     <string name="action_proinfo">项目信息</string>
     <string name="action_exitapp">注销当前账号</string>
-    <string name="action_accepttask">认领任务</string>
+    <string name="action_accepttask">参与任务</string>
+    <string name="action_quittask">退出任务</string>
     <string name="action_delete">删除</string>
     <string name="action_add">增加</string>
     <string name="warn_tokeninvalid">你的账号在别处登录，需重新登录</string>
