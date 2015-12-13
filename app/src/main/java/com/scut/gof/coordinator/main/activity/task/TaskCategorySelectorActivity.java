@@ -1,4 +1,4 @@
-package com.scut.gof.coordinator.main.activity;
+package com.scut.gof.coordinator.main.activity.task;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.loopj.android.http.RequestParams;
 import com.scut.gof.coordinator.R;
+import com.scut.gof.coordinator.main.activity.BaseActivity;
 import com.scut.gof.coordinator.main.net.HttpClient;
 import com.scut.gof.coordinator.main.net.JsonResponseHandler;
 import com.scut.gof.coordinator.main.storage.model.Task;
@@ -209,7 +210,7 @@ public class TaskCategorySelectorActivity extends BaseActivity {
 
         @Override
         public int getItemCount() {
-            return categories.length;
+            return categories == null ? 0 : categories.length;
         }
 
         class MHolder extends RecyclerView.ViewHolder {

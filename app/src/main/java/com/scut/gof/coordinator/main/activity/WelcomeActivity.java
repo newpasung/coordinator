@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.scut.gof.coordinator.R;
+import com.scut.gof.coordinator.main.activity.user.LoginActivity;
 import com.scut.gof.coordinator.main.communication.LocalBrCast;
 import com.scut.gof.coordinator.main.fragment.WelcomeFragment.FirstWelcomeFragment;
 import com.scut.gof.coordinator.main.fragment.WelcomeFragment.NormalWelcomeFragment;

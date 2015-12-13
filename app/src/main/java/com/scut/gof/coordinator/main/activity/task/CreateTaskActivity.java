@@ -1,4 +1,4 @@
-package com.scut.gof.coordinator.main.activity;
+package com.scut.gof.coordinator.main.activity.task;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -16,6 +16,7 @@ import android.view.View;
 
 import com.loopj.android.http.RequestParams;
 import com.scut.gof.coordinator.R;
+import com.scut.gof.coordinator.main.activity.BaseActivity;
 import com.scut.gof.coordinator.main.communication.LocalBrCast;
 import com.scut.gof.coordinator.main.fragment.FragmentTransactionExtended;
 import com.scut.gof.coordinator.main.fragment.task.CreateAdvancedTaskFragment;

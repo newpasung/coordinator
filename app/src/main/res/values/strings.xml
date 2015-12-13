@@ -15,6 +15,7 @@
     <string name="text_message">消息</string>
     <string name="text_importantmsg">重要消息</string>
     <string name="text_baseinfo">基本信息</string>
+    <string name="text_mytask">我的任务</string>
     <string name="text_feedback_tips">你可以写下建议或意见，并留下联系方式，我们会做出及时的回复。</string>
     <string name="text_copyright">Copyright&#169; 2015 SCUT-GOF\n本应用由独立小组开发未经允许不能用于商业用途</string>
     <string name="text_ensure">确定</string>
@@ -64,6 +65,7 @@
     <string name="action_laststep">上一步</string>
     <string name="action_commit">完成</string>
     <string name="action_moreconfig">高级设置</string>
+    <string name="action_filtercondition">筛选条件</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_newtask">新建任务</string>

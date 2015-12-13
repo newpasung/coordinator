@@ -11,8 +11,9 @@ import android.widget.TableRow;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.scut.gof.coordinator.R;
-import com.scut.gof.coordinator.main.activity.BaseinfoActivity;
-import com.scut.gof.coordinator.main.activity.LoginActivity;
+import com.scut.gof.coordinator.main.activity.task.MyTaskActivity;
+import com.scut.gof.coordinator.main.activity.user.BaseinfoActivity;
+import com.scut.gof.coordinator.main.activity.user.LoginActivity;
 import com.scut.gof.coordinator.main.fragment.BaseFragment;
 import com.scut.gof.coordinator.main.storage.StorageHelper;
 import com.scut.gof.coordinator.main.storage.XManager;
@@ -25,6 +26,7 @@ public class UserDataFragment extends BaseFragment {
 
     TableRow mRowbaseinfo;
     TableRow mRowexitapp;
+    TableRow mRowmytasks;
     public UserDataFragment() {
     }
 
@@ -47,6 +49,7 @@ public class UserDataFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         mRowbaseinfo = (TableRow) view.findViewById(R.id.row_baseinfo);
         mRowexitapp = (TableRow) view.findViewById(R.id.row_exitapp);
+        mRowmytasks = (TableRow) view.findViewById(R.id.row_mytask);
         mRowbaseinfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,6 +84,12 @@ public class UserDataFragment extends BaseFragment {
                             }
                         })
                         .show();
+            }
+        });
+        mRowmytasks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), MyTaskActivity.class));
             }
         });
     }

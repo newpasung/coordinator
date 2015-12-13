@@ -1,8 +1,9 @@
-package com.scut.gof.coordinator.main.activity;
+package com.scut.gof.coordinator.main.activity.user;
 
 import android.os.Bundle;
 
 import com.scut.gof.coordinator.R;
+import com.scut.gof.coordinator.main.activity.BaseActivity;
 
 /**
  * Created by Administrator on 2015/12/10.

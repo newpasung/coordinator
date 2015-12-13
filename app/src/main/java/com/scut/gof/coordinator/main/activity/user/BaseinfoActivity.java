@@ -1,4 +1,4 @@
-package com.scut.gof.coordinator.main.activity;
+package com.scut.gof.coordinator.main.activity.user;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -15,6 +15,7 @@ import com.qiniu.android.storage.UpCompletionHandler;
 import com.scut.gof.coordinator.R;
 import com.scut.gof.coordinator.lib.nereo.multi_image_selector.MultiImageSelectorActivity;
 import com.scut.gof.coordinator.main.UserManager;
+import com.scut.gof.coordinator.main.activity.BaseActivity;
 import com.scut.gof.coordinator.main.adapter.UserinfoAdapter;
 import com.scut.gof.coordinator.main.net.qiniu.AvatarOption;
 import com.scut.gof.coordinator.main.net.qiniu.QiniuHelper;

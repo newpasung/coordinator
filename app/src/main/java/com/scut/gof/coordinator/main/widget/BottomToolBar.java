@@ -358,6 +358,16 @@ public class BottomToolBar extends RelativeLayout {
         setVisibility(INVISIBLE);
     }
 
+    public void hideAll() {
+        if (mFloatingButton != null) {
+            mFloatingButton.setTranslationX(0f);
+            mFloatingButton.setTranslationY(0f);
+            mFloatingButton.hide();
+        }
+        hideMainBuz();
+        setVisibility(INVISIBLE);
+    }
+
     protected float calScale(float radius) {
         Rect barRect = new Rect();
         Rect viewRect = new Rect();
@@ -404,6 +414,12 @@ public class BottomToolBar extends RelativeLayout {
     public void hideFab() {
         if (mFloatingButton != null) {
             mFloatingButton.hide();
+        }
+    }
+
+    public void showFab() {
+        if (mFloatingButton != null) {
+            mFloatingButton.show();
         }
     }
 

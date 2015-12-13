@@ -8,7 +8,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.scut.gof.coordinator.main.activity.LoginActivity;
+import com.scut.gof.coordinator.main.activity.user.LoginActivity;
 
 import org.apache.http.Header;
 import org.json.JSONArray;

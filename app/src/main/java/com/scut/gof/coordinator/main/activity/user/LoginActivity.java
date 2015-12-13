@@ -1,4 +1,4 @@
-package com.scut.gof.coordinator.main.activity;
+package com.scut.gof.coordinator.main.activity.user;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;

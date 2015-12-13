@@ -13,6 +13,7 @@ import android.support.v4.content.LocalBroadcastManager;
 public class LocalBrCast {
     //broadcast的消息参数
     public static final String PARAM_REFRESHADAPTER = "localbroadcast_refresh_adapter";
+    public static final String PARAM_NETREFRESHTASK = "net_refresh_data";
     public static final String PARAM_WELACT_TRANSACTIVITY = "PARAM_WELACT_TRANSACTIVITY";
     public static final String PARAM_NEWTASK = "UPLOADNEWPRODATA";
     public static final String PARAM_NEWPROJECT = "UPLOADNEWPRODATA";

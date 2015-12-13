@@ -46,10 +46,11 @@
             android:theme="@style/HomeActivityStyle"
             android:windowSoftInputMode="adjustPan" />
 
-        <activity android:name=".main.activity.LoginActivity"
+        <activity
+            android:name=".main.activity.user.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".main.activity.TaskDetailActivity"
+            android:name=".main.activity.task.TaskDetailActivity"
             android:label=""
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -65,7 +66,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".main.activity.BaseinfoActivity"
+            android:name=".main.activity.user.BaseinfoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -73,20 +74,24 @@
             android:label="查看图片"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".main.activity.CreateTaskActivity"
+            android:name=".main.activity.task.CreateTaskActivity"
             android:label="新建任务"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan|stateVisible" />
         <activity
-            android:name=".main.activity.TaskCategorySelectorActivity"
+            android:name=".main.activity.task.MyTaskActivity"
+            android:label="我的任务"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".main.activity.task.TaskCategorySelectorActivity"
             android:label="任务分类"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".main.activity.UserSimpleListActivity"
+            android:name=".main.activity.user.UserSimpleListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".main.activity.TaskHierarchyActivity"
+            android:name=".main.activity.task.TaskHierarchyActivity"
             android:label="任务列表"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />

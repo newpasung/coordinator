@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_taskfilter"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:background="@color/colorPrimary"
+        android:padding="@dimen/padding_normal">
+
+        <com.scut.gof.coordinator.main.widget.CirclePrgbar
+            android:id="@+id/circleprgbar"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/margin_small"
+            android:background="@color/white"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_category"
+                style="@style/text_caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/circleprgbar"
+                android:text="@string/text_taskcategory" />
+
+            <RadioGroup
+                android:id="@+id/category_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text_category"
+                android:layout_marginTop="@dimen/margin_tiny">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RadioGroup>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginTop="@dimen/margin_tiny"
+                android:background="@color/black_54" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_btncontainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true">
+
+            <Button
+                android:id="@+id/btn_cancel"
+                style="@style/text_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_flat_btn"
+                android:text="@string/action_cancel" />
+
+            <Button
+                android:id="@+id/btn_commit"
+                style="@style/text_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/bg_flat_btn"
+                android:text="@string/action_commit"
+                android:textColor="@color/white" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/maskview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/transparent" />
+</LinearLayout>

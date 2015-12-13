@@ -8,8 +8,8 @@ import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
-import com.activeandroid.query.Update;
 import com.scut.gof.coordinator.CooApplication;
 import com.scut.gof.coordinator.R;
 import com.scut.gof.coordinator.main.UserManager;
@@ -32,7 +32,7 @@ public class Task extends Model {
     public static final int TASKSTATUS_ON = 1;
     public static final int TASKSTATUS_COMMIT = 2;
     public static final int TASKSTATUS_DELETED = 3;
-    final int RELATION_NORELATION = -2;
+    public static final int RELATION_NORELATION = -2;
     @Column(name = "tid")
     private long tid;
     @Column(name = "parentid")
@@ -69,6 +69,7 @@ public class Task extends Model {
     private int peoplecount;
     @Column(name = "creator")
     private long creator;
+    @Column(name = "role")
     private int role;
 
     public Task() {
@@ -77,6 +78,10 @@ public class Task extends Model {
         category = "";
         tag = "";
         role = RELATION_NORELATION;
+    }
+
+    public static void clearData() {
+        new Delete().from(Task.class).execute();
     }
 
     public static Task insertOrUpdate(JSONObject data) {
@@ -120,6 +125,9 @@ public class Task extends Model {
             }
             if (data.has("mark")) {
                 task.mark = data.getInt("mark");
+            }
+            if (data.has("role")) {
+                task.role = data.getInt("role");
             }
             if (data.has("child_uncompletecount")) {
                 task.child_uncompletecount = data.getInt("child_uncompletecount");
@@ -182,23 +190,6 @@ public class Task extends Model {
         return list;
     }
 
-    public static void updateTaskStatus(JSONArray array) {
-        ActiveAndroid.beginTransaction();
-        boolean isOk = true;
-        for (int i = 0; i < array.length(); i++) {
-            try {
-                JSONObject data = array.getJSONObject(i);
-                new Update(Task.class).set("status=" + data.getInt("status"))
-                        .where("tid=" + data.getLong("tid")).execute();
-            } catch (JSONException e) {
-                e.printStackTrace();
-                isOk = false;
-            }
-        }
-        if (isOk) ActiveAndroid.setTransactionSuccessful();
-        ActiveAndroid.endTransaction();
-    }
-
     public static Task getTaskById(long tid) {
         return new Select().from(Task.class).where("tid = " + tid).executeSingle();
     }
@@ -208,6 +199,14 @@ public class Task extends Model {
                 .where("status=" + status + " and proid=" + proid)
                 .orderBy("tid")
                 .limit(10).execute();
+    }
+
+    public static List<Task> getMytasks() {
+        return new Select().from(Task.class)
+                .where("status <> 3 and (creator="
+                        + UserManager.getUserid(CooApplication.getInstance())
+                        + " or role <> " + RELATION_NORELATION + ")")
+                .execute();
     }
 
     public String getStrStarttime() {
@@ -340,13 +339,6 @@ public class Task extends Model {
 
     //传入我的uid
     public int getRole() {
-        long uid = UserManager.getUserid(CooApplication.getInstance());
-        RelaTask relaTask = new Select().from(RelaTask.class).where("tid=" + this.tid + " and uid =" + uid).executeSingle();
-        if (relaTask != null) {
-            role = relaTask.getRole();
-        } else {
-            role = RELATION_NORELATION;
-        }
         return role;
     }
 

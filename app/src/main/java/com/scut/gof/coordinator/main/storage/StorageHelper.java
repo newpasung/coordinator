@@ -8,6 +8,7 @@ import com.scut.gof.coordinator.main.storage.model.Material;
 import com.scut.gof.coordinator.main.storage.model.Project;
 import com.scut.gof.coordinator.main.storage.model.RelaProject;
 import com.scut.gof.coordinator.main.storage.model.RelaTask;
+import com.scut.gof.coordinator.main.storage.model.Task;
 import com.scut.gof.coordinator.main.storage.model.User;
 
 import java.io.File;
@@ -28,6 +29,7 @@ public class StorageHelper {
         Project.clearData();
         Material.clearData();
         User.clearData();
+        Task.clearData();
         //删除内部缓存文件
         deleteFilesByDirectory(context.getCacheDir());
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {

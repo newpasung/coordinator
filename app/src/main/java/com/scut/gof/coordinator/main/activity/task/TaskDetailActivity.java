@@ -1,4 +1,4 @@
-package com.scut.gof.coordinator.main.activity;
+package com.scut.gof.coordinator.main.activity.task;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +19,9 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.loopj.android.http.RequestParams;
 import com.scut.gof.coordinator.R;
+import com.scut.gof.coordinator.main.activity.BaseActivity;
+import com.scut.gof.coordinator.main.activity.user.BaseinfoActivity;
+import com.scut.gof.coordinator.main.activity.user.UserSimpleListActivity;
 import com.scut.gof.coordinator.main.adapter.DetailInfoAdapter;
 import com.scut.gof.coordinator.main.net.HttpClient;
 import com.scut.gof.coordinator.main.net.JsonResponseHandler;

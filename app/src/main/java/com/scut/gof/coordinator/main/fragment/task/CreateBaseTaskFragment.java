@@ -16,8 +16,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.scut.gof.coordinator.R;
-import com.scut.gof.coordinator.main.activity.CreateTaskActivity;
-import com.scut.gof.coordinator.main.activity.TaskCategorySelectorActivity;
+import com.scut.gof.coordinator.main.activity.task.CreateTaskActivity;
+import com.scut.gof.coordinator.main.activity.task.TaskCategorySelectorActivity;
 import com.scut.gof.coordinator.main.communication.LocalBrCast;
 import com.scut.gof.coordinator.main.fragment.BaseFragment;
 import com.scut.gof.coordinator.main.interf.BottomBarController;

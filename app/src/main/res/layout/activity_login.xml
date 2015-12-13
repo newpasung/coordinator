@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.scut.gof.coordinator.main.activity.LoginActivity">
+    tools:context=".main.activity.user.LoginActivity">
 
     <fragment
         android:id="@+id/login_content"
+        android:name="com.scut.gof.coordinator.main.fragment.LoginFragment.LoginFragment"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:name="com.scut.gof.coordinator.main.fragment.LoginFragment.LoginFragment"
         tools:layout="@layout/fragment_login">
     </fragment>
 

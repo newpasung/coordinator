@@ -8,18 +8,33 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
+import com.loopj.android.http.RequestParams;
 import com.scut.gof.coordinator.R;
-import com.scut.gof.coordinator.main.activity.CreateTaskActivity;
-import com.scut.gof.coordinator.main.activity.TaskHierarchyActivity;
+import com.scut.gof.coordinator.main.activity.task.CreateTaskActivity;
+import com.scut.gof.coordinator.main.activity.task.TaskHierarchyActivity;
+import com.scut.gof.coordinator.main.communication.LocalBrCast;
 import com.scut.gof.coordinator.main.fragment.BaseFragment;
 import com.scut.gof.coordinator.main.interf.BottomBarController;
+import com.scut.gof.coordinator.main.net.HttpClient;
+import com.scut.gof.coordinator.main.net.JsonResponseHandler;
 import com.scut.gof.coordinator.main.storage.model.Project;
 import com.scut.gof.coordinator.main.storage.model.Task;
 import com.scut.gof.coordinator.main.widget.BottomToolBar;
+import com.scut.gof.coordinator.main.widget.CirclePrgbar;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,10 +50,19 @@ public class TaskListContainerFragment extends BaseFragment implements BottomBar
     TabLayout tabLayout;
     String[] tabTitles;
     Project project;
+    //下面是taskfilter的组件
+    LinearLayout mLltaskfilter;
+    Button mBtncancel;
+    Button mBtncommit;
+    CirclePrgbar circlePrgbar;
+    RadioGroup mBtngroup;
+    View maskView;
+    BottomToolBar mBottomtoolbar;
+    String[] categories;
+    boolean animating = false;
     long proid = -1;
-
     public TaskListContainerFragment() {
-
+        categories = new String[0];
     }
 
     public static TaskListContainerFragment newInstance(long proid) {
@@ -69,6 +93,134 @@ public class TaskListContainerFragment extends BaseFragment implements BottomBar
     protected void iniUI(View view) {
         viewPager = (ViewPager) view.findViewById(R.id.viewpager);
         tabLayout = (TabLayout) view.findViewById(R.id.tablayout);
+        mLltaskfilter = (LinearLayout) view.findViewById(R.id.ll_taskfilter);
+        mBtncancel = (Button) view.findViewById(R.id.btn_cancel);
+        circlePrgbar = (CirclePrgbar) view.findViewById(R.id.circleprgbar);
+        mBtngroup = (RadioGroup) view.findViewById(R.id.category_group);
+        mBtncommit = (Button) view.findViewById(R.id.btn_commit);
+        mLltaskfilter.setVisibility(View.INVISIBLE);
+        maskView = view.findViewById(R.id.maskview);
+        mBtncancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideTaskFilter();
+            }
+        });
+        mBtncommit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String category = "";
+                if (mBtngroup.getCheckedRadioButtonId() != -1) {
+                    category = categories[mBtngroup.getCheckedRadioButtonId()];
+                }
+                modifyFilter(category);
+                hideTaskFilter();
+            }
+        });
+        maskView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideTaskFilter();
+            }
+        });
+    }
+
+    public void showTaskFilter() {
+        if (animating) return;
+        if (mLltaskfilter.getVisibility() == View.VISIBLE) return;
+        if (categories.length == 0) {
+            netRefreshCategories(proid);
+            circlePrgbar.setVisibility(View.VISIBLE);
+        }
+        int height = mLltaskfilter.getHeight();
+        mLltaskfilter.setTranslationX(0);
+        TranslateAnimation animation = new TranslateAnimation(0, 0, -height, 0);
+        animation.setInterpolator(new LinearOutSlowInInterpolator());
+        animation.setFillAfter(false);
+        animation.setDuration(1000);
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                mLltaskfilter.setVisibility(View.VISIBLE);
+                animating = true;
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                animating = false;
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+
+        mLltaskfilter.startAnimation(animation);
+    }
+
+    public void hideTaskFilter() {
+        if (animating) return;
+        if (mLltaskfilter.getVisibility() == View.GONE) return;
+        final int height = mLltaskfilter.getHeight();
+        TranslateAnimation animation = new TranslateAnimation(0, 0, 0, -height);
+        animation.setInterpolator(new LinearOutSlowInInterpolator());
+        animation.setDuration(1000);
+        animation.setFillAfter(true);
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                animating = true;
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                mLltaskfilter.setVisibility(View.GONE);
+                animating = false;
+                if (mBottomtoolbar != null) {
+                    mBottomtoolbar.showFab();
+                }
+                mLltaskfilter.setTranslationX(-height);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        mLltaskfilter.startAnimation(animation);
+    }
+
+    private void netRefreshCategories(long proid) {
+        RequestParams params = new RequestParams();
+        params.put("proid", proid);
+        HttpClient.post(getActivity(), "task/categories", params, new JsonResponseHandler() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                try {
+                    String data = response.getJSONObject("data").getString("categories");
+                    categories = data.split(";");
+                    if (categories != null && categories.length > 0) {
+                        mBtngroup.removeAllViews();
+                        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                        for (int i = 0; i < categories.length; i++) {
+                            RadioButton button = new RadioButton(getActivity());
+                            button.setLayoutParams(layoutParams);
+                            button.setText(categories[i]);
+                            button.setId(i);
+                            mBtngroup.addView(button);
+                        }
+                    }
+
+                    circlePrgbar.setVisibility(View.GONE);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(String message, String for_param) {
+            }
+        });
     }
 
     protected void iniAdapter() {
@@ -110,11 +262,18 @@ public class TaskListContainerFragment extends BaseFragment implements BottomBar
         }
     }
 
+    public void modifyFilter(String category) {
+        for (int i = 0; i < fragments.size(); i++) {
+            ((TaskListFragment) fragments.get(i)).modifyNetFilter(category);
+        }
+        LocalBrCast.sendBroadcast(getActivity(), LocalBrCast.PARAM_NETREFRESHTASK);
+    }
+
     @Override
     public void refreshView(BottomToolBar bottomToolBar) {
         if (project == null) return;
         if (project.getStatus() == 1) {
-            bottomToolBar.setText("任务层级视图", "", getString(R.string.action_newtask));
+            bottomToolBar.setText("任务层级视图", getString(R.string.action_filtercondition), getString(R.string.action_newtask));
         } else {
             bottomToolBar.hideFab();
         }
@@ -129,7 +288,11 @@ public class TaskListContainerFragment extends BaseFragment implements BottomBar
 
     @Override
     public void controllmiddle(BottomToolBar toolBar) {
-
+        if (mBottomtoolbar == null) {
+            mBottomtoolbar = toolBar;
+        }
+        toolBar.hideAll();
+        showTaskFilter();
     }
 
     @Override
