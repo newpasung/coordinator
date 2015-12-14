@@ -17,17 +17,27 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    productFlavors {
+        flavor1 {
+            applicationId 'com.scut.gof.coordinator'
+        }
+    }
     useLibrary 'org.apache.http.legacy'
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
 }
 repositories {
     jcenter()
     maven { url "https://jitpack.io" }
-
 }
 repositories {
     mavenCentral()
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
 }
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
@@ -45,4 +55,5 @@ dependencies {
     compile 'com.android.support:support-v13:23.1.1'
     compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
     compile 'com.yqritc:recyclerview-flexibledivider:1.2.6'
+    compile files('libs/jpush-android-2.0.5.jar')
 }

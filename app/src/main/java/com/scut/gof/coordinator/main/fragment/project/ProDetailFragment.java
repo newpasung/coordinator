@@ -22,7 +22,7 @@ import com.loopj.android.http.RequestParams;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;
 import com.scut.gof.coordinator.R;
-import com.scut.gof.coordinator.lib.nereo.multi_image_selector.MultiImageSelectorActivity;
+import com.scut.gof.coordinator.libs.nereo.multi_image_selector.MultiImageSelectorActivity;
 import com.scut.gof.coordinator.main.UserManager;
 import com.scut.gof.coordinator.main.activity.ImageBrowserActivity;
 import com.scut.gof.coordinator.main.fragment.BaseFragment;

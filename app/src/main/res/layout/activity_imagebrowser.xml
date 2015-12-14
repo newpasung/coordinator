@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.scut.gof.coordinator.lib.com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
+    <com.scut.gof.coordinator.libs.com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
         android:id="@+id/subscaleview"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

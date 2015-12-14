@@ -5,12 +5,15 @@ import android.util.Log;
 
 import com.activeandroid.ActiveAndroid;
 
+import cn.jpush.android.api.JPushInterface;
+
 /**
  * Created by Administrator on 2015/11/8.
  */
 public class CooApplication extends Application implements Thread.UncaughtExceptionHandler {
 
     public static Application application;
+    public static boolean DEBUGMODE = true;
 
     public static Application getInstance() {
         return application;
@@ -21,6 +24,8 @@ public class CooApplication extends Application implements Thread.UncaughtExcept
         super.onCreate();
         application = this;
         ActiveAndroid.initialize(this);
+        JPushInterface.init(this);
+        JPushInterface.setDebugMode(DEBUGMODE);
     }
 
     @Override

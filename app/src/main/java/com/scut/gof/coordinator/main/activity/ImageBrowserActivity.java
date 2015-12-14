@@ -8,8 +8,8 @@ import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.scut.gof.coordinator.R;
-import com.scut.gof.coordinator.lib.com.davemorrissey.labs.subscaleview.ImageSource;
-import com.scut.gof.coordinator.lib.com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
+import com.scut.gof.coordinator.libs.com.davemorrissey.labs.subscaleview.ImageSource;
+import com.scut.gof.coordinator.libs.com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.scut.gof.coordinator.main.image.PicassoProxy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;

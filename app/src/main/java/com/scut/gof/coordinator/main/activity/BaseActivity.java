@@ -11,6 +11,8 @@ import com.scut.gof.coordinator.R;
 import com.scut.gof.coordinator.main.utils.ApiUtil;
 import com.scut.gof.coordinator.main.utils.DenstityUtil;
 
+import cn.jpush.android.api.JPushInterface;
+
 /**
  * Created by Administrator on 2015/10/29.
  * 所有activity的基类
@@ -23,6 +25,18 @@ public class BaseActivity extends AppCompatActivity {
 
     protected void toast(String text){
         Toast.makeText(this,text,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(BaseActivity.this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
     }
 
     protected void toastWarn(String text) {
