@@ -11,15 +11,18 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.loopj.android.http.RequestParams;
 import com.scut.gof.coordinator.R;
-import com.scut.gof.coordinator.main.activity.BaseActivity;
+import com.scut.gof.coordinator.main.activity.base.BaseActivity;
 import com.scut.gof.coordinator.main.net.HttpClient;
 import com.scut.gof.coordinator.main.net.JsonResponseHandler;
 import com.scut.gof.coordinator.main.storage.model.Task;
 import com.scut.gof.coordinator.main.thread.TaskExecutor;
+import com.scut.gof.coordinator.main.utils.DenstityUtil;
 import com.scut.gof.coordinator.main.widget.CircleImageView;
 import com.scut.gof.coordinator.main.widget.CirclePrgbar;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
@@ -131,15 +134,17 @@ public class TaskHierarchyActivity extends BaseActivity {
                     for (int i = 0; i < taskData.length(); i++) {
                         taskDescriptorList.add(new TaskDescriptor(taskData.getJSONObject(i)));
                     }
-                    long parentid = taskDescriptorList.get(0).parentid;
-                    if (taskMap.containsKey(parentid)) {
-                        taskMap.remove(parentid);
+                    if (taskDescriptorList.size() > 0) {
+                        long parentid = taskDescriptorList.get(0).parentid;
+                        if (taskMap.containsKey(parentid)) {
+                            taskMap.remove(parentid);
+                        }
+                        taskMap.put(parentid, taskDescriptorList);
+                        if (adapter.getCurParentid() != 0) {
+                            keyList.push(adapter.getCurParentid());
+                        }
+                        adapter.setTaskList(taskMap.get(parentid));
                     }
-                    taskMap.put(parentid, taskDescriptorList);
-                    if (adapter.getCurParentid() != 0) {
-                        keyList.push(adapter.getCurParentid());
-                    }
-                    adapter.setTaskList(taskMap.get(parentid));
                     adapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -176,6 +181,8 @@ public class TaskHierarchyActivity extends BaseActivity {
     }
 
     class ChildTaskAdapter extends RecyclerView.Adapter {
+        final int VIEWTYPE_EMPTYTIP = 0;
+        final int VIEWTYPE_TASKS = 1;
         List<TaskDescriptor> taskList = new ArrayList<>();
 
         public long getCurParentid() {
@@ -196,49 +203,83 @@ public class TaskHierarchyActivity extends BaseActivity {
             }
         }
 
+        public boolean isDataEmpty() {
+            return taskList.size() == 0;
+        }
+
         public void setTaskList(List<TaskDescriptor> taskList) {
             this.taskList = taskList;
         }
 
         public TaskDescriptor getItem(int position) {
-            return taskList.get(position);
+            return taskList.get(position - 1);
         }
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new MHolder(LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.listitem_childtaskhierarchy, parent, false));
+            if (viewType == VIEWTYPE_EMPTYTIP) {
+                return new EmptyHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.listitem_imageview, parent, false));
+            } else {
+                return new MHolder(LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.listitem_childtaskhierarchy, parent, false));
+            }
         }
 
         @Override
         public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
-            ((MHolder) holder).mTvname.setText(getItem(position).name);
-            ((MHolder) holder).mCiricon.setBackgroundResource(
-                    getItem(position).hasChildtask ? R.drawable.assignment_color : R.drawable.single_assignment_color
-            );
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (getItem(position).hasChildtask) {
-                        if (taskMap.containsKey(getItem(position).tid)) {
-                            keyList.push(getItem(position).parentid);
-                            setTaskList(taskMap.get(getItem(position).tid));
-                            notifyDataSetChanged();
+            if (holder instanceof MHolder) {
+                ((MHolder) holder).mTvname.setText(getItem(position).name);
+                ((MHolder) holder).mCiricon.setBackgroundResource(
+                        getItem(position).hasChildtask ? R.drawable.assignment_color : R.drawable.single_assignment_color
+                );
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (getItem(position).hasChildtask) {
+                            if (taskMap.containsKey(getItem(position).tid)) {
+                                keyList.push(getItem(position).parentid);
+                                setTaskList(taskMap.get(getItem(position).tid));
+                                notifyDataSetChanged();
+                            } else {
+                                netGetChildTasks(false, getItem(position).tid);
+                            }
                         } else {
-                            netGetChildTasks(false, getItem(position).tid);
+                            Intent intent = new Intent(TaskHierarchyActivity.this, TaskDetailActivity.class);
+                            intent.putExtra("tid", getItem(position).tid);
+                            startActivityForResult(intent, REQUESTCODE_TASKDETAIL);
                         }
-                    } else {
-                        Intent intent = new Intent(TaskHierarchyActivity.this, TaskDetailActivity.class);
-                        intent.putExtra("tid", getItem(position).tid);
-                        startActivityForResult(intent, REQUESTCODE_TASKDETAIL);
                     }
+                });
+            } else if (holder instanceof EmptyHolder) {
+                EmptyHolder mHolder = (EmptyHolder) holder;
+                if (isDataEmpty()) {
+                    ViewGroup.LayoutParams params = mHolder.itemView.getLayoutParams();
+                    params.height = DenstityUtil.getScreenHeight(mHolder.itemView.getContext()) * 2 / 3;
+                    mHolder.mContainer.setLayoutParams(params);
+                    mHolder.mContainer.setVisibility(View.VISIBLE);
+                    mHolder.mIvtip.setVisibility(View.VISIBLE);
+                } else {
+                    ViewGroup.LayoutParams params = mHolder.itemView.getLayoutParams();
+                    params.height = 0;
+                    mHolder.mContainer.setLayoutParams(params);
+                    mHolder.mContainer.setVisibility(View.GONE);
+                    mHolder.mIvtip.setVisibility(View.GONE);
                 }
-            });
+            }
         }
 
         @Override
         public int getItemCount() {
-            return taskList.size();
+            return taskList.size() + 1;
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            if (position == 0) {
+                return VIEWTYPE_EMPTYTIP;
+            } else {
+                return VIEWTYPE_TASKS;
+            }
         }
 
         class MHolder extends RecyclerView.ViewHolder {
@@ -249,6 +290,17 @@ public class TaskHierarchyActivity extends BaseActivity {
                 super(itemView);
                 mCiricon = (CircleImageView) itemView.findViewById(R.id.cir_icon);
                 mTvname = (TextView) itemView.findViewById(R.id.tv_name);
+            }
+        }
+
+        class EmptyHolder extends RecyclerView.ViewHolder {
+            ImageView mIvtip;
+            LinearLayout mContainer;
+
+            public EmptyHolder(View itemView) {
+                super(itemView);
+                mIvtip = (ImageView) itemView.findViewById(R.id.iv_nodatatip);
+                mContainer = (LinearLayout) itemView.findViewById(R.id.pic_container);
             }
         }
     }

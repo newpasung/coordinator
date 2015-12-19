@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.scut.gof.coordinator.R;
-import com.scut.gof.coordinator.main.activity.BaseActivity;
+import com.scut.gof.coordinator.main.activity.base.BaseActivity;
 
 import java.io.File;
 import java.util.ArrayList;

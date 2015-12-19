@@ -50,12 +50,14 @@
     <string name="text_numofpeople">人数</string>
     <string name="text_childtask">子任务</string>
     <string name="text_tag">标签</string>
-
+    <string name="text_post_defaultname">工作心记</string>
     <string name="hint_leaveusinfo">留下任何的联系方式</string>
     <string name="hint_non_compulsion">可不填</string>
     <string name="action_setting">设置</string>
     <string name="action_feedback">帮助&#38;反馈</string>
     <string name="action_personaldata">个人数据</string>
+    <string name="action_parters">同事</string>
+    <string name="action_workpost">工作圈</string>
     <string name="action_home">首页</string>
     <string name="action_task">任务</string>
     <string name="action_submit">提交</string>
@@ -67,6 +69,7 @@
     <string name="action_moreconfig">高级设置</string>
     <string name="action_filtercondition">筛选条件</string>
     <string name="action_settings">Settings</string>
+    <string name="action_edit">编辑</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_newtask">新建任务</string>
     <string name="action_proinfo">项目信息</string>
@@ -74,7 +77,7 @@
     <string name="action_accepttask">参与任务</string>
     <string name="action_quittask">退出任务</string>
     <string name="action_delete">删除</string>
-    <string name="action_add">增加</string>
+    <string name="action_add">添加</string>
     <string name="warn_tokeninvalid">你的账号在别处登录，需重新登录</string>
     <string name="warn_inputproname">你要输入项目名称</string>
     <string name="warn_chooseprotime">你要选择项目起始时间</string>

@@ -10,7 +10,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.loopj.android.http.RequestParams;
 import com.scut.gof.coordinator.R;
-import com.scut.gof.coordinator.main.activity.BaseActivity;
+import com.scut.gof.coordinator.main.activity.base.BaseActivity;
 import com.scut.gof.coordinator.main.adapter.PullupDecoratorAdapter;
 import com.scut.gof.coordinator.main.adapter.TaskSynopsisAdapter;
 import com.scut.gof.coordinator.main.net.HttpClient;

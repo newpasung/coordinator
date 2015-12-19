@@ -15,7 +15,8 @@
         <TableRow
             android:id="@+id/row_baseinfo"
             android:layout_marginTop="@dimen/margin_medium"
-            android:background="@drawable/frame4_black24_whiteground"
+            android:background="@drawable/bg_4frame_clickable"
+            android:clickable="true"
             android:gravity="center_vertical">
 
             <TextView
@@ -36,7 +37,8 @@
         <TableRow
             android:id="@+id/row_mytask"
             android:layout_marginTop="@dimen/margin_medium"
-            android:background="@drawable/frame4_black24_whiteground"
+            android:background="@drawable/bg_4frame_clickable"
+            android:clickable="true"
             android:gravity="center_vertical">
 
             <TextView
@@ -56,8 +58,9 @@
 
         <TableRow
             android:id="@+id/row_exitapp"
-              android:layout_marginTop="@dimen/margin_normal"
-              android:background="@drawable/frame4_black24_whiteground"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:background="@drawable/bg_4frame_clickable"
+            android:clickable="true"
               android:gravity="center_vertical">
 
               <TextView

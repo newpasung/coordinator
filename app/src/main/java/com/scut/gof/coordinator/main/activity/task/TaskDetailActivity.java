@@ -19,9 +19,9 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.loopj.android.http.RequestParams;
 import com.scut.gof.coordinator.R;
-import com.scut.gof.coordinator.main.activity.BaseActivity;
-import com.scut.gof.coordinator.main.activity.user.BaseinfoActivity;
-import com.scut.gof.coordinator.main.activity.user.UserSimpleListActivity;
+import com.scut.gof.coordinator.main.activity.base.BaseActivity;
+import com.scut.gof.coordinator.main.activity.user.TaskPartnersActivity;
+import com.scut.gof.coordinator.main.activity.user.UserinfoActivity;
 import com.scut.gof.coordinator.main.adapter.DetailInfoAdapter;
 import com.scut.gof.coordinator.main.net.HttpClient;
 import com.scut.gof.coordinator.main.net.JsonResponseHandler;
@@ -235,7 +235,7 @@ public class TaskDetailActivity extends BaseActivity {
     }
 
     private void checkPartners() {
-        Intent intent = new Intent(this, UserSimpleListActivity.class);
+        Intent intent = new Intent(this, TaskPartnersActivity.class);
         startActivity(intent);
     }
 
@@ -374,7 +374,7 @@ public class TaskDetailActivity extends BaseActivity {
     }
 
     private void checkUserInfo() {
-        Intent intent = new Intent(this, BaseinfoActivity.class);
+        Intent intent = new Intent(this, UserinfoActivity.class);
         intent.putExtra("uid", mTask.getCreator());
         startActivity(intent);
     }

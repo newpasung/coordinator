@@ -12,8 +12,8 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.scut.gof.coordinator.R;
 import com.scut.gof.coordinator.main.activity.task.MyTaskActivity;
-import com.scut.gof.coordinator.main.activity.user.BaseinfoActivity;
 import com.scut.gof.coordinator.main.activity.user.LoginActivity;
+import com.scut.gof.coordinator.main.activity.user.UserinfoActivity;
 import com.scut.gof.coordinator.main.fragment.BaseFragment;
 import com.scut.gof.coordinator.main.storage.StorageHelper;
 import com.scut.gof.coordinator.main.storage.XManager;
@@ -53,7 +53,7 @@ public class UserDataFragment extends BaseFragment {
         mRowbaseinfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), BaseinfoActivity.class));
+                startActivity(new Intent(getActivity(), UserinfoActivity.class));
             }
         });
         mRowexitapp.setOnClickListener(new View.OnClickListener() {

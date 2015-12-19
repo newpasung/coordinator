@@ -1,4 +1,4 @@
-package com.scut.gof.coordinator.main.activity;
+package com.scut.gof.coordinator.main.activity.base;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -41,7 +41,9 @@ public class ImageBrowserActivity extends BaseActivity {
             final MaterialDialog dialog = new MaterialDialog.Builder(this)
                     .content("图片加载中")
                     .progress(true, 0).show();
-            PicassoProxy.loadBigImg(this, url, tag, new Target() {
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.setCancelable(true);
+            PicassoProxy.loadBigImg2(this, url, tag, new Target() {
                 @Override
                 public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
                     scaleView.setImage(ImageSource.bitmap(bitmap));
@@ -50,7 +52,7 @@ public class ImageBrowserActivity extends BaseActivity {
 
                 @Override
                 public void onBitmapFailed(Drawable errorDrawable) {
-                    dialog.setContent("加载失败");
+                    dialog.dismiss();
                 }
 
                 @Override

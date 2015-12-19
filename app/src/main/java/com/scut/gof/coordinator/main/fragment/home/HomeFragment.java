@@ -135,17 +135,24 @@ public class HomeFragment extends BaseFragment implements BottomBarController {
     public void refreshView(BottomToolBar toolBar) {
         if (isDetached()) return;
         if (getActivity() == null) return;
-        toolBar.setText(new String[]{getString(R.string.action_newpro), "", ""});
+        toolBar.setText(new String[]{"", "", getString(R.string.action_newpro)});
     }
 
     @Override
     public void controllleft(BottomToolBar toolBar) {
+
+    }
+
+    @Override
+    public void controllmiddle(BottomToolBar toolBar) {
+    }
+
+    @Override
+    public void controllright(BottomToolBar toolBar) {
         toolBar.reset(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
-
             }
-
             @Override
             public void onAnimationEnd(Animator animation) {
                 startActivity(new Intent(getActivity(), CreateProActivity.class));
@@ -161,15 +168,6 @@ public class HomeFragment extends BaseFragment implements BottomBarController {
 
             }
         });
-    }
-
-    @Override
-    public void controllmiddle(BottomToolBar toolBar) {
-    }
-
-    @Override
-    public void controllright(BottomToolBar toolBar) {
-
     }
 
     private void refreshProjects() {

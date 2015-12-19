@@ -16,6 +16,7 @@ import android.view.View;
 
 import com.loopj.android.http.RequestParams;
 import com.scut.gof.coordinator.R;
+import com.scut.gof.coordinator.main.activity.base.BaseActivity;
 import com.scut.gof.coordinator.main.communication.LocalBrCast;
 import com.scut.gof.coordinator.main.fragment.FragmentTransactionExtended;
 import com.scut.gof.coordinator.main.fragment.material.IniMaterialFragment;

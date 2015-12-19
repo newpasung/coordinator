@@ -56,7 +56,7 @@ public class User extends Model {
     /**
      * 直插入简单数据，加快效率
      */
-    public static boolean insertOrUpdateSimply(JSONObject user) {
+    public static User insertOrUpdateSimply(JSONObject user) {
         User mUser = null;
         try {
             long id = user.getLong("uid");
@@ -74,14 +74,14 @@ public class User extends Model {
                 mUser.avatar = user.getString("avatar");
             }
             mUser.save();
-            return true;
+            return mUser;
         } catch (JSONException e) {
             e.printStackTrace();
-            return false;
         }
+        return null;
     }
 
-    public static boolean insertOrUpdate(JSONObject jsonObject) {
+    public static User insertOrUpdate(JSONObject jsonObject) {
         User user = null;
         try {
             long uid = jsonObject.getLong("uid");
@@ -118,11 +118,10 @@ public class User extends Model {
                 user.birthday = jsonObject.getString("birthday");
             }
             user.save();
-            return true;
         } catch (JSONException e) {
             e.printStackTrace();
-            return false;
         }
+        return user;
     }
 
     public static User getUserById(long uid) {
@@ -156,7 +155,7 @@ public class User extends Model {
     }
 
     public String getBirthday() {
-        return birthday;
+        return birthday.equals("0-0-0") ? "" : birthday;
     }
 
     public String getEmail() {

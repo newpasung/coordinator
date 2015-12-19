@@ -1,6 +1,7 @@
 package com.scut.gof.coordinator.main.utils;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.view.View;
@@ -16,6 +17,14 @@ public class ApiUtil {
         }
         else{
             view.setBackground(drawable);
+        }
+    }
+
+    public static Drawable getDrawable(Resources resources, int resid) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
+            return resources.getDrawable(resid);
+        } else {
+            return resources.getDrawable(resid, null);
         }
     }
 

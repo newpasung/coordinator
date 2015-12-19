@@ -16,12 +16,18 @@ public class HttpClient {
     private static AsyncHttpClient client = new AsyncHttpClient();
 
     public static void get(Context context, String url, RequestParams params, JsonResponseHandler handler){
+        if (params == null) {
+            params = new RequestParams();
+        }
         params.put(RequestParamName.TOKEN, UserManager.getToken(context));
         handler.setWeakReference(new WeakReference<Context>(context));
         client.get(context, BASE_URL + url, params, handler);
     }
 
     public static void post(Context context, String url, RequestParams params, JsonResponseHandler handler){
+        if (params == null) {
+            params = new RequestParams();
+        }
         params.put(RequestParamName.TOKEN, UserManager.getToken(context));
         handler.setWeakReference(new WeakReference<Context>(context));
         client.post(context, BASE_URL + url, params, handler);

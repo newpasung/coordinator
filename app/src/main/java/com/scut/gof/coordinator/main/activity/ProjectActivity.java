@@ -15,6 +15,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.scut.gof.coordinator.R;
+import com.scut.gof.coordinator.main.activity.base.BaseActivity;
+import com.scut.gof.coordinator.main.activity.base.ImageBrowserActivity;
 import com.scut.gof.coordinator.main.fragment.FragmentTransactionExtended;
 import com.scut.gof.coordinator.main.fragment.project.ProDetailFragment;
 import com.scut.gof.coordinator.main.fragment.task.TaskListContainerFragment;

@@ -3,58 +3,58 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <ScrollView
-        android:background="@drawable/background"
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:background="@drawable/background"
         >
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <TextView
-                android:layout_margin="@dimen/margin_small"
-                android:text="@string/text_copyright"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:layout_margin="@dimen/margin_small"
-                android:text="@string/text_feedback_tips"
-                style="@style/text_body"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <EditText
-                android:background="@drawable/frame4_black24_whiteground"
-                android:layout_margin="@dimen/margin_small"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_small"
+                android:text="@string/text_copyright" />
+
+            <TextView
+                style="@style/text_body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_small"
+                android:text="@string/text_feedback_tips" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_small"
+                android:background="@drawable/frame4_black24_whiteground"
+                android:gravity="top"
                 android:minHeight="192dp"
                 />
 
             <EditText
-                android:hint="@string/hint_leaveusinfo"
-                android:background="@drawable/frame4_black24_whiteground"
-                android:layout_margin="@dimen/margin_small"
-                android:minHeight="30dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_small"
+                android:background="@drawable/frame4_black24_whiteground"
+                android:hint="@string/hint_leaveusinfo"
+                android:minHeight="30dp" />
 
             <Button
                 android:id="@+id/btn_submit"
                 style="@style/text_title"
-                android:shadowColor="@color/black_54"
-                android:shadowRadius="5"
-                android:shadowDx="5"
-                android:shadowDy="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_small"
                 android:background="@drawable/background_btn_eva_updown"
-                android:text="@string/action_submit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:shadowColor="@color/black_54"
+                android:shadowDx="5"
+                android:shadowDy="1"
+                android:shadowRadius="5"
+                android:text="@string/action_submit" />
 
         </LinearLayout>
     </ScrollView>

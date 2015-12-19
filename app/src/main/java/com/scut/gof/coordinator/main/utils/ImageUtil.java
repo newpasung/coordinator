@@ -37,6 +37,7 @@ public class ImageUtil {
         Bitmap bitmap = BitmapFactory.decodeFile(picPath, options);
         options.inJustDecodeBounds = false;
         int scale = 0;
+        int targetSize = 0;
         int shorterOne = 0;
         if (options.outHeight <= options.outWidth) {
             shorterOne = options.outHeight;
@@ -51,6 +52,7 @@ public class ImageUtil {
                 } else if (shorterOne > 1000) {
                     scale = 2;
                 }
+                targetSize = 50;
             }
             break;
             case COMPRESSEFFECT_MIDDLE: {
@@ -59,6 +61,7 @@ public class ImageUtil {
                 } else if (shorterOne > 1000) {
                     scale = 2;
                 }
+                targetSize = 80;
             }
             break;
             case COMPRESSEFFECT_SMALLER: {
@@ -70,6 +73,7 @@ public class ImageUtil {
                 } else if (shorterOne > 800) {
                     scale = 2;
                 }
+                targetSize = 120;
             }
             break;
         }
@@ -77,7 +81,16 @@ public class ImageUtil {
         options.inPreferredConfig = Bitmap.Config.RGB_565;
         bitmap = BitmapFactory.decodeFile(picPath, options);
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+        int quality = 100;
+        bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
+        while (outputStream.toByteArray().length > targetSize * 128) {
+            quality -= 10;
+            outputStream.reset();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
+            if (quality < 40) {
+                break;
+            }
+        }
         data = outputStream.toByteArray();
         try {
             outputStream.flush();

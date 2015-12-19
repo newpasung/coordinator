@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/padding_small">
+
+    <com.scut.gof.coordinator.main.widget.CircleImageView
+        android:id="@+id/cir_avatar"
+        android:layout_width="@dimen/avatar_normal"
+        android:layout_height="@dimen/avatar_normal"
+        tools:src="@drawable/landscape" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        style="@style/text_caption_big"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/cir_avatar"
+        android:layout_marginLeft="@dimen/margin_small"
+        android:layout_marginRight="@dimen/margin_normal"
+        android:layout_toRightOf="@+id/cir_avatar"
+        android:singleLine="true"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/textsize_l3"
+        tools:text="@string/test_sentence_20" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        style="@style/text_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cir_avatar"
+        android:paddingTop="@dimen/padding_small"
+        tools:text="@string/test_sentence_100" />
+</RelativeLayout>

@@ -1,4 +1,4 @@
-package com.scut.gof.coordinator.main.activity;
+package com.scut.gof.coordinator.main.activity.base;
 
 import android.graphics.Color;
 import android.os.Bundle;

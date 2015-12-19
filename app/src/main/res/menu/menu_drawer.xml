@@ -9,7 +9,14 @@
         android:id="@+id/btn_userdata"
         android:icon="@drawable/account"
         android:title="@string/action_personaldata"/>
-
+    <item
+        android:id="@+id/btn_partners"
+        android:icon="@drawable/group_black"
+        android:title="@string/action_parters" />
+    <item
+        android:id="@+id/btn_workpost"
+        android:icon="@drawable/toy"
+        android:title="@string/action_workpost" />
     <item android:id="@+id/btn_setting"
         android:icon="@drawable/setting"
         android:title="@string/action_setting"/>
@@ -17,8 +24,8 @@
         android:icon="@drawable/feedback"
         android:title="@string/action_feedback"/>
     <item android:id="@+id/btn_test"
-        android:title="@string/test"
         android:icon="@drawable/home"
+        android:title="@string/test"
         />
 </group>
 </menu>

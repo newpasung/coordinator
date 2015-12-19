@@ -18,6 +18,9 @@ import android.widget.TextView;
 
 import com.scut.gof.coordinator.R;
 import com.scut.gof.coordinator.main.UserManager;
+import com.scut.gof.coordinator.main.activity.base.BaseActivity;
+import com.scut.gof.coordinator.main.activity.base.ImageBrowserActivity;
+import com.scut.gof.coordinator.main.activity.user.UserListActivity;
 import com.scut.gof.coordinator.main.fragment.FragmentTransactionExtended;
 import com.scut.gof.coordinator.main.fragment.home.FeedBackFragment;
 import com.scut.gof.coordinator.main.fragment.home.HomeFragment;
@@ -138,8 +141,16 @@ public class HomeActivity extends BaseActivity {
                         replaceFragment(SettingFragment.newInstance());
                     }
                     break;
+                    case R.id.btn_partners: {
+                        startActivity(new Intent(HomeActivity.this, UserListActivity.class));
+                    }
+                    break;
+                    case R.id.btn_workpost: {
+                        startActivity(new Intent(HomeActivity.this, PostListActivity.class));
+                    }
+                    break;
                     case R.id.btn_test: {
-                        toastWarn("test");
+                        startActivity(new Intent(HomeActivity.this, TestUploadPicsActivity.class));
                     }
                     break;
                 }

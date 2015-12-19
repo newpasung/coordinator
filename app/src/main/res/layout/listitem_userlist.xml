@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/padding_normal"
+    android:paddingLeft="@dimen/padding_normal">
+
+    <View
+        android:id="@+id/line_divider"
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="@dimen/margin_listcontent"
+        android:background="@color/black_24"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tv_initial"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/textsize_l5"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        style="@style/text_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/margin_listcontent"
+        android:layout_toLeftOf="@+id/cir_avatar"
+        android:singleLine="true"
+        tools:text="@string/test_sentence_20" />
+
+    <com.scut.gof.coordinator.main.widget.CircleImageView
+        android:id="@+id/cir_avatar"
+        android:layout_width="@dimen/avatar_normal"
+        android:layout_height="@dimen/avatar_normal"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/margin_normal"
+        android:layout_marginRight="@dimen/margin_normal"
+        android:layout_marginTop="@dimen/margin_normal"
+        tools:src="@drawable/landscape" />
+
+</RelativeLayout>

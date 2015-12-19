@@ -6,7 +6,7 @@ import android.view.View;
 
 import com.scut.gof.coordinator.libs.me.imid.swipebacklayout.lib.SwipeBackLayout;
 import com.scut.gof.coordinator.libs.me.imid.swipebacklayout.lib.Utils;
-import com.scut.gof.coordinator.main.activity.BaseActivity;
+import com.scut.gof.coordinator.main.activity.base.BaseActivity;
 
 public class SwipeBackActivity extends BaseActivity implements SwipeBackActivityBase {
     private SwipeBackActivityHelper mHelper;

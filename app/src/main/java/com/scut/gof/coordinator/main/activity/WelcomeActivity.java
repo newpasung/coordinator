@@ -7,13 +7,14 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.scut.gof.coordinator.R;
+import com.scut.gof.coordinator.main.activity.base.BaseActivity;
 import com.scut.gof.coordinator.main.activity.user.LoginActivity;
 import com.scut.gof.coordinator.main.communication.LocalBrCast;
 import com.scut.gof.coordinator.main.fragment.WelcomeFragment.FirstWelcomeFragment;
 import com.scut.gof.coordinator.main.fragment.WelcomeFragment.NormalWelcomeFragment;
 import com.scut.gof.coordinator.main.storage.XManager;
 
-public class WelcomeActivity extends BaseActivity{
+public class WelcomeActivity extends BaseActivity {
 
     BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override

@@ -24,7 +24,7 @@ import com.qiniu.android.storage.UpCompletionHandler;
 import com.scut.gof.coordinator.R;
 import com.scut.gof.coordinator.libs.nereo.multi_image_selector.MultiImageSelectorActivity;
 import com.scut.gof.coordinator.main.UserManager;
-import com.scut.gof.coordinator.main.activity.ImageBrowserActivity;
+import com.scut.gof.coordinator.main.activity.base.ImageBrowserActivity;
 import com.scut.gof.coordinator.main.fragment.BaseFragment;
 import com.scut.gof.coordinator.main.image.PicassoProxy;
 import com.scut.gof.coordinator.main.interf.BottomBarController;
@@ -223,7 +223,7 @@ public class ProDetailFragment extends BaseFragment implements BottomBarControll
             ArrayList<String> logoFilePaths = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
             //妈个鸡，返回webp格式
             logoFilePath = logoFilePaths.get(0);
-            PicassoProxy.loadFile(getActivity(), new File(logoFilePath), 120, mCirlogo);
+            PicassoProxy.loadFile(getActivity(), new File(logoFilePath), mCirlogo);
         }
     }
 

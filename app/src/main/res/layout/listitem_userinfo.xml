@@ -16,9 +16,9 @@
         tools:text="@string/test_sentence_20" />
 
     <TextView
-        android:id="@+id/tv_content"
+        android:id="@+id/et_content"
         style="@style/text_body"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="1dp"
         android:layout_marginTop="8dp"

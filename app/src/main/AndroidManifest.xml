@@ -53,7 +53,8 @@
             com.scut.gof.coordinator.main.storage.model.RelaProject,
             com.scut.gof.coordinator.main.storage.model.RelaTask,
             com.scut.gof.coordinator.main.storage.model.Task,
-            com.scut.gof.coordinator.main.storage.model.User" />
+            com.scut.gof.coordinator.main.storage.model.User,
+            com.scut.gof.coordinator.main.storage.model.Post" />
 
         <receiver android:name=".main.receiver.JPushTestReceiver">
             <intent-filter>
@@ -82,6 +83,7 @@
         <activity
             android:name=".main.activity.user.LoginActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".main.activity.TestUploadPicsActivity" />
         <activity
             android:name=".main.activity.task.TaskDetailActivity"
             android:label=""
@@ -99,11 +101,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".main.activity.user.BaseinfoActivity"
+            android:name=".main.activity.user.UserinfoActivity"
+            android:label=""
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".main.activity.ImageBrowserActivity"
+            android:name=".main.activity.base.ImageBrowserActivity"
             android:label="查看图片"
             android:screenOrientation="portrait" />
         <activity
@@ -121,13 +124,26 @@
             android:label="任务分类"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".main.activity.user.UserSimpleListActivity"
+            android:name=".main.activity.user.TaskPartnersActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".main.activity.task.TaskHierarchyActivity"
             android:label="任务列表"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".main.activity.user.UserListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".main.activity.PostListActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".main.activity.NewPostActivity"
+            android:screenOrientation="portrait" />
 
         <activity android:name=".qcode.zxing.activity.CaptureActivity" />
         <activity android:name=".qcode.androidzhang.zxingframe.CheckResult" />
