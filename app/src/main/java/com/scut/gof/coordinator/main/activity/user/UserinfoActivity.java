@@ -158,8 +158,12 @@ public class UserinfoActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_edit, menu);
-        return true;
+        if (isEditable) {
+            getMenuInflater().inflate(R.menu.menu_edit, menu);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

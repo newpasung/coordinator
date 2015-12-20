@@ -2,6 +2,7 @@ package com.scut.gof.coordinator.main.activity.user;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -12,25 +13,22 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.ArraySet;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.activeandroid.ActiveAndroid;
-import com.activeandroid.Model;
 import com.activeandroid.query.Select;
 import com.scut.gof.coordinator.R;
 import com.scut.gof.coordinator.main.UserManager;
 import com.scut.gof.coordinator.main.activity.base.BaseActivity;
 import com.scut.gof.coordinator.main.adapter.UserlistAdapter;
-import com.scut.gof.coordinator.main.models.SimpleContact;
 import com.scut.gof.coordinator.main.net.HttpClient;
 import com.scut.gof.coordinator.main.net.JsonResponseHandler;
 import com.scut.gof.coordinator.main.storage.model.Project;
@@ -39,16 +37,14 @@ import com.scut.gof.coordinator.main.storage.model.User;
 import com.scut.gof.coordinator.main.thread.TaskExecutor;
 import com.scut.gof.coordinator.main.utils.CharacterParser;
 import com.scut.gof.coordinator.main.utils.PinyinComparator;
+import com.scut.gof.coordinator.main.widget.SideBar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Administrator on 2015/12/17.
@@ -65,7 +61,11 @@ public class UserListActivity extends BaseActivity {
     Spinner mSpinnerFilter;
     EditText mEtsearch;
     String searchTarget;
+    SideBar mSidebar;
     List<Project> myProjects;
+    boolean canSelect = false;//因为spinner默认回调一下
+    int spin_lastselectindex;
+    LinearLayoutManager linearLayoutManager;
     Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -73,7 +73,8 @@ public class UserListActivity extends BaseActivity {
                 adapter.updateData((List<User>) msg.obj);
             }
             else if (msg.what==MSG_NET_DATASUCCESS){
-                contactData = localGetUsers(null);
+                contactData = localGetUsers(mSpinnerFilter.getSelectedItemPosition());
+                adapter.setData(contactData);
                 adapter.notifyDataSetChanged();
             }
         }
@@ -90,8 +91,9 @@ public class UserListActivity extends BaseActivity {
         }
     }
 
-
     private void iniUi() {
+        linearLayoutManager = new LinearLayoutManager(this);
+        mSidebar = (SideBar) findViewById(R.id.sidebar);
         mRecyclerview = (RecyclerView) findViewById(R.id.recyclerview);
         mSwipeRefresh =(SwipeRefreshLayout) findViewById(R.id.swiperefresh);
         mSpinnerFilter = (Spinner) findViewById(R.id.spinner_filter);
@@ -121,7 +123,7 @@ public class UserListActivity extends BaseActivity {
         });
         adapter.setData(contactData);
         mRecyclerview.setAdapter(adapter);
-        mRecyclerview.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerview.setLayoutManager(linearLayoutManager);
         mEtsearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -147,12 +149,66 @@ public class UserListActivity extends BaseActivity {
                 netGetUserlist();
             }
         });
+        mSidebar.setOnTouchingLetterChangedListener(new SideBar.OnTouchingLetterChangedListener() {
+            @Override
+            public void onTouchingLetterChanged(String s) {
+                mRecyclerview.scrollToPosition(adapter.getPositionForSection(s.toLowerCase().charAt(0)));
+            }
+        });
+        mRecyclerview.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                mSidebar.setChosenText((char) adapter.getSectionForPosition(linearLayoutManager.findFirstVisibleItemPosition()));
+                if (Math.abs(dy) > 2) {
+                    if (mSidebar.getVisibility() == View.INVISIBLE) {
+                        mSidebar.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, final int newState) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    mSidebar.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (newState == RecyclerView.SCROLL_STATE_IDLE && !mSidebar.isTouching()) {
+                                mSidebar.setVisibility(View.INVISIBLE);
+                            }
+                        }
+                    }, 300);
+                }
+            }
+        });
+        mSpinnerFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (!canSelect) {
+                    spin_lastselectindex = position;
+                    canSelect = true;
+                    return;
+                }
+                if (position == spin_lastselectindex) {
+                    return;
+                }
+                if (position == 0) {
+                    contactData = localGetUsers(0);
+                } else {
+                    contactData = localGetUsers(myProjects.get(position - 1).getProid());
+                }
+                adapter.updateData(contactData);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
     }
 
     private void iniData() {
         myProjects=getMyProjects();
         contactData = new ArrayList<>();
-        contactData = localGetUsers(null);
+        contactData = localGetUsers(0);
         Collections.sort(contactData, new PinyinComparator());
     }
 
@@ -178,6 +234,11 @@ public class UserListActivity extends BaseActivity {
     private BaseAdapter getSpinnerAdapter() {
         ArrayAdapter arrayAdapter = new ArrayAdapter(this, R.layout.spinner_whiteconner);
         arrayAdapter.add("全部");
+        if (myProjects != null) {
+            for (int i = 0; i < myProjects.size(); i++) {
+                arrayAdapter.add(myProjects.get(i).getProname());
+            }
+        }
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         return arrayAdapter;
     }
@@ -213,8 +274,14 @@ public class UserListActivity extends BaseActivity {
                         for (int i = 0; i < contactData.size(); i++) {
                             //就是，用户木有新输入
                             if (targetCopy.equals(searchTarget)) {
-                                if (contactData.get(i).getName_pinyin().contains(searchTarget)) {
-                                    contacts.add(contactData.get(i));
+                                if (searchTarget.matches("[A-Za-z#]")) {
+                                    if (contactData.get(i).getName_pinyin().contains(searchTarget)) {
+                                        contacts.add(contactData.get(i));
+                                    }
+                                } else {
+                                    if (contactData.get(i).getName().contains(searchTarget)) {
+                                        contacts.add(contactData.get(i));
+                                    }
                                 }
                             } else {
                                 break;
@@ -277,41 +344,23 @@ public class UserListActivity extends BaseActivity {
         return projects;
     }
 
-    /**@category 可以输入一个项目的id来筛选，或者输入null获取全部*/
-    private List<User> localGetUsers(String category){
-        if (myProjects==null){
-            myProjects=getMyProjects();
-            if (myProjects.size()==0){
-                return new ArrayList<>(0);
-            }
+    /**
+     * @category 可以输入一个项目的id来筛选，或者输入0获取全部
+     */
+    private List<User> localGetUsers(long proid) {
+        if (myProjects == null) ;
+        String whereCause = proid == 0 ? "" : "relaproject.proid =" + proid + " and relaproject.uid = user.uid";
+        List<User> users = new ArrayList<>();
+        Cursor cursor = ActiveAndroid.getDatabase().query(true, "user,relaproject ", new String[]{"user.uid"}
+                , whereCause, null, null, null, null, null);
+        while (cursor.moveToNext()) {
+            users.add(User.getUserById(cursor.getLong(cursor.getColumnIndex("uid"))));
         }
-        StringBuilder onCondition=new StringBuilder();
-        onCondition.append("user.uid=relaproject.uid and relaproject.proid ");
-        if (TextUtils.isEmpty(category)){
-            onCondition.append("in(");
-            for (int i=0;i<myProjects.size();i++){
-                Project project =myProjects.get(i);
-                onCondition.append(project.getProid());
-                if (i!=myProjects.size()-1){
-                    //最后一个不用
-                    onCondition.append(",");
-                }
-            }
-            onCondition.append(")");
-        }else{
-            onCondition.append(" = ");
-            onCondition.append(category);
-        }
-        List<User> users=new Select()
-                .from(User.class)
-                .join(RelaProject.class)
-                .on(onCondition.toString())
-                .execute();
         if (users==null){
             users =new ArrayList<>();
         }
-        ActiveAndroid.getDatabase().query()
         return users;
     }
+
 
 }

@@ -141,7 +141,7 @@ public class TaskDetailActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_detailinfo, menu);
+        getMenuInflater().inflate(R.menu.menu_taskdetail, menu);
         return true;
     }
 

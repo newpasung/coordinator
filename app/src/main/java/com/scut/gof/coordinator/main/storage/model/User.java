@@ -71,6 +71,7 @@ public class User extends Model {
             mUser = User.getUserById(id);
             if (mUser == null) {
                 mUser = new User();
+                mUser.uid = id;
             }
             if (user.has("name")) {
                 if (mUser.name==null||!mUser.name.equals(user.getString("name"))){

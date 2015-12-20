@@ -72,27 +72,29 @@ public class UserinfoAdapter extends RecyclerView.Adapter {
 
     //把数据源转为adapter的数据结构
     protected void transDataSource(User user) {
-        if (!isLocalUser && !TextUtils.isEmpty(user.getWorkphone())) {
+        contentList.clear();
+        captionList.clear();
+        if (isLocalUser || !TextUtils.isEmpty(user.getWorkphone())) {
             contentList.add(user.getWorkphone());
             captionList.add(R.string.text_workphone);
         }
-        if (!isLocalUser && !TextUtils.isEmpty(user.getEmail())) {
+        if (isLocalUser || !TextUtils.isEmpty(user.getEmail())) {
             contentList.add(user.getEmail());
             captionList.add(R.string.text_email);
         }
-        if (!isLocalUser && !TextUtils.isEmpty(user.getGender())) {
+        if (isLocalUser || !TextUtils.isEmpty(user.getGender())) {
             contentList.add(user.getGender());
             captionList.add(R.string.text_gender);
         }
-        if (!isLocalUser && !TextUtils.isEmpty(user.getSignature())) {
+        if (isLocalUser || !TextUtils.isEmpty(user.getSignature())) {
             contentList.add(user.getSignature());
             captionList.add(R.string.text_signature);
         }
-        if (!isLocalUser && !TextUtils.isEmpty(user.getLocale())) {
+        if (isLocalUser || !TextUtils.isEmpty(user.getLocale())) {
             contentList.add(user.getLocale());
             captionList.add(R.string.text_locale);
         }
-        if (!isLocalUser && !TextUtils.isEmpty(user.getBirthday())) {
+        if (isLocalUser || !TextUtils.isEmpty(user.getBirthday())) {
             contentList.add(user.getBirthday());
             captionList.add(R.string.text_birthday);
         }

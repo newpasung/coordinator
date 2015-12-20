@@ -10,8 +10,10 @@ import android.widget.TextView;
 import com.scut.gof.coordinator.R;
 import com.scut.gof.coordinator.main.image.PicassoProxy;
 import com.scut.gof.coordinator.main.storage.model.User;
+import com.scut.gof.coordinator.main.utils.PinyinComparator;
 import com.scut.gof.coordinator.main.widget.CircleImageView;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -22,7 +24,6 @@ public class UserlistAdapter extends RecyclerView.Adapter implements SectionInde
     private final int VIEWTYPE_USERITEM = 1;
     List<User> userData;
     OnUserClickListener listener;
-
     public UserlistAdapter(OnUserClickListener listener) {
         this.listener = listener;
     }
@@ -31,10 +32,12 @@ public class UserlistAdapter extends RecyclerView.Adapter implements SectionInde
      * 必须传入已经排序的数据
      */
     public void setData(List<User> data) {
+        Collections.sort(data, new PinyinComparator());
         userData = data;
     }
 
     public void updateData(List<User> data) {
+        Collections.sort(data, new PinyinComparator());
         this.userData = data;
         notifyDataSetChanged();
     }
@@ -113,6 +116,10 @@ public class UserlistAdapter extends RecyclerView.Adapter implements SectionInde
         return userData.get(position).getName_pinyin().charAt(0);
     }
 
+    public interface OnUserClickListener {
+        void onUserClicked(long uid);
+    }
+
     class ContentHolder extends RecyclerView.ViewHolder {
         View mDivider;
         TextView mTvname;
@@ -126,10 +133,6 @@ public class UserlistAdapter extends RecyclerView.Adapter implements SectionInde
             mTvinitial = (TextView) itemView.findViewById(R.id.tv_initial);
             mCiravatar = (CircleImageView) itemView.findViewById(R.id.cir_avatar);
         }
-    }
-
-    public interface  OnUserClickListener{
-        void onUserClicked(long uid);
     }
 
 }
