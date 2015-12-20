@@ -28,10 +28,13 @@ public class RelaProject extends Model {
     public static void clearData() {
         new Delete().from(RelaProject.class).execute();
     }
+/*
 
-    /**
+    */
+/**
      * 应该传入一个至少包含uid和proid的数据
      */
+
     public static RelaProject insertOrUpdate(JSONObject data, long uid) {
         RelaProject relaProject = null;
         try {
@@ -64,7 +67,7 @@ public class RelaProject extends Model {
         return relaProject;
     }
 
-    /**
+ /*   *//**
      * 传入一个project数组数据和用户id
      */
     public static ArrayList<RelaProject> insertOrUpdate(JSONArray data, long uid) {

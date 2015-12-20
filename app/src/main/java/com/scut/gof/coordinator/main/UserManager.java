@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.activeandroid.query.Select;
+import com.scut.gof.coordinator.main.storage.StorageHelper;
 import com.scut.gof.coordinator.main.storage.XManager;
 import com.scut.gof.coordinator.main.storage.model.Project;
 import com.scut.gof.coordinator.main.storage.model.RelaProject;
@@ -28,7 +29,7 @@ public class UserManager {
      */
     public static User getLocalUser(Context context) {
         if (mUser == null) {
-            mUser = User.getUserById(getUserid(context));
+            mUser = User.getUserById(XManager.getUid(context));
         }
         return mUser;
     }
@@ -53,7 +54,7 @@ public class UserManager {
     }
 
     public static long getUserid(Context context) {
-        return XManager.getUid(context);
+        return getLocalUser(context).getUid();
     }
 
     public static String getToken(Context context) {
@@ -73,12 +74,16 @@ public class UserManager {
         JSONObject userData = data.getJSONObject("user");
         String token = userData.getString("token");
         long uid = userData.getLong("uid");
+        if (XManager.getUid(context)==uid){
+            StorageHelper.clearData(context);
+        }
         XManager.setToken(context, token);
         XManager.setUid(context, uid);
         User.insertOrUpdate(userData);
         JSONArray projectdata = data.getJSONArray("projects");
         //添加进project数据
         Project.insertOrUpdate(projectdata);
+        XManager.setLoginStatus(context, true);
     }
 
     public static List<Project> getMyProjects(Context context) {

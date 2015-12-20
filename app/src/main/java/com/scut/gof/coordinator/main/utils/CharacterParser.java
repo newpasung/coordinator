@@ -125,4 +125,15 @@ public class CharacterParser {
         return buffer.toString();
     }
 
+    public String getContactPinyin(String source){
+        String pinyin = characterParser.getSpelling(source);
+        String initial = pinyin.substring(0, 1).toUpperCase();
+        if (initial.matches("[A-Za-z]")) {
+            return pinyin;
+        } else {
+            //非英文的都用#标记
+            return "#" + pinyin;
+        }
+    }
+
 }

@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.scut.gof.coordinator.R;
 import com.scut.gof.coordinator.main.image.PicassoProxy;
-import com.scut.gof.coordinator.main.models.SimpleContact;
+import com.scut.gof.coordinator.main.storage.model.User;
 import com.scut.gof.coordinator.main.widget.CircleImageView;
 
 import java.util.List;
@@ -20,17 +20,22 @@ import java.util.List;
 public class UserlistAdapter extends RecyclerView.Adapter implements SectionIndexer {
 
     private final int VIEWTYPE_USERITEM = 1;
-    List<SimpleContact> simpleContacts;
+    List<User> userData;
+    OnUserClickListener listener;
+
+    public UserlistAdapter(OnUserClickListener listener) {
+        this.listener = listener;
+    }
 
     /**
      * 必须传入已经排序的数据
      */
-    public void setData(List<SimpleContact> data) {
-        simpleContacts = data;
+    public void setData(List<User> data) {
+        userData = data;
     }
 
-    public void updateData(List<SimpleContact> data) {
-        this.simpleContacts = data;
+    public void updateData(List<User> data) {
+        this.userData = data;
         notifyDataSetChanged();
     }
 
@@ -50,14 +55,20 @@ public class UserlistAdapter extends RecyclerView.Adapter implements SectionInde
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onUserClicked(getItem(position).getUid());
+            }
+        });
         if (holder instanceof ContentHolder) {
             int section = getSectionForPosition(position);
             //如果是首位,显示首字母和分割线
             if (position == getPositionForSection(section)) {
                 ((ContentHolder) holder).mDivider.setVisibility(View.VISIBLE);
                 ((ContentHolder) holder).mTvinitial.setVisibility(View.VISIBLE);
-                ((ContentHolder) holder).mTvinitial.setText(String.valueOf(getItem(position).getPinyin().charAt(0)));
+                ((ContentHolder) holder).mTvinitial.setText(String.valueOf(getItem(position).getName_pinyin().charAt(0)));
                 if (position == 0) {
                     ((ContentHolder) holder).mDivider.setVisibility(View.GONE);
                 }
@@ -67,17 +78,17 @@ public class UserlistAdapter extends RecyclerView.Adapter implements SectionInde
             }
             ((ContentHolder) holder).mTvname.setText(getItem(position).getName());
             PicassoProxy.loadAvatar(((ContentHolder) holder).mCiravatar.getContext()
-                    , getItem(position).getAvaterUrl(), ((ContentHolder) holder).mCiravatar);
+                    , getItem(position).getThumbnailavatar(), ((ContentHolder) holder).mCiravatar);
         }
     }
 
-    public SimpleContact getItem(int position) {
-        return simpleContacts.get(position);
+    public User getItem(int position) {
+        return userData.get(position);
     }
 
     @Override
     public int getItemCount() {
-        return simpleContacts.size();
+        return userData.size();
     }
 
     @Override
@@ -89,7 +100,7 @@ public class UserlistAdapter extends RecyclerView.Adapter implements SectionInde
     @Override
     public int getPositionForSection(int sectionIndex) {
         for (int i = 0; i < getItemCount(); i++) {
-            if (simpleContacts.get(i).getPinyin().charAt(0) == sectionIndex) {
+            if (userData.get(i).getName_pinyin().charAt(0) == sectionIndex) {
                 return i;
             }
         }
@@ -99,7 +110,7 @@ public class UserlistAdapter extends RecyclerView.Adapter implements SectionInde
     //使用首字母来的asc来区分section
     @Override
     public int getSectionForPosition(int position) {
-        return simpleContacts.get(position).getPinyin().charAt(0);
+        return userData.get(position).getName_pinyin().charAt(0);
     }
 
     class ContentHolder extends RecyclerView.ViewHolder {
@@ -115,6 +126,10 @@ public class UserlistAdapter extends RecyclerView.Adapter implements SectionInde
             mTvinitial = (TextView) itemView.findViewById(R.id.tv_initial);
             mCiravatar = (CircleImageView) itemView.findViewById(R.id.cir_avatar);
         }
+    }
+
+    public interface  OnUserClickListener{
+        void onUserClicked(long uid);
     }
 
 }

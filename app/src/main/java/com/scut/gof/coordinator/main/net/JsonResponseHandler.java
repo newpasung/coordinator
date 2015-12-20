@@ -9,6 +9,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.scut.gof.coordinator.main.activity.user.LoginActivity;
+import com.scut.gof.coordinator.main.storage.XManager;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
@@ -49,6 +50,7 @@ public abstract class JsonResponseHandler extends JsonHttpResponseHandler{
                                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                         intent.setClass(context, LoginActivity.class);
                                         context.startActivity(intent);
+                                        XManager.setLoginStatus(context,false);
                                         dialog.dismiss();
                                     }
                                 })

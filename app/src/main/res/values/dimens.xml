@@ -11,6 +11,7 @@
     <dimen name="margin_tiny">2dp</dimen>
     <dimen name="margin_listcontent">72dp</dimen>
 
+    <dimen name="padding_line">1dp</dimen>
     <dimen name="padding_tiny">2dp</dimen>
     <dimen name="padding_small">8dp</dimen>
     <dimen name="padding_normal">16dp</dimen>

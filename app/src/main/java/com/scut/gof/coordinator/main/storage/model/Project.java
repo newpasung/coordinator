@@ -54,10 +54,13 @@ public class Project extends Model {
     private String prologo;
     @Column(name = "mark")
     private int mark;
+    @Column(name = "role")
+    private int role;
     public Project() {
         super();
     }
 
+    public static final int ROLE_CREATOR=1;
     /**
      * 清空所有数据的哦
      */
@@ -99,6 +102,7 @@ public class Project extends Model {
             }
             if (data.has("principalid")) {
                 project.principalid = data.getLong("principalid");
+                RelaProject.insertOrUpdate(id,project.principalid,ROLE_CREATOR);
             }
             if (data.has("description")) {
                 project.description = data.getString("description");
@@ -121,15 +125,11 @@ public class Project extends Model {
             if (data.has("mark")) {
                 project.mark = data.getInt("mark");
             }
-            project.save();
-            if (data.has("principalid")) {
-                RelaProject.insertOrUpdate(data, project.principalid);
-            } else {
-                if (data.has("role")) {
-                    RelaProject.insertOrUpdate(project.proid, UserManager.getUserid(CooApplication.getInstance()), data.getInt("role"));
-                }
+            if (data.has("role")){
+                project.role = data.getInt("role");
+                RelaProject.insertOrUpdate(id,UserManager.getUserid(CooApplication.getInstance()),project.role);
             }
-            RelaProject.insertOrUpdate(data, project.principalid);
+            project.save();
             return project;
         } catch (JSONException e) {
             e.printStackTrace();

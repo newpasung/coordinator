@@ -68,10 +68,10 @@ public class HomeFragment extends BaseFragment implements BottomBarController {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == MSG_WHAT_ONFAILE_REFRESH) {
-                adapter.setProData(UserManager.getRecentProject(getActivity()));
-                adapter.notifyDataSetChanged();
                 mSwipelayout.setRefreshing(false);
             } else if (msg.what == MSG_WHAT_ONSUCCESS_REFRESH) {
+                adapter.setProData(UserManager.getRecentProject(getActivity()));
+                adapter.notifyDataSetChanged();
                 mSwipelayout.setRefreshing(false);
             }
         }

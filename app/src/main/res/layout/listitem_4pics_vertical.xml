@@ -8,6 +8,7 @@
 
     <ImageView
         android:id="@+id/iv_pic0"
+        android:padding="@dimen/padding_line"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -21,6 +22,7 @@
 
         <ImageView
             android:id="@+id/iv_pic1"
+            android:padding="@dimen/padding_line"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -28,6 +30,7 @@
 
         <ImageView
             android:id="@+id/iv_pic2"
+            android:padding="@dimen/padding_line"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -35,6 +38,7 @@
 
         <ImageView
             android:id="@+id/iv_pic3"
+            android:padding="@dimen/padding_line"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"

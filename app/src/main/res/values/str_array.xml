@@ -19,49 +19,4 @@
         <item>普通</item>
         <item>低级</item>
     </string-array>
-    <string-array name="test_userlist">
-        <item>紧急</item>
-        <item>普通</item>
-        <item>低级</item>
-        <item>普通</item>
-        <item>紧急</item>
-        <item>低级</item>
-        <item>小活动</item>
-        <item>校园文体活动</item>
-        <item>准备中</item>
-        <item>进行中</item>
-        <item>已完成</item>
-        <item>阿斯顿飞吻</item>
-        <item>巴萨的单位</item>
-        <item>大瑟尔</item>
-        <item>恩爱是个人</item>
-        <item>分期和七个人</item>
-        <item>个驱蚊</item>
-        <item>活泼为二位</item>
-        <item>校园文体活动</item>
-        <item>准备中</item>
-        <item>进行中</item>
-        <item>z</item>
-        <item>z</item>
-        <item>z</item>
-        <item>z</item>
-        <item>z</item>
-        <item>l</item>
-        <item>h</item>
-        <item>j</item>
-        <item>g</item>
-        <item>f</item>
-        <item>e</item>
-        <item>d</item>
-        <item>c</item>
-        <item>b</item>
-        <item>azg</item>
-        <item>aza</item>
-        <item>azz</item>
-        <item>ab</item>
-        <item>1azg</item>
-        <item>2aza</item>
-        <item>3azz</item>
-        <item>ab</item>
-    </string-array>
 </resources>

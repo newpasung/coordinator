@@ -56,7 +56,6 @@ public class LoginFragment extends BaseFragment {
                         }
                     }
                     JSONObject response = (JSONObject) msg.obj;
-                    XManager.setLoginStatus(context, true);
                     UserManager.iniUserData(context, response.getJSONObject("data"));
                     shouldTrans = true;
                 } catch (JSONException e) {

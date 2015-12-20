@@ -1,13 +1,19 @@
 package com.scut.gof.coordinator.main.storage.model;
 
+import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
+import com.scut.gof.coordinator.main.utils.CharacterParser;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2015/11/20.
@@ -20,10 +26,11 @@ public class User extends Model {
     private String avatar;
     @Column(name = "thumbnailavatar")
     private String thumbnailavatar;
-
     //下面是展示的信息
     @Column(name = "name")
     private String name;
+    @Column(name = "name_pinyin")
+    private String name_pinyin;
     @Column(name = "gender")
     private int gender;
     @Column(name = "workphone")
@@ -47,6 +54,7 @@ public class User extends Model {
         this.workphone = "";
         this.signature = "";
         this.locale = "";
+        this.name_pinyin="";
     }
 
     public static void clearData() {
@@ -65,7 +73,10 @@ public class User extends Model {
                 mUser = new User();
             }
             if (user.has("name")) {
-                mUser.name = user.getString("name");
+                if (mUser.name==null||!mUser.name.equals(user.getString("name"))){
+                    mUser.name = user.getString("name");
+                    mUser.name_pinyin = CharacterParser.getInstance().getContactPinyin(mUser.name);
+                }
             }
             if (user.has("thumbnailavatar")) {
                 mUser.thumbnailavatar = user.getString("thumbnailavatar");
@@ -73,12 +84,32 @@ public class User extends Model {
             if (user.has("avatar")) {
                 mUser.avatar = user.getString("avatar");
             }
+            if (user.has("proids")){
+                RelaProject.insertOrUpdate(user.getJSONArray("proids"),id);
+            }
             mUser.save();
-            return mUser;
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return null;
+        return mUser;
+    }
+
+    public static List<User> insertOrUpdateSimply(JSONArray array){
+        List<User> users =new ArrayList<>();
+        ActiveAndroid.beginTransaction();
+        try {
+            for (int i=0;i<array.length();i++){
+                User user =insertOrUpdateSimply(array.getJSONObject(i));
+                if (user!=null){
+                    users.add(user);
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        ActiveAndroid.setTransactionSuccessful();
+        ActiveAndroid.endTransaction();
+        return users;
     }
 
     public static User insertOrUpdate(JSONObject jsonObject) {
@@ -91,7 +122,10 @@ public class User extends Model {
                 user.uid = uid;
             }
             if (jsonObject.has("name")) {
-                user.name = jsonObject.getString("name");
+                if (user.name==null||!jsonObject.getString("name").equals(user.name)){
+                    user.name = jsonObject.getString("name");
+                    user.name_pinyin = CharacterParser.getInstance().getContactPinyin(user.name);
+                }
             }
             if (jsonObject.has("gender")) {
                 user.gender = jsonObject.getInt("gender");
@@ -174,4 +208,7 @@ public class User extends Model {
         return workphone;
     }
 
+    public String getName_pinyin() {
+        return name_pinyin;
+    }
 }
