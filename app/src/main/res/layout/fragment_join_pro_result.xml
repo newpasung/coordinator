@@ -1,13 +1,34 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.scut.gof.coordinator.main.fragment.project.JoinProResultFragment">
 
-    <TextView
-        android:id="@+id/tv_invite_code"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="这里是邀请码"/>
-
-</FrameLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+        <com.scut.gof.coordinator.main.widget.CircleImageView
+            android:id="@+id/pro_logo"
+            android:layout_width="@dimen/avatar_large"
+            android:layout_height="@dimen/avatar_large"
+            android:src="@drawable/landscape"
+            android:layout_centerHorizontal="true"/>
+        <TextView
+            android:id="@+id/tv_proname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pro_logo"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:text="这里是项目的名字"
+            android:textSize="@dimen/textsize_l3"
+            android:textAlignment="center"/>
+        <Button
+            android:id="@+id/btn_join_pro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_proname"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:text="加入该项目"/>
+    </RelativeLayout>
+</RelativeLayout>

@@ -13,6 +13,7 @@ import com.scut.gof.coordinator.R;
 import com.scut.gof.coordinator.main.activity.base.BaseActivity;
 import com.scut.gof.coordinator.main.communication.LocalBrCast;
 import com.scut.gof.coordinator.main.fragment.project.JoinProFragment;
+import com.scut.gof.coordinator.main.fragment.project.JoinProResultFragment;
 import com.scut.gof.coordinator.main.net.HttpClient;
 import com.scut.gof.coordinator.main.net.JsonResponseHandler;
 import com.scut.gof.coordinator.main.storage.model.Project;
@@ -74,7 +75,13 @@ public class JoinProActivity extends BaseActivity {
                 try {
                     JSONObject data = response.getJSONObject("data");
                     Project project = Project.insertOrUpdate(data.getJSONObject("project"));
-                    toast(project.getId()+"");
+                    Bundle bundle = new Bundle();
+                    bundle.putString("proname", project.getProname());
+                    bundle.putString("prologo", project.getThumbnailLogo());
+                    bundle.putString("invite_code", invite_code);
+                    JoinProResultFragment joinProResultFragment = new JoinProResultFragment();
+                    joinProResultFragment.setArguments(bundle);
+                    getFragmentManager().beginTransaction().replace(R.id.fragment_container, joinProResultFragment, "joinProResult").commit();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
