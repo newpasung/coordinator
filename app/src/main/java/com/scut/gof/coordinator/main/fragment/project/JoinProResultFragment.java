@@ -57,7 +57,7 @@ public class JoinProResultFragment extends BaseFragment {
 
                     @Override
                     public void onFailure(String message, String for_param) {
-                        toast("加入失败");
+                        toast("加入失败，" + message);
                     }
                 });
             }
