@@ -1,0 +1,42 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".main.fragment.project.JoinProFragment">
+
+
+    <ImageView
+        android:id="@+id/iv_qrcode"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:src="@drawable/qrcode"/>
+    <Button
+        android:id="@+id/btn_scan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iv_qrcode"
+        android:layout_centerHorizontal="true"
+        android:text="扫描二维码"/>
+
+    <View
+        android:id="@+id/division"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"
+        android:background="@color/colorPrimary"
+        android:layout_below="@+id/btn_scan"/>
+
+    <EditText
+        android:id="@+id/et_invite_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/division"
+        android:hint="输入邀请码"/>
+    <Button
+        android:id="@+id/btn_invite_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/et_invite_code"
+        android:text="确认邀请码"/>
+</RelativeLayout>

@@ -8,11 +8,11 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
-
-    <!-- JPUSH Required  一些系统要求的权限，如访问网络等-->
+    <!-- JPUSH Required  一些系统要求的权限，如访问网络等 -->
     <permission
         android:name="com.scut.gof.coordinator.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
@@ -33,13 +33,14 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+
     <application
         android:name=".CooApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <meta-data
             android:name="AA_DB_NAME"
             android:value="coordinator.db" />
@@ -48,13 +49,7 @@
             android:value="1" />
         <meta-data
             android:name="AA_MODELS"
-            android:value="com.scut.gof.coordinator.main.storage.model.Material,
-            com.scut.gof.coordinator.main.storage.model.Project,
-            com.scut.gof.coordinator.main.storage.model.RelaProject,
-            com.scut.gof.coordinator.main.storage.model.RelaTask,
-            com.scut.gof.coordinator.main.storage.model.Task,
-            com.scut.gof.coordinator.main.storage.model.User,
-            com.scut.gof.coordinator.main.storage.model.Post" />
+            android:value="com.scut.gof.coordinator.main.storage.model.Material,             com.scut.gof.coordinator.main.storage.model.Project,             com.scut.gof.coordinator.main.storage.model.RelaProject,             com.scut.gof.coordinator.main.storage.model.RelaTask,             com.scut.gof.coordinator.main.storage.model.Task,             com.scut.gof.coordinator.main.storage.model.User,             com.scut.gof.coordinator.main.storage.model.Post" />
 
         <receiver android:name=".main.receiver.JPushTestReceiver">
             <intent-filter>
@@ -64,14 +59,26 @@
                 <category android:name="com.scut.gof.coordinator" />
             </intent-filter>
         </receiver>
+
         <activity
             android:name=".main.activity.WelcomeActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar" >
+            android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="invide_code"
+                    android:scheme="coordinator" />
             </intent-filter>
         </activity>
         <activity
@@ -79,7 +86,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/HomeActivityStyle"
             android:windowSoftInputMode="adjustPan" />
-
         <activity
             android:name=".main.activity.user.LoginActivity"
             android:screenOrientation="portrait" />
@@ -95,7 +101,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan|stateVisible" />
-
+        <activity android:name=".main.activity.JoinProActivity"
+            android:label="加入项目"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".main.activity.ProjectActivity"
             android:screenOrientation="portrait"
@@ -131,7 +140,6 @@
             android:label="任务列表"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".main.activity.user.UserListActivity"
             android:screenOrientation="portrait"
@@ -144,14 +152,13 @@
         <activity
             android:name=".main.activity.NewPostActivity"
             android:screenOrientation="portrait" />
-
         <activity android:name=".qcode.zxing.activity.CaptureActivity" />
         <activity android:name=".qcode.androidzhang.zxingframe.CheckResult" />
         <activity android:name=".qcode.androidzhang.zxingframe.ZxingFrame" />
         <activity android:name=".libs.nereo.multi_image_selector.MultiImageSelectorActivity" />
 
-        <!--JPUSH -->
-        <!-- Required SDK核心功能-->
+        <!-- JPUSH -->
+        <!-- Required SDK核心功能 -->
         <activity
             android:name="cn.jpush.android.ui.PushActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -164,12 +171,12 @@
                 <category android:name="com.scut.gof.coordinator" />
             </intent-filter>
         </activity>
-        <!-- Required  SDK核心功能-->
+        <!-- Required  SDK核心功能 -->
         <service
             android:name="cn.jpush.android.service.DownloadService"
             android:enabled="true"
-            android:exported="false"></service>
-        <!-- Required SDK 核心功能-->
+            android:exported="false" />
+        <!-- Required SDK 核心功能 -->
         <!-- 可配置android:process参数将PushService放在其他进程中 -->
         <service
             android:name="cn.jpush.android.service.PushService"
@@ -183,14 +190,14 @@
                 <action android:name="cn.jpush.android.intent.PUSH_TIME" />
             </intent-filter>
         </service>
-        <!-- Required SDK核心功能-->
+        <!-- Required SDK核心功能 -->
         <receiver
             android:name="cn.jpush.android.service.PushReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter android:priority="1000">
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
-                <!--Required  显示通知栏 -->
+                <!-- Required  显示通知栏 -->
                 <category android:name="com.scut.gof.coordinator" />
             </intent-filter>
             <intent-filter>
@@ -204,10 +211,9 @@
 
                 <data android:scheme="package" />
             </intent-filter>
-
         </receiver>
 
-        <!-- Required SDK核心功能-->
+        <!-- Required SDK核心功能 -->
         <receiver
             android:name="cn.jpush.android.service.AlarmReceiver"
             android:exported="false" />
@@ -218,7 +224,7 @@
         <meta-data
             android:name="JPUSH_APPKEY"
             android:value="db263ee1d6e75fd4211c75db" />
-        <!--JPUSH -->
+        <!-- JPUSH -->
     </application>
 
 </manifest>

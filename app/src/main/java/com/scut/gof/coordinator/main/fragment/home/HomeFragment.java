@@ -16,6 +16,7 @@ import com.loopj.android.http.RequestParams;
 import com.scut.gof.coordinator.R;
 import com.scut.gof.coordinator.main.UserManager;
 import com.scut.gof.coordinator.main.activity.CreateProActivity;
+import com.scut.gof.coordinator.main.activity.JoinProActivity;
 import com.scut.gof.coordinator.main.activity.ProjectActivity;
 import com.scut.gof.coordinator.main.adapter.HomeAdapter;
 import com.scut.gof.coordinator.main.fragment.BaseFragment;
@@ -135,7 +136,7 @@ public class HomeFragment extends BaseFragment implements BottomBarController {
     public void refreshView(BottomToolBar toolBar) {
         if (isDetached()) return;
         if (getActivity() == null) return;
-        toolBar.setText(new String[]{"", "", getString(R.string.action_newpro)});
+        toolBar.setText(new String[]{"", getString(R.string.action_joinpro), getString(R.string.action_newpro)});
     }
 
     @Override
@@ -145,6 +146,27 @@ public class HomeFragment extends BaseFragment implements BottomBarController {
 
     @Override
     public void controllmiddle(BottomToolBar toolBar) {
+        toolBar.reset(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                startActivity(new Intent(getActivity(), JoinProActivity.class));
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
     }
 
     @Override

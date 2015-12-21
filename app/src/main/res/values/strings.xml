@@ -62,6 +62,7 @@
     <string name="action_task">任务</string>
     <string name="action_submit">提交</string>
     <string name="action_newpro">新建项目</string>
+    <string name="action_joinpro">加入项目</string>
     <string name="action_cancel">取消</string>
     <string name="action_nextstep">下一步</string>
     <string name="action_laststep">上一步</string>
@@ -86,4 +87,5 @@
     <string name="preview">Preview</string>
     <string name="msg_no_camera">No system camera found</string>
     <string name="msg_amount_limit">Select images amount is limit</string>
+
 </resources>
