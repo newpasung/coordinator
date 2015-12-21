@@ -4,8 +4,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 import com.loopj.android.http.RequestParams;
@@ -38,6 +40,12 @@ public class JoinProActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join_pro);
+
+        Uri intentData = getIntent().getData();
+        if (intentData!=null && intentData.getScheme().equals("coordinator") && intentData.getHost().equals("invide_code")) {
+            invite_code = intentData.getQueryParameter("code");
+            sendRequest();
+        }
         iniUI();
         LocalBrCast.register(this, LocalBrCast.PARAM_JOINPROJECT, receiver);
     }

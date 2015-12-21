@@ -70,16 +70,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="invide_code"
-                    android:scheme="coordinator" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".main.activity.HomeActivity"
@@ -104,7 +94,16 @@
         <activity android:name=".main.activity.JoinProActivity"
             android:label="加入项目"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:host="invide_code" android:scheme="coordinator" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".main.activity.ProjectActivity"
             android:screenOrientation="portrait"
