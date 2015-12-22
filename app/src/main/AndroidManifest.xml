@@ -145,6 +145,10 @@
             android:name=".main.activity.NewPostActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".main.activity.ScheduleListActivity"
+            android:screenOrientation="portrait" />
+
         <activity android:name=".qcode.zxing.activity.CaptureActivity" />
         <activity android:name=".qcode.androidzhang.zxingframe.CheckResult" />
         <activity android:name=".qcode.androidzhang.zxingframe.ZxingFrame" />
