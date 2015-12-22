@@ -17,6 +17,7 @@ public class LocalBrCast {
     public static final String PARAM_WELACT_TRANSACTIVITY = "PARAM_WELACT_TRANSACTIVITY";
     public static final String PARAM_NEWTASK = "UPLOADNEWPRODATA";
     public static final String PARAM_NEWPROJECT = "UPLOADNEWPRODATA";
+    public static final String PARAM_JOINPROJECT = "JOINPROJECT";
 
     //向系统注册一个接受广播的接收器
     public static void register(Context context, String actionKey, BroadcastReceiver receiver) {
