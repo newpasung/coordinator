@@ -67,16 +67,18 @@
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
                         android:layout_toLeftOf="@+id/iv_dropdowncircle1"
+                        android:background="@drawable/bg_clickable_dropdown_circle"
+                        android:gravity="center_vertical"
                         android:singleLine="true"
                         tools:text="@string/test_sentence_100" />
 
-                    <ImageView
-                        android:id="@+id/iv_dropdowncircle1"
-                        android:layout_width="@dimen/dropdowncircle_size"
-                        android:layout_height="@dimen/dropdowncircle_size"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:background="@drawable/dropdown_circle" />
+                    <!-- <ImageView
+                         android:id="@+id/iv_dropdowncircle1"
+                         android:layout_width="@dimen/dropdowncircle_size"
+                         android:layout_height="@dimen/dropdowncircle_size"
+                         android:layout_alignParentRight="true"
+                         android:layout_centerVertical="true"
+                         android:background="@drawable/dropdown_circle_accent" />-->
                 </com.scut.gof.coordinator.main.widget.RippleView>
 
 
@@ -112,7 +114,7 @@
                         android:layout_height="@dimen/dropdowncircle_size"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:background="@drawable/dropdown_circle" />
+                        android:background="@drawable/dropdown_circle_accent" />
                 </com.scut.gof.coordinator.main.widget.RippleView>
 
 
@@ -149,7 +151,7 @@
                         android:layout_width="@dimen/dropdowncircle_size"
                         android:layout_height="@dimen/dropdowncircle_size"
                         android:layout_alignParentRight="true"
-                        android:background="@drawable/dropdown_circle" />
+                        android:background="@drawable/dropdown_circle_accent" />
                 </com.scut.gof.coordinator.main.widget.RippleView>
 
                 <include layout="@layout/linedivider_black54" />

@@ -21,6 +21,8 @@ import com.scut.gof.coordinator.main.activity.ProjectActivity;
 import com.scut.gof.coordinator.main.adapter.HomeAdapter;
 import com.scut.gof.coordinator.main.fragment.BaseFragment;
 import com.scut.gof.coordinator.main.interf.BottomBarController;
+import com.scut.gof.coordinator.main.localmodels.Announcement;
+import com.scut.gof.coordinator.main.localmodels.HomeMessage;
 import com.scut.gof.coordinator.main.net.HttpClient;
 import com.scut.gof.coordinator.main.net.JsonResponseHandler;
 import com.scut.gof.coordinator.main.storage.model.Project;
@@ -41,7 +43,7 @@ public class HomeFragment extends BaseFragment implements BottomBarController {
     RecyclerView mRec;
     SwipeRefreshLayout mSwipelayout;
     List<Project> proData = new ArrayList<>();
-    List<String> msgData=new ArrayList<>();
+    List<HomeMessage> msgData = new ArrayList<>();
     HomeAdapter adapter;
     HomeAdapter.MOnClick clickListener = new HomeAdapter.MOnClick() {
         @Override
@@ -124,12 +126,13 @@ public class HomeFragment extends BaseFragment implements BottomBarController {
     }
 
     protected void iniData(){
+        String testurl = "http://img1.imgtn.bdimg.com/it/u=266880594,205135855&fm=21&gp=0.jpg";
         proData.clear();
         msgData.clear();
         proData = UserManager.getRecentProject(getActivity());
-        msgData.add("未处理消息的概括1好长啊好长啊好长啊好长啊好长啊好长啊好长啊好长啊好长啊好长啊");
-        msgData.add("未处理消息的概括2");
-        msgData.add("未处理消息的概括3");
+        msgData.add(new Announcement("实现性的内容1", testurl));
+        msgData.add(new Announcement("实现性的内容2", testurl));
+        msgData.add(new Announcement("实现性的内容3", testurl));
     }
 
     @Override
@@ -141,7 +144,6 @@ public class HomeFragment extends BaseFragment implements BottomBarController {
 
     @Override
     public void controllleft(BottomToolBar toolBar) {
-
     }
 
     @Override

@@ -158,6 +158,7 @@ public class UserListActivity extends BaseActivity {
         mRecyclerview.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (linearLayoutManager.findFirstVisibleItemPosition() < 0) return;
                 mSidebar.setChosenText((char) adapter.getSectionForPosition(linearLayoutManager.findFirstVisibleItemPosition()));
                 if (Math.abs(dy) > 2) {
                     if (mSidebar.getVisibility() == View.INVISIBLE) {

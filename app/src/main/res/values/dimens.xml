@@ -45,6 +45,7 @@
     <dimen name="iconsize_normal">40dp</dimen>
     <dimen name="iconsize_small">28dp</dimen>
     <dimen name="fab_marginLeft">3dp</dimen>
+    <dimen name="textview_clickable_height">27dp</dimen>
     //from official
     <dimen name="drawer_header_content_height">56dp</dimen>
     <dimen name="dialog_flat_btn_height">36dp</dimen>

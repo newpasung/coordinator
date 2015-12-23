@@ -58,6 +58,7 @@
     <string name="action_personaldata">个人数据</string>
     <string name="action_parters">同事</string>
     <string name="action_workpost">工作圈</string>
+    <string name="action_schedule">我的日程</string>
     <string name="action_home">首页</string>
     <string name="action_task">任务</string>
     <string name="action_submit">提交</string>
@@ -79,6 +80,7 @@
     <string name="action_quittask">退出任务</string>
     <string name="action_delete">删除</string>
     <string name="action_add">添加</string>
+    <string name="action_autosync">联网同步日程等数据</string>
     <string name="warn_tokeninvalid">你的账号在别处登录，需重新登录</string>
     <string name="warn_inputproname">你要输入项目名称</string>
     <string name="warn_chooseprotime">你要选择项目起始时间</string>

@@ -30,7 +30,7 @@
 
             </android.support.design.widget.AppBarLayout>
 
-            <include layout="@layout/content_home" />
+            <include layout="@layout/content_frgcontainer" />
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/btn_fab"

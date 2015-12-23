@@ -24,7 +24,6 @@ import com.scut.gof.coordinator.main.fragment.BaseFragment;
 import com.scut.gof.coordinator.main.net.HttpClient;
 import com.scut.gof.coordinator.main.net.JsonResponseHandler;
 import com.scut.gof.coordinator.main.net.RequestParamName;
-import com.scut.gof.coordinator.main.storage.XManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;

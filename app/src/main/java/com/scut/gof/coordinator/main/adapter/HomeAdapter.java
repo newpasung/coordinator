@@ -5,11 +5,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.scut.gof.coordinator.R;
 import com.scut.gof.coordinator.main.image.PicassoProxy;
+import com.scut.gof.coordinator.main.localmodels.HomeMessage;
 import com.scut.gof.coordinator.main.storage.model.Project;
 import com.scut.gof.coordinator.main.widget.CircleImageView;
 
@@ -29,7 +31,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
     private static final int HEADLINE_MSG = 3;
     Context mContext;
     List<Project> prodata = new ArrayList<>();
-    List<String> msgdata =new ArrayList<>();
+    List<HomeMessage> msgdata = new ArrayList<>();
     MOnClick listener;
     public HomeAdapter(Context mContext) {
         this.mContext = mContext;
@@ -80,9 +82,32 @@ public class HomeAdapter extends RecyclerView.Adapter {
                 });
             }break;
             case TYPE_MSG:{
-                ((MsgHolder)holder).mCir.setImageResource(R.drawable.tencent);
-                ((MsgHolder)holder).mTvtype.setText(mContext.getString(R.string.test_type));
-                ((MsgHolder)holder).mTvcontent.setText(getMsgData(position));
+                final HomeMessage message = getMsg(position);
+                MsgHolder msgHolder = ((MsgHolder) holder);
+                PicassoProxy.loadAvatar(mContext, message.getIconUrl(), msgHolder.mCir);
+                msgHolder.mTvtype.setText(mContext.getString(R.string.test_type));
+                msgHolder.mTvcontent.setText(message.getContent());
+                msgHolder.mTvtype.setText(message.getDescription());
+                msgHolder.mBtnpositive.setText(message.getPositiveTitle());
+                msgHolder.mBtnnegative.setText(message.getNegativeTitle());
+                msgHolder.mBtnpositive.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (message.getOnPositiveClick() != null) {
+                            message.getOnPositiveClick().onClick(v);
+                        }
+                    }
+                });
+                msgHolder.mBtnnegative.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        removeMsg(position);
+                        if (message.getOnNegativeClick() != null) {
+                            message.getOnNegativeClick().onClick(v);
+                        }
+                    }
+                });
+
             }break;
         }
     }
@@ -113,7 +138,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
         this.prodata = data;
     }
 
-    public void setMsgData(List<String> data) {
+    public void setMsgData(List<HomeMessage> data) {
         this.msgdata.clear();
         this.msgdata = data;
     }
@@ -123,8 +148,13 @@ public class HomeAdapter extends RecyclerView.Adapter {
         return prodata.get(position - 1);
     }
 
-    protected String getMsgData(int position) {
+    protected HomeMessage getMsg(int position) {
         return msgdata.get(position - prodata.size() - 2);
+    }
+
+    protected void removeMsg(int position) {
+        msgdata.remove(position - prodata.size() - 2);
+        notifyItemRemoved(position);
     }
 
     protected boolean hasPro() {
@@ -155,11 +185,15 @@ public class HomeAdapter extends RecyclerView.Adapter {
         CircleImageView mCir;
         TextView mTvtype;
         TextView mTvcontent;
+        Button mBtnpositive;
+        Button mBtnnegative;
         public MsgHolder(View itemView) {
             super(itemView);
             mCir=(CircleImageView)itemView.findViewById(R.id.cir_msgtype);
             mTvtype=(TextView)itemView.findViewById(R.id.tv_type);
             mTvcontent=(TextView)itemView.findViewById(R.id.tv_content);
+            mBtnpositive = (Button) itemView.findViewById(R.id.btn_positive);
+            mBtnnegative = (Button) itemView.findViewById(R.id.btn_negative);
         }
     }
 

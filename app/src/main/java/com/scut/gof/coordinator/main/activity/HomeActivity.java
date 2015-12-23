@@ -149,6 +149,10 @@ public class HomeActivity extends BaseActivity {
                         startActivity(new Intent(HomeActivity.this, PostListActivity.class));
                     }
                     break;
+                    case R.id.btn_schedule: {
+                        startActivity(new Intent(HomeActivity.this, ScheduleListActivity.class));
+                    }
+                    break;
                     case R.id.btn_test: {
                         startActivity(new Intent(HomeActivity.this, TestUploadPicsActivity.class));
                     }

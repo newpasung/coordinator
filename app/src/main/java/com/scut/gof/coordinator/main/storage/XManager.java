@@ -20,6 +20,7 @@ public class XManager {
     public static String PARAM_OPENED = "hasopened";//是否已经打开过app，用于判断是否显示引导页
     public static String PARAM_LOGINED = "haslogined";//是否已经登录
     public static String PARAM_LASTOPENTIME = "lastopentime";//上一次打开应用的时间，毫秒
+    public static String PARAM_AUTOSYNCHRONIZATION = "autosync";
     //一些用户相关的参数
     public static String PARAM_TOKEN = "token";//用户token
     public static String PARAM_UID = "uid";//用户uid
@@ -36,6 +37,15 @@ public class XManager {
             userPref=context.getSharedPreferences(FILENAME_USER,Context.MODE_PRIVATE);
         }
         return userPref;
+    }
+
+    public static void setAutoSync(Context context, boolean param) {
+        getSystemManager(context).edit().putBoolean(PARAM_AUTOSYNCHRONIZATION, param)
+                .commit();
+    }
+
+    public static boolean isAutoSync(Context context) {
+        return getSystemManager(context).getBoolean(PARAM_AUTOSYNCHRONIZATION, true);
     }
 
     //获取是否已登录
