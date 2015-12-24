@@ -140,7 +140,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".main.activity.JoinProActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/HomeActivityStyle"/>
         <activity
             android:name=".main.activity.ScheduleListActivity"
             android:label="@string/action_schedule"
