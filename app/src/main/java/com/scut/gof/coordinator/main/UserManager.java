@@ -9,6 +9,7 @@ import com.scut.gof.coordinator.main.storage.XManager;
 import com.scut.gof.coordinator.main.storage.model.Project;
 import com.scut.gof.coordinator.main.storage.model.RelaProject;
 import com.scut.gof.coordinator.main.storage.model.User;
+import com.scut.gof.coordinator.main.utils.JPushUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -83,6 +84,7 @@ public class UserManager {
         JSONArray projectdata = data.getJSONArray("projects");
         //添加进project数据
         Project.insertOrUpdate(projectdata);
+        new JPushUtil(context).run();
         XManager.setLoginStatus(context, true);
     }
 

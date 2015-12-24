@@ -26,6 +26,7 @@ import com.scut.gof.coordinator.main.localmodels.HomeMessage;
 import com.scut.gof.coordinator.main.net.HttpClient;
 import com.scut.gof.coordinator.main.net.JsonResponseHandler;
 import com.scut.gof.coordinator.main.storage.model.Project;
+import com.scut.gof.coordinator.main.utils.JPushUtil;
 import com.scut.gof.coordinator.main.widget.BottomToolBar;
 
 import org.json.JSONException;
@@ -76,6 +77,7 @@ public class HomeFragment extends BaseFragment implements BottomBarController {
                 adapter.setProData(UserManager.getRecentProject(getActivity()));
                 adapter.notifyDataSetChanged();
                 mSwipelayout.setRefreshing(false);
+                new JPushUtil(getActivity()).run();
             }
         }
     };
