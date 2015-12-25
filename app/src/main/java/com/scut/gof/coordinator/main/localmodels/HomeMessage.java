@@ -7,6 +7,7 @@ import android.view.View;
  */
 public abstract class HomeMessage {
 
+    protected int time;
     protected View.OnClickListener onPositiveClick = null;
     protected View.OnClickListener onNegativeClick = null;
     protected String positiveTitle = "查看";

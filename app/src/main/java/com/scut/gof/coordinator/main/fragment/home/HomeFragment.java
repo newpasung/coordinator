@@ -128,13 +128,10 @@ public class HomeFragment extends BaseFragment implements BottomBarController {
     }
 
     protected void iniData(){
-        String testurl = "http://img1.imgtn.bdimg.com/it/u=266880594,205135855&fm=21&gp=0.jpg";
         proData.clear();
         msgData.clear();
         proData = UserManager.getRecentProject(getActivity());
-        msgData.add(new Announcement("实现性的内容1", testurl));
-        msgData.add(new Announcement("实现性的内容2", testurl));
-        msgData.add(new Announcement("实现性的内容3", testurl));
+        msgData = Announcement.getRecentUnreadAnnouncements();
     }
 
     @Override

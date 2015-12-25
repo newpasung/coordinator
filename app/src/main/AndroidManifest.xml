@@ -49,13 +49,12 @@
             android:value="1" />
         <meta-data
             android:name="AA_MODELS"
-            android:value="com.scut.gof.coordinator.main.storage.model.Material,             com.scut.gof.coordinator.main.storage.model.Project,             com.scut.gof.coordinator.main.storage.model.RelaProject,             com.scut.gof.coordinator.main.storage.model.RelaTask,             com.scut.gof.coordinator.main.storage.model.Task,             com.scut.gof.coordinator.main.storage.model.User,             com.scut.gof.coordinator.main.storage.model.Post ,             com.scut.gof.coordinator.main.storage.model.Schedule" />
+            android:value="com.scut.gof.coordinator.main.storage.model.MDAnnouncement,             com.scut.gof.coordinator.main.storage.model.Material,             com.scut.gof.coordinator.main.storage.model.Project,             com.scut.gof.coordinator.main.storage.model.RelaProject,             com.scut.gof.coordinator.main.storage.model.RelaTask,             com.scut.gof.coordinator.main.storage.model.Task,             com.scut.gof.coordinator.main.storage.model.User,             com.scut.gof.coordinator.main.storage.model.Post ,             com.scut.gof.coordinator.main.storage.model.Schedule" />
 
-        <receiver android:name=".main.receiver.JPushTestReceiver">
+        <receiver android:name=".main.receiver.MyJPushReceiver">
             <intent-filter>
-                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
-
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
                 <category android:name="com.scut.gof.coordinator" />
             </intent-filter>
         </receiver>
